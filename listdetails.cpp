@@ -21,8 +21,8 @@
 
 #include "listdetails.h"
 
-ListDetails::ListDetails(QWidget *parent) :
-    QLabel(parent)
+ListDetails::ListDetails(QWidget *parent)
+    : QLabel(parent)
 {
     setStyleSheet(
         "QLabel { border: 1px solid gray; background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffefef, stop:0.35 #f7db45, stop:0.65 #f7db45, stop:1 #ffefef); }"

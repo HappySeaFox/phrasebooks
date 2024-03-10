@@ -63,9 +63,9 @@ public:
     QNetworkReply::NetworkError error() const;
 
     /*
-     *  Start a new network request. HEAD, GET, PUT and POST are supported
+     *  Start a new network GET request
      */
-    bool startRequest(const QNetworkRequest &request);
+    bool get(const QUrl &url);
 
 signals:
     /*

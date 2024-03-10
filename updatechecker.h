@@ -38,7 +38,8 @@ signals:
     void newVersion(const QString &); // empty if no updates
     void error(const QString &);
 
-private slots:
+// slots
+private:
     void slotFinished();
 
 private:

@@ -55,7 +55,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string extracomment="&quot;THT&quot; is the name of the application">THT is ready</string>
+          <string extracomment="&quot;Phrasebooks&quot; is the name of the application">Phrasebooks is ready</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -93,7 +93,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string extracomment="&quot;THT&quot; is the name of the application">THT is busy</string>
+          <string extracomment="&quot;Phrasebooks&quot; is the name of the application">Phrasebooks is busy</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

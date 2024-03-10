@@ -6,6 +6,16 @@ isEmpty(TARGET) {
     error("$$TARGET requires Windows platform")
 }
 
+lessThan(QT_MAJOR_VERSION, 5) {
+    error("This project requires Qt 5.5 or greater")
+} else {
+    equals(QT_MAJOR_VERSION, 5) {
+        lessThan(QT_MINOR_VERSION, 5) {
+            error("This project requires Qt 5.5 or greater")
+        }
+    }
+}
+
 LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\")
 LANGUAGES=$$replace(LANGUAGES, .ts, )
 

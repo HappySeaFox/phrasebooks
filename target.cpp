@@ -26,9 +26,9 @@
 #include "target.h"
 #include "utils.h"
 
-Target::Target(QWidget *parent) :
-    QWidget(parent),
-    m_dragging(false)
+Target::Target(QWidget *parent)
+    : QWidget(parent)
+    , m_dragging(false)
 {
     QHBoxLayout *l = new QHBoxLayout;
     l->setContentsMargins(0, 0, 0, 0);

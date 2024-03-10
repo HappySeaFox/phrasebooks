@@ -59,7 +59,7 @@ RC_FILE = phrasebooks.rc
 include(phrasebooks-common.pri)
 
 # network data
-VCSROOT_FOR_DOWNLOAD="https://sourceforge.net/p/phrasebooks/code/ci/master/tree"
+VCSROOT_FOR_DOWNLOAD="http://sourceforge.net/p/phrasebooks/code/ci/master/tree"
 HTTPROOT="http://sourceforge.net/p/phrasebooks"
 DOWNLOADROOT="http://sourceforge.net/projects/phrasebooks"
 

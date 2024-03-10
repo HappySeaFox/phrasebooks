@@ -26,9 +26,9 @@
 
 #include "ui_miniinput.h"
 
-MiniInput::MiniInput(QWidget *parent) :
-    QFrame(parent),
-    ui(new Ui::MiniInput)
+MiniInput::MiniInput(QWidget *parent)
+    : QFrame(parent)
+    , ui(new Ui::MiniInput)
 {
     ui->setupUi(this);
 

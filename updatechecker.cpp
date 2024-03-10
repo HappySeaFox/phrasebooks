@@ -24,21 +24,21 @@
 #include "updatechecker.h"
 #include "utils.h"
 
-UpdateChecker::UpdateChecker(QObject *parent) :
-    QObject(parent),
-    m_lastVersion(NVER_STRING),
-    m_rxVersion("^(\\d+)\\.(\\d+)\\.(\\d+)$"),
-    m_rxNewLine("\\r?\\n"),
-    m_url(VCSROOT_FOR_DOWNLOAD "/phrasebooks-version.tag?format=raw")
+UpdateChecker::UpdateChecker(QObject *parent)
+    : QObject(parent)
+    , m_lastVersion(NVER_STRING)
+    , m_rxVersion("^(\\d+)\\.(\\d+)\\.(\\d+)$")
+    , m_rxNewLine("\\r?\\n")
+    , m_url(VCSROOT_FOR_DOWNLOAD "/phrasebooks-version.tag?format=raw")
 {
     m_net = new NetworkAccess(this);
 
-    connect(m_net, SIGNAL(finished()), this, SLOT(slotFinished()));
+    connect(m_net, &NetworkAccess::finished, this, &UpdateChecker::slotFinished);
 }
 
 void UpdateChecker::start()
 {
-    m_net->startRequest(QNetworkRequest(m_url));
+    m_net->get(m_url);
 }
 
 void UpdateChecker::slotFinished()

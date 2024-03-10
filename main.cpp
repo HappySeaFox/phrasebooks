@@ -18,6 +18,7 @@
 #include <QStandardPaths>
 #include <QTranslator>
 #include <QByteArray>
+#include <QSslSocket>
 #include <QDateTime>
 #include <QLocale>
 #include <QDir>
@@ -155,6 +156,14 @@ int main(int argc, char *argv[])
 
     if(app.sendMessage("activate-window"))
         return 0;
+
+    // workaround to speed up the SSL initialization
+    const bool haveSsl = QSslSocket::supportsSsl();
+
+    if(haveSsl)
+        qDebug("SSL engine: %s", qPrintable(QSslSocket::sslLibraryVersionString()));
+    else
+        qDebug("SSL is not supported");
 
     // load translations
     QString locale = QLocale::system().name();

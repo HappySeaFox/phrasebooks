@@ -4,11 +4,6 @@
 <context>
     <name>About</name>
     <message>
-        <source>THT helps you do your trading home task. It can link different trading platforms and charts, and manage lists of tickers. Send your requests and report errors to our bug tracker. Also visit:</source>
-        <extracomment>&quot;THT&quot; is the name of the application. The URL to visit will be added in runtime. Ticker is a short company name, see http://www.investopedia.com/terms/t/tickersymbol.asp . The common practice is to borrow &quot;ticker&quot; from English and incorporate into your language (see http://en.wikipedia.org/wiki/Loanword)</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dmitry Baryshev</source>
         <translation type="unfinished"></translation>
     </message>
@@ -49,7 +44,12 @@
     </message>
     <message>
         <source>Phrasebooks is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</source>
-        <extracomment>See https://www.gnu.org/licenses/gpl-2.0.txt . &quot;THT&quot; is the name of the application</extracomment>
+        <extracomment>See https://www.gnu.org/licenses/gpl-3.0.txt . &quot;Phrasebooks&quot; is the name of the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phrasebooks is an application to manage English phrasebooks and load the specified English word or text into your favourite dictionary. Send your requests and report errors to our bug tracker. Also visit:</source>
+        <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>Add</source>
-        <extracomment>This is the label on a button that user pushes to issue the command. Ticker is a short company name, see http://www.investopedia.com/terms/t/tickersymbol.asp . The common practice is to borrow &quot;ticker&quot; from English and incorporate into your language (see http://en.wikipedia.org/wiki/Loanword)</extracomment>
+        <extracomment>This is the label on a button that user pushes to issue the command</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -106,16 +106,6 @@
 <context>
     <name>Phrasebooks</name>
     <message>
-        <source>THT is ready</source>
-        <extracomment>&quot;THT&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>THT is busy</source>
-        <extracomment>&quot;THT&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Options...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -139,6 +129,16 @@
     </message>
     <message>
         <source>&quot;The Little Golden Calf&quot; I.Ilf, E.Petrov</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phrasebooks is ready</source>
+        <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phrasebooks is busy</source>
+        <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

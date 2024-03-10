@@ -31,7 +31,7 @@ public:
         , reply(nullptr)
     {}
 
-    QNetworkRequest request;
+    QUrl url;
     QNetworkReply::NetworkError error;
     QNetworkAccessManager *manager;
     QPointer<QNetworkReply> reply;
@@ -40,8 +40,8 @@ public:
 
 /*******************************************/
 
-NetworkAccess::NetworkAccess(QObject *parent) :
-    QObject(parent)
+NetworkAccess::NetworkAccess(QObject *parent)
+    : QObject(parent)
 {
     d = new NetworkAccessPrivate;
 
@@ -81,14 +81,19 @@ QNetworkReply::NetworkError NetworkAccess::error() const
     return d->error;
 }
 
-bool NetworkAccess::startRequest(const QNetworkRequest &request)
+bool NetworkAccess::get(const QUrl &url)
 {
     abort();
 
     d->error = QNetworkReply::NoError;
     d->data.clear();
 
-    qDebug("Starting a new network request for \"%s\"", qPrintable(request.url().toString(QUrl::RemovePassword)));
+    qDebug("Starting a new network request to \"%s\"", qPrintable(url.toString(QUrl::RemovePassword)));
+
+    QNetworkRequest request(url);
+
+    request.setRawHeader("Dnt", "1");
+    request.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT rv:45.0) Gecko/20100101 Firefox/45.0");
 
     d->reply = d->manager->get(request);
 
@@ -96,7 +101,7 @@ bool NetworkAccess::startRequest(const QNetworkRequest &request)
         return false;
 
     // cache data
-    d->request = request;
+    d->url = url;
 
     connect(d->reply, &QNetworkReply::downloadProgress, this, &NetworkAccess::downloadProgress);
 
@@ -112,9 +117,9 @@ bool NetworkAccess::startRequest(const QNetworkRequest &request)
 
 void NetworkAccess::slotNetworkError(QNetworkReply::NetworkError err)
 {
-    d->error = err;
-
     qWarning("Network error #%d", err);
+
+    d->error = err;
 }
 
 void NetworkAccess::slotSslErrors(const QList<QSslError> &errors)
@@ -122,10 +127,13 @@ void NetworkAccess::slotSslErrors(const QList<QSslError> &errors)
     const QList<QSslError> allowed = QList<QSslError>()
                                         << QSslError::SelfSignedCertificate
                                         << QSslError::SelfSignedCertificateInChain;
-    foreach(QSslError e, errors)
+    foreach(const QSslError &e, errors)
     {
         if(allowed.indexOf(e.error()) < 0)
+        {
+            qWarning("SSL error \"%s\" is fatal", qPrintable(e.errorString()));
             return;
+        }
     }
 
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
@@ -166,11 +174,6 @@ void NetworkAccess::slotNetworkDone()
     else
     {
         qDebug("Redirecting");
-
-        QNetworkRequest rq = d->request;
-
-        rq.setUrl(redirect.isRelative() ? rq.url().resolved(redirect) : redirect);
-
-        startRequest(rq);
+        get(redirect.isRelative() ? d->url.resolved(redirect) : redirect);
     }
 }
