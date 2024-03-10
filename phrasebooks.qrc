@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/add.png</file>
+        <file>images/clear.png</file>
+        <file>images/drag.png</file>
+        <file>images/error.png</file>
+        <file>images/export.png</file>
+        <file>images/file.png</file>
+        <file>images/list.png</file>
+        <file>images/ok.png</file>
+        <file>images/options.png</file>
+        <file>images/phrasebooks.ico</file>
+        <file>images/quit.png</file>
+        <file>images/save.png</file>
+        <file>images/update.png</file>
+        <file>images/wait.gif</file>
+        <file>images/transparent.png</file>
+        <file>images/flags/en.png</file>
+        <file>images/flags/ru.png</file>
+        <file>images/counters/0.png</file>
+        <file>images/counters/1.png</file>
+        <file>images/counters/2.png</file>
+        <file>images/counters/3.png</file>
+        <file>images/counters/4.png</file>
+        <file>images/counters/5.png</file>
+        <file>images/counters/6.png</file>
+        <file>images/counters/7.png</file>
+        <file>images/counters/8.png</file>
+        <file>images/counters/9.png</file>
+        <file>images/counters/10.png</file>
+        <file>images/counters/11.png</file>
+        <file>images/counters/12.png</file>
+        <file>images/counters/13.png</file>
+        <file>images/counters/14.png</file>
+        <file>images/counters/15.png</file>
+        <file>images/counters/16.png</file>
+        <file>images/counters/17.png</file>
+        <file>images/counters/18.png</file>
+        <file>images/counters/19.png</file>
+        <file>images/counters/20.png</file>
+        <file>images/counters/20+.png</file>
+    </qresource>
+</RCC>
