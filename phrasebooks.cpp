@@ -22,28 +22,15 @@
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
-#include <QApplication>
 #include <QKeySequence>
-#include <QMutexLocker>
-#include <QMapIterator>
-#include <QGridLayout>
-#include <QHBoxLayout>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <QMetaObject>
-#include <QMetaMethod>
-#include <QDataStream>
 #include <QDropEvent>
-#include <QFileInfo>
 #include <QShortcut>
 #include <QDateTime>
 #include <QMimeData>
-#include <QPalette>
-#include <QPainter>
-#include <QColor>
 #include <QEvent>
 #include <QTimer>
-#include <QMutex>
 #include <QDebug>
 #include <QIcon>
 #include <QMenu>
@@ -54,13 +41,14 @@
 #include <winnt.h>
 #include <psapi.h>
 
+#include "qtsingleapplication.h"
+#include "phrasebooks.h"
 #include "settings.h"
 // TODO
 //#include "options.h"
 #include "about.h"
 #include "utils.h"
 
-#include "phrasebooks.h"
 #include "ui_phrasebooks.h"
 
 static const int PHRASEBOOKS_WINDOW_STARTUP_TIMEOUT = 1200;
@@ -83,6 +71,8 @@ Phrasebooks::Phrasebooks()
     , m_justTitle(false)
 {
     ui->setupUi(this);
+
+    connect(static_cast<QtSingleApplication *>(qApp), &QtSingleApplication::messageReceived, this, &Phrasebooks::slotMessageReceived);
 
     setAcceptDrops(true);
 
@@ -116,12 +106,12 @@ Phrasebooks::Phrasebooks()
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);
     m_timerCheckActive->setInterval(50);
-    connect(m_timerCheckActive, SIGNAL(timeout()), this, SLOT(slotCheckActive()));
+    connect(m_timerCheckActive, &QTimer::timeout, this, &Phrasebooks::slotCheckActive);
 
     m_timerLoadToNextWindow = new QTimer(this);
     m_timerLoadToNextWindow->setSingleShot(true);
     m_timerLoadToNextWindow->setInterval(10);
-    connect(m_timerLoadToNextWindow, SIGNAL(timeout()), this, SLOT(slotLoadToNextWindow()));
+    connect(m_timerLoadToNextWindow, &QTimer::timeout, this, &Phrasebooks::slotLoadToNextWindow);
 
     connect(ui->list, &List::loadText, this, &Phrasebooks::slotLoadText);
 
@@ -139,7 +129,7 @@ Phrasebooks::Phrasebooks()
     new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
 
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
-        QTimer::singleShot(0, this, SLOT(slotFoolsDay()));
+        QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
 
     // watch for QWhatsThisClickedEvent
     qApp->installEventFilter(this);

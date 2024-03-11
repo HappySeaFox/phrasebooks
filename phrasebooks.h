@@ -92,20 +92,23 @@ public slots:
     void activate();
 
 private slots:
-    void slotCheckActive();
     void slotAbout();
     void slotAboutQt();
     void slotQuit();
     void slotOptions();
-    void slotLoadText(const QString &text);
-    void slotLoadToNextWindow();
     void slotClearLinks();
     void slotLockLinks();
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
+    void targetDropped(const QPoint &, bool beep = true);
+
+// slots
+private:
+    void slotCheckActive();
+    void slotLoadToNextWindow();
+    void slotLoadText(const QString &text);
     void slotMessageReceived(const QString &);
     void slotFoolsDay();
-    void targetDropped(const QPoint &, bool beep = true);
 
 private:
     Ui::Phrasebooks *ui;
