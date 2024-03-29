@@ -67,18 +67,21 @@ bool MiniInput::eventFilter(QObject *watched, QEvent *e)
                 switch(ke->key())
                 {
                     case Qt::Key_Up:
-                        emit focusUp();
+                    {
+                        if(ui->lineMiniInput->text().isEmpty())
+                            emit focusUp();
+                        else
+                        {
+                            emit addText(ui->lineMiniInput->text());
+                            ui->lineMiniInput->selectAll();
+                        }
+                    }
                     break;
 
                     case Qt::Key_Return:
                     case Qt::Key_Enter:
                     {
-                        // FIXME
-                        if(1)//ke->modifiers() & Qt::ControlModifier)
-                            emit loadText(ui->lineMiniInput->text());
-                        else
-                            emit addText(ui->lineMiniInput->text());
-
+                        emit loadText(ui->lineMiniInput->text());
                         ui->lineMiniInput->selectAll();
                     }
                     break;

@@ -67,7 +67,6 @@ Phrasebooks::Phrasebooks()
     , m_lastActiveOurWindow(nullptr)
     , m_drawnWindow(0)
     , m_linksChanged(false)
-    , m_wasActiveForeignWindow(0)
     , m_justTitle(false)
 {
     ui->setupUi(this);
@@ -423,9 +422,8 @@ void Phrasebooks::loadNextWindow()
         qDebug("Done for all windows");
 
         busy(false);
-        activateRightWindowAtEnd();
+        activate();
 
-        m_wasActiveForeignWindow = 0;
         m_running = false;
     }
     else
@@ -450,24 +448,19 @@ void Phrasebooks::loadText(const QString &text)
     if(m_windows.isEmpty())
     {
         qDebug("No windows configured");
-        activateRightWindowAtEnd();
-        m_wasActiveForeignWindow = 0;
+        activate();
         return;
     }
 
     m_text = text;
     m_currentWindow = 0;
 
-    if(!m_wasActiveForeignWindow)
-        m_wasActiveForeignWindow = reinterpret_cast<HWND>(winId());
-
     nextLoadableWindowIndex();
 
     if(m_currentWindow >= m_windows.size())
     {
         qDebug("Cannot find where to load the ticker");
-        activateRightWindowAtEnd();
-        m_wasActiveForeignWindow = 0;
+        activate();
         return;
     }
 
@@ -671,17 +664,6 @@ void Phrasebooks::bringToFront(HWND window)
     SetForegroundWindow(window);
 }
 
-void Phrasebooks::activateRightWindowAtEnd()
-{
-    qDebug("Activating %p, this is %s window", Utils::pointerToVoidPointer(m_wasActiveForeignWindow),
-                                      (m_wasActiveForeignWindow == reinterpret_cast<HWND>(winId()) ? "Phrasebooks" : "foreign"));
-
-    if(m_wasActiveForeignWindow && m_wasActiveForeignWindow != reinterpret_cast<HWND>(winId()))
-        bringToFront(m_wasActiveForeignWindow);
-    else
-        activate();
-}
-
 bool Phrasebooks::isBusy() const
 {
     if(m_locked)
@@ -705,9 +687,6 @@ bool Phrasebooks::detectForegroundWindowAndActivate()
 
     const HWND foregroundWindow = GetForegroundWindow();
     const DWORD foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, &foregroundProcessId);
-
-    if(!m_wasActiveForeignWindow)
-        m_wasActiveForeignWindow = foregroundWindow;
 
     if(GetCurrentProcessId() != foregroundProcessId)
     {
@@ -790,7 +769,6 @@ void Phrasebooks::slotMessageReceived(const QString &msg)
     if(msg == "activate-window")
     {
         detectForegroundWindowAndActivate();
-        m_wasActiveForeignWindow = 0;
     }
 }
 

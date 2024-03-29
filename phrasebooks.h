@@ -84,7 +84,6 @@ private:
     void drawWindowMarker();
     void removeWindowMarker();
     void bringToFront(HWND);
-    void activateRightWindowAtEnd();
     bool isBusy() const;
     bool detectForegroundWindowAndActivate();
 
@@ -128,7 +127,6 @@ private:
     QWidget *m_lastActiveOurWindow;
     HWND m_drawnWindow;
     bool m_linksChanged;
-    HWND m_wasActiveForeignWindow;
     bool m_justTitle;
 };
 

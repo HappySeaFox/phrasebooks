@@ -62,7 +62,6 @@ protected:
     virtual void paintEvent(QPaintEvent *event);
 
 private:
-    void undo();
     void deleteCurrent();
     void numberOfItemsChanged();
     QStringList toStringList();
@@ -90,6 +89,7 @@ public slots:
 private slots:
     void slotAddFromFile();
     void slotCurrentRowChanged(int);
+    void undo();
 
 // slots
 private:
