@@ -42,6 +42,7 @@
 #include <psapi.h>
 
 #include "qtsingleapplication.h"
+#include "englishvalidator.h"
 #include "phrasebooks.h"
 #include "settings.h"
 // TODO
@@ -64,7 +65,6 @@ Phrasebooks::Phrasebooks()
     , ui(new Ui::Phrasebooks)
     , m_running(false)
     , m_locked(false)
-    , m_lastActiveOurWindow(nullptr)
     , m_drawnWindow(0)
     , m_linksChanged(false)
     , m_justTitle(false)
@@ -112,7 +112,8 @@ Phrasebooks::Phrasebooks()
     m_timerLoadToNextWindow->setInterval(10);
     connect(m_timerLoadToNextWindow, &QTimer::timeout, this, &Phrasebooks::slotLoadToNextWindow);
 
-    connect(ui->list, &List::loadText, this, &Phrasebooks::slotLoadText);
+    connect(ui->list, &List::loadText,            this, &Phrasebooks::slotLoadText);
+    connect(ui->list, &List::currentIndexChanged, this, &Phrasebooks::slotCurrentIndexChanged);
 
     // restore geometry
     QSize sz = SETTINGS_GET_SIZE(SETTING_SIZE);
@@ -176,18 +177,15 @@ bool Phrasebooks::eventFilter(QObject *o, QEvent *e)
 
 void Phrasebooks::dragEnterEvent(QDragEnterEvent *e)
 {
-    if(e->mimeData()->hasFormat("text/plain"))
-    {
-        qDebug("Accepting dragged MIME in main window");
+    if(e->mimeData()->hasText())
         e->acceptProposedAction();
-    }
     else
         e->ignore();
 }
 
 void Phrasebooks::dragMoveEvent(QDragMoveEvent *e)
 {
-    if(e->mimeData()->hasFormat("text/plain"))
+    if(e->mimeData()->hasText())
         e->acceptProposedAction();
     else
         e->ignore();
@@ -201,7 +199,16 @@ void Phrasebooks::dragLeaveEvent(QDragLeaveEvent *e)
 void Phrasebooks::dropEvent(QDropEvent *e)
 {
     e->acceptProposedAction();
-    ui->list->addLines(e->mimeData()->text().trimmed().split(QRegExp("\\s+"), QString::SkipEmptyParts));
+
+    QString text = e->mimeData()->text().trimmed();
+
+    EnglishValidator validator;
+    int pos = 0;
+
+    static QRegExp rx("[\\r]?\\n");
+
+    if(validator.validate(text, pos) == QValidator::Acceptable)
+        ui->list->addLines(text.split(rx, QString::SkipEmptyParts));
 }
 
 void Phrasebooks::sendKey(int key, bool extended)
@@ -215,7 +222,7 @@ void Phrasebooks::sendKey(int key, bool extended)
     int index = 0;
 
     // do we need the SHIFT key? Don't check all the cases, we don't need all of them
-    bool shift = (key >= '!' && key <= '+') || (key >= 'A' && key <= 'Z');
+    const bool shift = (key >= '!' && key <= '+') || (key >= 'A' && key <= 'Z');
 
     // send SHIFT down
     if(shift)
@@ -282,7 +289,7 @@ void Phrasebooks::sendString(const QString &text)
         sendKey(text.at(i).toLatin1());
 
     // TODO
-    Sleep(10);
+    Sleep(50);
 
     sendKey(VK_RETURN);
 }
@@ -424,6 +431,8 @@ void Phrasebooks::loadNextWindow()
         busy(false);
         activate();
 
+        LockSetForegroundWindow(LSFW_LOCK);
+
         m_running = false;
     }
     else
@@ -469,7 +478,6 @@ void Phrasebooks::loadText(const QString &text)
 
     busy(true);
 
-    m_lastActiveOurWindow = qApp->activeWindow();
     m_timerLoadToNextWindow->start();
 }
 
@@ -478,13 +486,7 @@ void Phrasebooks::activate()
     qDebug("Activating");
 
     Utils::raiseWindow(this);
-
-    if(m_lastActiveOurWindow)
-        m_lastActiveOurWindow->activateWindow();
-    else
-        activateWindow();
-
-    m_lastActiveOurWindow = 0;
+    activateWindow();
 }
 
 void Phrasebooks::slotCheckActive()
@@ -568,6 +570,11 @@ void Phrasebooks::slotLoadText(const QString &text)
         return;
 
     loadText(text);
+}
+
+void Phrasebooks::slotCurrentIndexChanged(int current, int total)
+{
+    ui->labelCurrentLine->setText(QString("%1/%2").arg(current+1).arg(total));
 }
 
 void Phrasebooks::slotLoadToNextWindow()

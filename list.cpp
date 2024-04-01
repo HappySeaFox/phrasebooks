@@ -15,36 +15,25 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopServices>
 #include <QListWidgetItem>
-#include <QLinearGradient>
 #include <QApplication>
 #include <QFontMetrics>
-#include <QStyleOption>
 #include <QFileDialog>
-#include <QInputEvent>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QMouseEvent>
 #include <QStringList>
 #include <QClipboard>
-#include <QScrollBar>
 #include <QDateTime>
 #include <QFileInfo>
 #include <QKeyEvent>
-#include <QPalette>
-#include <QPainter>
-#include <QStyle>
 #include <QTimer>
 #include <QLabel>
 #include <QEvent>
 #include <QColor>
 #include <QMenu>
 #include <QSize>
-#include <QUrl>
-#include <QPen>
 
-#include "listdetails.h"
 #include "settings.h"
 #include "utils.h"
 #include "list.h"
@@ -61,8 +50,6 @@ List::List(QWidget *parent)
     connect(ui->widgetInput, &MiniInput::focusUp,  this, &List::slotFocusUp);
     connect(ui->widgetInput, &MiniInput::addText,  this, &List::addText);
     connect(ui->widgetInput, &MiniInput::loadText, this, &List::loadText);
-
-    m_numbers = new ListDetails(window());
 
     // "List" menu
     QMenu *menu = new QMenu(this);
@@ -85,24 +72,23 @@ List::List(QWidget *parent)
 
     setFocusProxy(ui->list);
 
-    load();
-    numberOfItemsChanged();
-
-    m_numbers->show();
-
     // catch keyboard events
     ui->list->installEventFilter(this);
-    ui->list->viewport()->installEventFilter(this);
     ui->labelListHeader->installEventFilter(this);
+
+    // to allow the main window catch the signals
+    QTimer::singleShot(0, this, [=] {
+        load();
+        numberOfItemsChanged();
+    });
 }
 
 List::~List()
 {
-    delete m_numbers;
     delete ui;
 }
 
-bool List::hasLines() const
+int List::count() const
 {
     return ui->list->count();
 }
@@ -296,45 +282,15 @@ bool List::eventFilter(QObject *obj, QEvent *event)
             if(ate)
                 return true;
         }
-        else if(type == QEvent::FocusIn)
-            ui->list->setAlternatingRowColors(true);
-        else if(type == QEvent::FocusOut)
-            ui->list->setAlternatingRowColors(false);
-        else if(type == QEvent::Resize || type == QEvent::Move)
-            moveNumbersLabel();
-    }
-    else if(obj == ui->list->viewport())
-    {
-        if(type == QEvent::Resize || type == QEvent::Move)
-            moveNumbersLabel();
     }
 
     return QObject::eventFilter(obj, event);
 }
 
-void List::moveEvent(QMoveEvent *)
-{
-    moveNumbersLabel();
-}
-
-void List::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event)
-
-    QStyleOption opt;
-    opt.initFrom(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
-
 void List::numberOfItemsChanged()
 {
-    m_numbers->setTotal(ui->list->count());
-
     // also change the current row
     slotCurrentRowChanged(ui->list->currentRow());
-
-    resizeNumberLabel();
 
     if(ui->list->count())
         m_oldLines.clear();
@@ -424,31 +380,6 @@ bool List::addItem(const QString &text)
         initialSelect(ui->list->hasFocus());
 
     return true;
-}
-
-void List::resizeNumberLabel()
-{
-    m_numbers->ensurePolished();
-
-    // basic size
-    QSize size = QFontMetrics(m_numbers->font()).size(0, m_numbers->totalText());
-    size.setHeight(size.height()*2);
-
-    // plus margins
-    int left = 0, top = 0, right = 0, bottom = 0;
-
-    m_numbers->layout()->getContentsMargins(&left, &top, &right, &bottom);
-    m_numbers->resize(size + QSize(left + right + 2, top + bottom + m_numbers->layout()->spacing() + 2));
-
-    moveNumbersLabel();
-}
-
-void List::moveNumbersLabel()
-{
-    const QWidget *w = ui->list->viewport();
-
-    m_numbers->move(w->mapTo(window(), QPoint(w->width(), 0)).x() - m_numbers->width(),
-                   w->mapTo(window(), QPoint(0, w->height())).y() - m_numbers->height()/2 + 1);
 }
 
 void List::undo()
@@ -705,5 +636,5 @@ void List::slotFocusUp()
 
 void List::slotCurrentRowChanged(int row)
 {
-    m_numbers->setCurrent(row+1);
+    emit currentIndexChanged(row, count());
 }

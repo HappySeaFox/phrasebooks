@@ -25,7 +25,6 @@ SOURCES += main.cpp \
     updatechecker.cpp \
     numericlabel.cpp \
     englishvalidator.cpp \
-    listdetails.cpp \
     about.cpp
 
 HEADERS += qtsingleapplication/qtsingleapplication.h \
@@ -41,7 +40,6 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
     updatechecker.h \
     numericlabel.h \
     englishvalidator.h \
-    listdetails.h \
     about.h
 
 RESOURCES += phrasebooks.qrc

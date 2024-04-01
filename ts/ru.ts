@@ -104,6 +104,13 @@
     </message>
 </context>
 <context>
+    <name>MiniInput</name>
+    <message>
+        <source>Type a phrase or a word...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Phrasebooks</name>
     <message>
         <source>Options...</source>

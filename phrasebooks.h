@@ -106,6 +106,7 @@ private:
     void slotCheckActive();
     void slotLoadToNextWindow();
     void slotLoadText(const QString &text);
+    void slotCurrentIndexChanged(int current, int total);
     void slotMessageReceived(const QString &);
     void slotFoolsDay();
 
@@ -124,7 +125,6 @@ private:
     bool m_wasVisible;
     bool m_useKeyboardInRegion;
     bool m_locked;
-    QWidget *m_lastActiveOurWindow;
     HWND m_drawnWindow;
     bool m_linksChanged;
     bool m_justTitle;

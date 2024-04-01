@@ -26,8 +26,6 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include <windows.h>
-
 #include "qtsingleapplication.h"
 
 #ifndef PHRASEBOOKS_NO_LOG
@@ -151,8 +149,6 @@ int main(int argc, char *argv[])
     qDebug("Starting at %s", qPrintable(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
 
     QtSingleApplication app(argc, argv);
-
-    AllowSetForegroundWindow(ASFW_ANY);
 
     if(app.sendMessage("activate-window"))
         return 0;

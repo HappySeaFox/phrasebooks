@@ -35,6 +35,9 @@
      <property name="frame">
       <bool>false</bool>
      </property>
+     <property name="placeholderText">
+      <string>Type a phrase or a word...</string>
+     </property>
     </widget>
    </item>
   </layout>

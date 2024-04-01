@@ -21,8 +21,6 @@
 #include <QStringList>
 #include <QWidget>
 
-class ListDetails;
-
 namespace Ui
 {
     class List;
@@ -39,7 +37,7 @@ public:
     inline void setIgnoreInput(bool);
     inline bool ignoreInput() const;
 
-    bool hasLines() const;
+    int count() const;
 
     void initialSelect(bool alsoSetFocus = true);
 
@@ -58,8 +56,6 @@ public:
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event);
-    virtual void moveEvent(QMoveEvent *);
-    virtual void paintEvent(QPaintEvent *event);
 
 private:
     void deleteCurrent();
@@ -68,10 +64,8 @@ private:
     void save();
     void load();
     bool addItem(const QString &text);
-    void resizeNumberLabel();
-    void moveNumbersLabel();
 
-    enum Move { Next, Previuos,
+    enum class Move { Next, Previuos,
                     First, Last,
                     PageUp, PageDown };
 
@@ -79,6 +73,7 @@ private:
 
 signals:
     void loadText(const QString &);
+    void currentIndexChanged(int current, int total);
 
 public slots:
     void addText(const QString &text);
@@ -98,7 +93,6 @@ private:
 private:
     Ui::List *ui;
     bool m_ignoreInput;
-    ListDetails *m_numbers;
     QStringList m_oldLines;
 };
 
