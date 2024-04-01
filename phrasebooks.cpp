@@ -23,6 +23,7 @@
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
 #include <QKeySequence>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDropEvent>
@@ -119,7 +120,8 @@ Phrasebooks::Phrasebooks()
     if(sz.isValid())
         resize(sz);
 
-    Utils::moveWindow(this, SETTINGS_GET_POINT(SETTING_POSITION));
+    if(SETTINGS_CONTAINS(SETTING_POSITION))
+        Utils::moveWindow(this, SETTINGS_GET_POINT(SETTING_POSITION));
 
     checkWindows();
 
@@ -698,6 +700,24 @@ void Phrasebooks::targetDropped(const QPoint &p, bool beep)
     m_linksChanged = true;
 }
 
+void Phrasebooks::slotAddBook()
+{
+    qDebug("Adding book");
+
+    QString book = QInputDialog::getText(this, tr("New book"), tr("Book:"));
+
+    if(book.isEmpty())
+        return;
+
+    if(!m_books.addBook(book))
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add this book"));
+}
+
+void Phrasebooks::slotAddChapter()
+{
+    qDebug("Adding chapter");
+}
+
 void Phrasebooks::slotTargetMoving(const QPoint &pt)
 {
     POINT pnt = {0, 0};
@@ -729,9 +749,7 @@ void Phrasebooks::slotMessageReceived(const QString &msg)
     qDebug("Got message \"%s\"", qPrintable(msg));
 
     if(msg == "activate-window")
-    {
         detectForegroundWindowAndActivate();
-    }
 }
 
 void Phrasebooks::slotFoolsDay()

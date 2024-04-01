@@ -16,6 +16,8 @@
  */
 
 #include <QCoreApplication>
+#include <QStandardPaths>
+#include <QDir>
 
 #include "settings.h"
 
@@ -33,10 +35,11 @@ Settings::Settings()
 {
     d = new SettingsPrivate;
 
-    d->settings = new QSettings(QSettings::IniFormat,
-                                QSettings::UserScope,
-                                QCoreApplication::organizationName(),
-                                QCoreApplication::applicationName());
+    d->settings = new QSettings(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                                    + QDir::separator()
+                                    + QCoreApplication::applicationName()
+                                    + ".ini",
+                                QSettings::IniFormat);
 
     d->settings->setFallbacksEnabled(false);
 
@@ -139,7 +142,7 @@ QSettings *Settings::settings()
 
 bool Settings::contains(const QString &key) const
 {
-    return d->settings->contains(key.startsWith('/') ? ("settings" + key) : key);
+    return d->settings->contains(key.contains('/') ? key : ("settings/" + key));
 }
 
 void Settings::remove(const QString &key, Settings::SyncType sync)

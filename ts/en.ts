@@ -138,6 +138,18 @@
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Book:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add this book</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

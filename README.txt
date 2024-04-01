@@ -16,3 +16,27 @@ you don't need this application.
 
 The C++ code is heavily based on the other my project
 http://sourceforge.net/projects/tht.
+
+Other license notes
+-------------------
+
+* Most icons are taken from Fugue Icons theme
+
+http://p.yusukekamiyamane.com/
+
+Author: Yusuke Kamiyamane
+License: Creative Commons Attribution 3.0 License
+
+* GDI drawing functions are based on Spy
+
+http://www.codeproject.com/Articles/1698/MS-Spy-style-Window-Finder
+
+Author: Lim Bio Liong
+License: CPOL
+
+* FindBestChildProc, FindBestChild, RealWindowFromPoint in Utils
+
+http://www.codeforge.cn/read/167975/WindowFromPointEx.c__html
+
+Author: J Brown
+License: Freeware

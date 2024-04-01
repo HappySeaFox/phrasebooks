@@ -30,6 +30,8 @@
 #include <QHash>
 #include <QMap>
 
+#define SETTINGS_CONTAINS Settings::instance()->contains
+
 #define SETTINGS_GET_BOOL Settings::instance()->value<bool>
 #define SETTINGS_SET_BOOL Settings::instance()->setValue<bool>
 
