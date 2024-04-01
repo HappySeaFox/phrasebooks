@@ -56,16 +56,6 @@
 <context>
     <name>List</name>
     <message>
-        <source>List</source>
-        <extracomment>Noun</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <extracomment>This is the label on a button that user pushes to issue the command</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear</source>
         <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
         <translation type="unfinished"></translation>

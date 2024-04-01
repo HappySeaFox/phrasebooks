@@ -25,66 +25,6 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QToolButton" name="pushList">
-       <property name="minimumSize">
-        <size>
-         <width>28</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string extracomment="Noun">List</string>
-       </property>
-       <property name="icon">
-        <iconset resource="phrasebooks.qrc">
-         <normaloff>:/images/list.png</normaloff>:/images/list.png</iconset>
-       </property>
-       <property name="popupMode">
-        <enum>QToolButton::InstantPopup</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="pushAdd">
-       <property name="minimumSize">
-        <size>
-         <width>28</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string extracomment="This is the label on a button that user pushes to issue the command">Add</string>
-       </property>
-       <property name="icon">
-        <iconset resource="phrasebooks.qrc">
-         <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-       </property>
-       <property name="popupMode">
-        <enum>QToolButton::InstantPopup</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>25</width>
-         <height>21</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelListHeader"/>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
     <widget class="QListWidget" name="list">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -109,7 +49,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="1" column="0">
     <widget class="MiniInput" name="widgetInput" native="true"/>
    </item>
   </layout>
@@ -123,13 +63,9 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>pushList</tabstop>
-  <tabstop>pushAdd</tabstop>
   <tabstop>list</tabstop>
  </tabstops>
- <resources>
-  <include location="phrasebooks.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>list</sender>

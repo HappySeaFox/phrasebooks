@@ -43,6 +43,7 @@
 
 #include "qtsingleapplication.h"
 #include "englishvalidator.h"
+#include "windowmarker.h"
 #include "phrasebooks.h"
 #include "settings.h"
 // TODO
@@ -75,9 +76,6 @@ Phrasebooks::Phrasebooks()
 
     setAcceptDrops(true);
 
-    QIcon icon_quit(":/images/quit.png");
-    QIcon icon_phrasebooks(":/images/phrasebooks.ico");
-
     // context menu
     QShortcut *help_shortcut = new QShortcut(QKeySequence::HelpContents, this, SLOT(slotAbout()));
     QShortcut *quit_shortcut = new QShortcut(Qt::CTRL+Qt::Key_Q, this, SLOT(slotQuit()));
@@ -90,7 +88,7 @@ Phrasebooks::Phrasebooks()
     m_menu->addAction(tr("Clear links"), this, SLOT(slotClearLinks()));
     m_menu->addSeparator();
 
-    m_menu->addAction(icon_phrasebooks,
+    m_menu->addAction(QIcon(":/images/phrasebooks.ico"),
                       Utils::aboutPhrasebooks()
                       + "...\t"
                       + help_shortcut->key().toString(),
@@ -100,7 +98,7 @@ Phrasebooks::Phrasebooks()
     //: Qt is a C++ crossplatform toolkit http://qt-project.org
     m_menu->addAction(tr("About Qt..."), this, SLOT(slotAboutQt()));
     m_menu->addSeparator();
-    m_menu->addAction(icon_quit, tr("Quit") + '\t' + quit_shortcut->key().toString(), this, SLOT(slotQuit()));
+    m_menu->addAction(QIcon(":/images/quit.png"), tr("Quit") + '\t' + quit_shortcut->key().toString(), this, SLOT(slotQuit()));
 
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);
@@ -147,8 +145,6 @@ Phrasebooks::~Phrasebooks()
 
 void Phrasebooks::contextMenuEvent(QContextMenuEvent *event)
 {
-    QApplication::restoreOverrideCursor();
-
     event->accept();
     m_menu->exec(event->globalPos());
 }
@@ -615,47 +611,6 @@ void Phrasebooks::slotLockLinks()
     ui->target->locked(m_locked);
 }
 
-void Phrasebooks::drawWindowMarker()
-{
-    if(!IsWindow(m_drawnWindow))
-        return;
-
-    static HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
-
-    HDC dc;
-    HGDIOBJ oldPen, oldBrush;
-    RECT rect;
-
-    GetWindowRect(m_drawnWindow, &rect);
-
-    dc = GetWindowDC(m_drawnWindow);
-
-    if(!dc)
-        return;
-
-    oldPen = SelectObject(dc, pen);
-    oldBrush = SelectObject(dc, GetStockObject(HOLLOW_BRUSH));
-
-    Rectangle(dc, 0, 0, rect.right - rect.left, rect.bottom - rect.top);
-
-    SelectObject(dc, oldPen);
-    SelectObject(dc, oldBrush);
-
-    ReleaseDC(m_drawnWindow, dc);
-}
-
-void Phrasebooks::removeWindowMarker()
-{
-    if(!IsWindow(m_drawnWindow))
-        return;
-
-    InvalidateRect(m_drawnWindow, 0, TRUE);
-    UpdateWindow(m_drawnWindow);
-    RedrawWindow(m_drawnWindow, 0, 0, RDW_FRAME | RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
-
-    m_drawnWindow = 0;
-}
-
 void Phrasebooks::bringToFront(HWND window)
 {
     qDebug("Bring to front %p", Utils::pointerToVoidPointer(window));
@@ -721,7 +676,7 @@ void Phrasebooks::targetDropped(const QPoint &p, bool beep)
     if(isBusy())
         return;
 
-    removeWindowMarker();
+    WindowMarker::remove(&m_drawnWindow);
 
     Link link = checkTargetWindow(p, false);
 
@@ -754,19 +709,19 @@ void Phrasebooks::slotTargetMoving(const QPoint &pt)
     HWND newHwnd = Utils::RealWindowFromPoint(pnt);
 
     if(m_drawnWindow != newHwnd)
-        removeWindowMarker();
+        WindowMarker::remove(&m_drawnWindow);
 
     if(!IsWindow(newHwnd) || rnewHwnd == reinterpret_cast<HWND>(winId()) || Utils::isDesktop(rnewHwnd))
         return;
 
     m_drawnWindow = newHwnd;
 
-    drawWindowMarker();
+    WindowMarker::draw(m_drawnWindow);
 }
 
 void Phrasebooks::slotTargetCancelled()
 {
-    removeWindowMarker();
+    WindowMarker::remove(&m_drawnWindow);
 }
 
 void Phrasebooks::slotMessageReceived(const QString &msg)

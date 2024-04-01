@@ -15,6 +15,7 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QContextMenuEvent>
 #include <QListWidgetItem>
 #include <QApplication>
 #include <QFontMetrics>
@@ -52,29 +53,21 @@ List::List(QWidget *parent)
     connect(ui->widgetInput, &MiniInput::loadText, this, &List::loadText);
 
     // "List" menu
-    QMenu *menu = new QMenu(this);
+    m_menu = new QMenu(this);
     //: This is the label on a menu item that user clicks to issue the command
-    menu->addAction(QIcon(":/images/clear.png"), tr("Clear") + '\t' + QKeySequence(QKeySequence::New).toString(), this, SLOT(clear()));
-    menu->addAction(tr("Undo clear") + '\t' + QKeySequence(QKeySequence::Undo).toString(), this, SLOT(undo()));
-    menu->addSeparator();
+    m_menu->addAction(QIcon(":/images/clear.png"), tr("Clear") + '\t' + QKeySequence(QKeySequence::New).toString(), this, SLOT(clear()));
+    m_menu->addAction(tr("Undo clear") + '\t' + QKeySequence(QKeySequence::Undo).toString(), this, SLOT(undo()));
+    m_menu->addSeparator();
     //: This is the label on a menu item that user clicks to issue the command
-    menu->addAction(tr("Sort") + "\tR", this, SLOT(sort()));
-
-    ui->pushList->setMenu(menu);
-
-    QIcon file_icon(":/images/file.png");
-
-    // "Add" menu
-    menu = new QMenu(this);
+    m_menu->addAction(tr("Sort") + "\tR", this, SLOT(sort()));
+    m_menu->addSeparator();
     //: This is the label on a menu item that user clicks to issue the command
-    menu->addAction(file_icon, tr("Add from file...") + "\tA", this, SLOT(slotAddFromFile()));
-    ui->pushAdd->setMenu(menu);
+    m_menu->addAction(QIcon(":/images/file.png"), tr("Add from file...") + "\tA", this, SLOT(slotAddFromFile()));
 
     setFocusProxy(ui->list);
 
     // catch keyboard events
     ui->list->installEventFilter(this);
-    ui->labelListHeader->installEventFilter(this);
 
     // to allow the main window catch the signals
     QTimer::singleShot(0, this, [=] {
@@ -148,143 +141,131 @@ bool List::eventFilter(QObject *obj, QEvent *event)
 {
     const QEvent::Type type = event->type();
 
-    // eat input events
-    if(m_ignoreInput && obj == ui->list &&
-                            (type == QEvent::KeyPress
-                            || type == QEvent::KeyRelease
-                            || type == QEvent::ShortcutOverride
-                            || type == QEvent::MouseButtonPress
-                            || type == QEvent::MouseButtonRelease
-                            || type == QEvent::MouseButtonDblClick
-                            || type == QEvent::MouseMove
-                            || type == QEvent::Wheel
-                            || type == QEvent::TabletPress
-                            || type == QEvent::TabletRelease
-                            || type == QEvent::TabletMove
-                            || type == QEvent::TouchBegin
-                            || type == QEvent::TouchEnd
-                            || type == QEvent::TouchUpdate
-                         ))
+    // ignore input events?
+    if(m_ignoreInput && dynamic_cast<QInputEvent *>(event))
         return true;
 
-    if(obj == ui->list)
+    if(type == QEvent::KeyPress)
     {
-        if(type == QEvent::KeyPress)
+        QKeyEvent *ke = static_cast<QKeyEvent *>(event);
+
+        bool ate = true;
+
+        if(ke->matches(QKeySequence::New))
+            clear();
+        else if(ke->matches(QKeySequence::Open))
+            slotAddFromFile();
+        else if(ke->matches(QKeySequence::Save))
+            save();
+        else if(ke->matches(QKeySequence::Undo))
+            undo();
+        else if(ke->modifiers() == Qt::NoModifier
+                || ke->modifiers() == Qt::KeypadModifier) // disallow all modifiers except keypad
         {
-            QKeyEvent *ke = static_cast<QKeyEvent *>(event);
-
-            bool ate = true;
-
-            if(ke->matches(QKeySequence::New))
-                clear();
-            else if(ke->matches(QKeySequence::Open))
-                slotAddFromFile();
-            else if(ke->matches(QKeySequence::Save))
-                save();
-            else if(ke->matches(QKeySequence::Undo))
-                undo();
-            else if(ke->modifiers() == Qt::NoModifier
-                    || ke->modifiers() == Qt::KeypadModifier) // disallow all modifiers except keypad
+            switch(ke->key())
             {
-                switch(ke->key())
-                {
-                    case Qt::Key_A:
-                        slotAddFromFile();
-                    break;
+                case Qt::Key_A:
+                    slotAddFromFile();
+                break;
 
-                    case Qt::Key_O:
-                    case Qt::Key_Insert:
-                        focusMiniEntry();
-                    break;
+                case Qt::Key_O:
+                case Qt::Key_Insert:
+                    focusMiniEntry();
+                break;
 
-                    case Qt::Key_Delete:
-                        deleteCurrent();
-                    break;
+                case Qt::Key_Delete:
+                    deleteCurrent();
+                break;
 
-                    case Qt::Key_Return:
-                    case Qt::Key_Enter:
-                        loadItem(Load::Current);
-                    break;
+                case Qt::Key_Return:
+                case Qt::Key_Enter:
+                    loadItem(Load::Current);
+                break;
 
-                    case Qt::Key_R:
-                        sort();
-                    break;
+                case Qt::Key_R:
+                    sort();
+                break;
 
-                    case Qt::Key_Up:
-                        loadItem(Load::Previous);
-                    break;
+                case Qt::Key_Up:
+                    loadItem(Load::Previous);
+                break;
 
-                    case Qt::Key_Down:
-                        loadItem(Load::Next);
-                    break;
+                case Qt::Key_Down:
+                    loadItem(Load::Next);
+                break;
 
-                    case Qt::Key_Home:
-                        loadItem(Load::First);
-                    break;
+                case Qt::Key_Home:
+                    loadItem(Load::First);
+                break;
 
-                    case Qt::Key_End:
-                        loadItem(Load::Last);
-                    break;
+                case Qt::Key_End:
+                    loadItem(Load::Last);
+                break;
 
-                    case Qt::Key_PageUp:
-                        loadItem(Load::PageUp);
-                    break;
+                case Qt::Key_PageUp:
+                    loadItem(Load::PageUp);
+                break;
 
-                    case Qt::Key_PageDown:
-                        loadItem(Load::PageDown);
-                    break;
+                case Qt::Key_PageDown:
+                    loadItem(Load::PageDown);
+                break;
 
                     // default processing
-                    case Qt::Key_Tab:
-                        return QObject::eventFilter(obj, event);
+                case Qt::Key_Tab:
+                return QObject::eventFilter(obj, event);
 
-                    default:
-                        ate = false;
-                    break;
-                } // switch
-            }
-            else if(ke->modifiers() == Qt::ControlModifier)
-            {
-                switch(ke->key())
-                {
-                    case Qt::Key_Up:
-                        moveItem(Move::Previuos);
-                    break;
-
-                    case Qt::Key_Down:
-                        moveItem(Move::Next);
-                    break;
-
-                    case Qt::Key_Home:
-                        moveItem(Move::First);
-                    break;
-
-                    case Qt::Key_End:
-                        moveItem(Move::Last);
-                    break;
-
-                    case Qt::Key_PageUp:
-                        moveItem(Move::PageUp);
-                    break;
-
-                    case Qt::Key_PageDown:
-                        moveItem(Move::PageDown);
-                    break;
-
-                    default:
-                        ate = false;
-                    break;
-                }
-            }
-            else
-                ate = false;
-
-            if(ate)
-                return true;
+                default:
+                    ate = false;
+                break;
+            } // switch
         }
+        else if(ke->modifiers() == Qt::ControlModifier)
+        {
+            switch(ke->key())
+            {
+                case Qt::Key_Up:
+                    moveItem(Move::Previuos);
+                break;
+
+                case Qt::Key_Down:
+                    moveItem(Move::Next);
+                break;
+
+                case Qt::Key_Home:
+                    moveItem(Move::First);
+                break;
+
+                case Qt::Key_End:
+                    moveItem(Move::Last);
+                break;
+
+                case Qt::Key_PageUp:
+                    moveItem(Move::PageUp);
+                break;
+
+                case Qt::Key_PageDown:
+                    moveItem(Move::PageDown);
+                break;
+
+                default:
+                    ate = false;
+                break;
+            }
+        }
+        else
+            ate = false;
+
+        if(ate)
+            return true;
     }
 
     return QObject::eventFilter(obj, event);
+}
+
+void List::contextMenuEvent(QContextMenuEvent *event)
+{
+    event->accept();
+    m_menu->exec(event->globalPos());
 }
 
 void List::numberOfItemsChanged()

@@ -21,6 +21,8 @@
 #include <QStringList>
 #include <QWidget>
 
+class QMenu;
+
 namespace Ui
 {
     class List;
@@ -56,6 +58,7 @@ public:
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event);
+    virtual void contextMenuEvent(QContextMenuEvent *event);
 
 private:
     void deleteCurrent();
@@ -94,6 +97,7 @@ private:
     Ui::List *ui;
     bool m_ignoreInput;
     QStringList m_oldLines;
+    QMenu *m_menu;
 };
 
 inline

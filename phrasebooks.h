@@ -81,8 +81,6 @@ private:
     void loadText(const QString &text);
     bool setForeignFocus(const Link &);
     void rebuildLinks();
-    void drawWindowMarker();
-    void removeWindowMarker();
     void bringToFront(HWND);
     bool isBusy() const;
     bool detectForegroundWindowAndActivate();
