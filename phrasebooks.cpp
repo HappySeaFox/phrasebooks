@@ -80,6 +80,7 @@ Phrasebooks::Phrasebooks()
     // context menu
     QShortcut *help_shortcut = new QShortcut(QKeySequence::HelpContents, this, SLOT(slotAbout()));
     QShortcut *quit_shortcut = new QShortcut(Qt::CTRL+Qt::Key_Q, this, SLOT(slotQuit()));
+    QShortcut *lock_shortcut = new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
 
     m_menu = new QMenu(this);
     m_menu->addAction(QIcon(":/images/options.png"), tr("Options..."), this, SLOT(slotOptions()));
@@ -87,12 +88,13 @@ Phrasebooks::Phrasebooks()
 
     //: This is the label on a menu item that user clicks to issue the command
     m_menu->addAction(tr("Clear links"), this, SLOT(slotClearLinks()));
+    m_menu->addAction(tr("Lock links") + '\t' + lock_shortcut->key().toString(), this, SLOT(slotLockLinks()));
     m_menu->addSeparator();
 
     m_menu->addAction(QIcon(":/images/phrasebooks.ico"),
                       Utils::aboutPhrasebooks()
-                      + "...\t"
-                      + help_shortcut->key().toString(),
+                        + "...\t"
+                        + help_shortcut->key().toString(),
                       this,
                       SLOT(slotAbout()));
 
@@ -124,9 +126,6 @@ Phrasebooks::Phrasebooks()
         Utils::moveWindow(this, SETTINGS_GET_POINT(SETTING_POSITION));
 
     checkWindows();
-
-    // lock links
-    new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
 
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
         QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
@@ -209,72 +208,6 @@ void Phrasebooks::dropEvent(QDropEvent *e)
         ui->list->addLines(text.split(rx, QString::SkipEmptyParts));
 }
 
-void Phrasebooks::sendKey(int key, bool extended)
-{
-    KEYBDINPUT kbInput = {0, 0, 0, 0, 0};
-    INPUT input[4];
-
-    memset(input, 0, sizeof(input));
-
-    int nelem = 2;
-    int index = 0;
-
-    // do we need the SHIFT key? Don't check all the cases, we don't need all of them
-    const bool shift = (key >= '!' && key <= '+') || (key >= 'A' && key <= 'Z');
-
-    // send SHIFT down
-    if(shift)
-    {
-        nelem += 2;
-
-        kbInput.dwFlags = 0;
-        kbInput.wVk = VK_SHIFT;
-        kbInput.wScan = MapVirtualKey(VK_SHIFT, 0);
-
-        input[index].type = INPUT_KEYBOARD;
-        input[index].ki = kbInput;
-
-        ++index;
-    }
-
-    // key down
-    SHORT vkey = VkKeyScan(key);
-
-    if(extended)
-        kbInput.dwFlags = KEYEVENTF_EXTENDEDKEY;
-
-    kbInput.wVk = vkey;
-    kbInput.wScan = MapVirtualKey(vkey, 0);
-
-    input[index].type = INPUT_KEYBOARD;
-    input[index].ki = kbInput;
-    ++index;
-
-    // key up
-    kbInput.dwFlags = KEYEVENTF_KEYUP;
-
-    if(extended)
-        kbInput.dwFlags |= KEYEVENTF_EXTENDEDKEY;
-
-    input[index].type = INPUT_KEYBOARD;
-    input[index].ki = kbInput;
-    ++index;
-
-    // SHIFT up
-    if(shift)
-    {
-        kbInput.dwFlags = KEYEVENTF_KEYUP;
-        kbInput.wVk = VK_SHIFT;
-        kbInput.wScan = MapVirtualKey(VK_SHIFT, 0);
-
-        input[index].type = INPUT_KEYBOARD;
-        input[index].ki = kbInput;
-    }
-
-    // send both combinations
-    SendInput(nelem, input, sizeof(INPUT));
-}
-
 void Phrasebooks::sendString(const QString &text)
 {
     if(text.isEmpty())
@@ -284,12 +217,12 @@ void Phrasebooks::sendString(const QString &text)
     }
 
     for(int i = 0;i < text.length();i++)
-        sendKey(text.at(i).toLatin1());
+        Utils::sendKey(text.at(i).toLatin1());
 
     // TODO
     Sleep(50);
 
-    sendKey(VK_RETURN);
+    Utils::sendKey(VK_RETURN);
 }
 
 void Phrasebooks::checkWindow(Link *link)
@@ -700,24 +633,6 @@ void Phrasebooks::targetDropped(const QPoint &p, bool beep)
     m_linksChanged = true;
 }
 
-void Phrasebooks::slotAddBook()
-{
-    qDebug("Adding book");
-
-    QString book = QInputDialog::getText(this, tr("New book"), tr("Book:"));
-
-    if(book.isEmpty())
-        return;
-
-    if(!m_books.addBook(book))
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add this book"));
-}
-
-void Phrasebooks::slotAddChapter()
-{
-    qDebug("Adding chapter");
-}
-
 void Phrasebooks::slotTargetMoving(const QPoint &pt)
 {
     POINT pnt = {0, 0};
@@ -754,8 +669,9 @@ void Phrasebooks::slotMessageReceived(const QString &msg)
 
 void Phrasebooks::slotFoolsDay()
 {
-    QDate day = QDate::currentDate();
+    const QDate day = QDate::currentDate();
 
+    // TODO
     // April, 1
     if(day.day() == 1 && day.month() == 4)
     {

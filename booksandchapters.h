@@ -15,28 +15,45 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QStandardPaths>
+#ifndef BOOKSANDCHAPTERS_H
+#define BOOKSANDCHAPTERS_H
+
+#include <QWidget>
 #include <QDir>
 
-#include "books.h"
+class QTreeView;
 
-Books::Books()
-    : m_root(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))
+namespace Ui
 {
-    m_root.mkpath("English");
-    m_root.cd("English");
+    class BooksAndChapters;
 }
 
-QStringList Books::books() const
+class BooksAndChapters : public QWidget
 {
-    m_root.refresh();
-    return m_root.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-}
+    Q_OBJECT
 
-bool Books::addBook(const QString &book) const
-{
-    if(m_root.exists(book))
-        return false;
+public:
+    explicit BooksAndChapters(QWidget *parent = 0);
+    ~BooksAndChapters();
 
-    return m_root.mkdir(book);
-}
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
+private:
+    enum CreateStatus { Ok, Exists, Error };
+
+    CreateStatus addBook(const QString &book) const;
+    CreateStatus addChapter(const QString &bookAndChapter) const;
+
+private slots:
+    void slotAddBook();
+    void slotAddChapter();
+    void slotDelete();
+
+private:
+    Ui::BooksAndChapters *ui;
+    QDir m_root;
+    QTreeView *m_view;
+};
+
+#endif // BOOKSANDCHAPTERS_H

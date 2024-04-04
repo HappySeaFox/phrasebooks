@@ -25,6 +25,7 @@
 #include <QRect>
 
 #include <climits>
+#include <cstring>
 
 #include "utils.h"
 
@@ -160,4 +161,70 @@ QString Utils::nonBreakable(const QString &str)
 {
     static QRegExp rxSpace("\\s");
     return QString(str).replace(rxSpace, "&nbsp;");
+}
+
+void Utils::sendKey(int key, bool extended)
+{
+    KEYBDINPUT kbInput = {0, 0, 0, 0, 0};
+    INPUT input[4];
+
+    memset(input, 0, sizeof(input));
+
+    int nelem = 2;
+    int index = 0;
+
+    // do we need the SHIFT key? Don't check all the cases, we don't need all of them
+    const bool shift = (key >= '!' && key <= '+') || (key >= 'A' && key <= 'Z');
+
+    // send SHIFT down
+    if(shift)
+    {
+        nelem += 2;
+
+        kbInput.dwFlags = 0;
+        kbInput.wVk = VK_SHIFT;
+        kbInput.wScan = MapVirtualKey(VK_SHIFT, 0);
+
+        input[index].type = INPUT_KEYBOARD;
+        input[index].ki = kbInput;
+
+        ++index;
+    }
+
+    // key down
+    SHORT vkey = VkKeyScan(key);
+
+    if(extended)
+        kbInput.dwFlags = KEYEVENTF_EXTENDEDKEY;
+
+    kbInput.wVk = vkey;
+    kbInput.wScan = MapVirtualKey(vkey, 0);
+
+    input[index].type = INPUT_KEYBOARD;
+    input[index].ki = kbInput;
+    ++index;
+
+    // key up
+    kbInput.dwFlags = KEYEVENTF_KEYUP;
+
+    if(extended)
+        kbInput.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+
+    input[index].type = INPUT_KEYBOARD;
+    input[index].ki = kbInput;
+    ++index;
+
+    // SHIFT up
+    if(shift)
+    {
+        kbInput.dwFlags = KEYEVENTF_KEYUP;
+        kbInput.wVk = VK_SHIFT;
+        kbInput.wScan = MapVirtualKey(VK_SHIFT, 0);
+
+        input[index].type = INPUT_KEYBOARD;
+        input[index].ki = kbInput;
+    }
+
+    // send both combinations
+    SendInput(nelem, input, sizeof(INPUT));
 }

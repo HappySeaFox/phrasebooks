@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BooksAndChapters</class>
+ <widget class="QWidget" name="BooksAndChapters">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>220</width>
+    <height>22</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QToolButton" name="toolAddBook">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="toolAddChapter">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="toolDelete">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>toolAddBook</sender>
+   <signal>clicked()</signal>
+   <receiver>BooksAndChapters</receiver>
+   <slot>slotAddBook()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolAddChapter</sender>
+   <signal>clicked()</signal>
+   <receiver>BooksAndChapters</receiver>
+   <slot>slotAddChapter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>176</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>BooksAndChapters</receiver>
+   <slot>slotDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>201</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotAddBook()</slot>
+  <slot>slotAddChapter()</slot>
+  <slot>slotDelete()</slot>
+ </slots>
+</ui>

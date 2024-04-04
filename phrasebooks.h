@@ -25,8 +25,6 @@
 
 #include <windows.h>
 
-#include "books.h"
-
 class QGridLayout;
 class QPoint;
 class QTimer;
@@ -72,7 +70,6 @@ private:
         bool subControlSupportsClearing;
     };
 
-    void sendKey(int key, bool extended = false);
     void sendString(const QString &text);
     void checkWindow(Link *);
     Link checkTargetWindow(const QPoint &, bool allowThisWindow);
@@ -100,8 +97,6 @@ private slots:
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
     void targetDropped(const QPoint &, bool beep = true);
-    void slotAddBook();
-    void slotAddChapter();
 
 // slots
 private:
@@ -130,7 +125,6 @@ private:
     HWND m_drawnWindow;
     bool m_linksChanged;
     bool m_justTitle;
-    Books m_books;
 };
 
 #endif // Phrasebooks_H

@@ -69,10 +69,9 @@ List::List(QWidget *parent)
     // catch keyboard events
     ui->list->installEventFilter(this);
 
-    // to allow the main window catch the signals
-    QTimer::singleShot(0, this, [=] {
-        load();
-        numberOfItemsChanged();
+    // handle internal dnd
+    connect(ui->list->model(), &QAbstractItemModel::rowsMoved, [this]{
+        save();
     });
 }
 
@@ -303,9 +302,9 @@ void List::save()
     qDebug("Saved in %ld ms.", static_cast<long int>(QDateTime::currentMSecsSinceEpoch() - t));
 }
 
-void List::load()
+void List::load(const QString &chapter)
 {
-    qDebug("Loading lines");
+    qDebug("Loading lines from book \"%s\"", qPrintable(chapter));
     // TODO
     //addLines(Settings::instance()->tickersForGroup(m_section));
 }

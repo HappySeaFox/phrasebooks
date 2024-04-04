@@ -54,6 +54,37 @@
     </message>
 </context>
 <context>
+    <name>BooksAndChapters</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Book:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add this book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chapter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add this chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>List</name>
     <message>
         <source>Clear</source>
@@ -139,15 +170,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Book:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot add this book</source>
+        <source>Lock links</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,17 +186,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open YouTube tutorial</source>
-        <extracomment>This is the label on a menu item that user clicks to issue the command. Means &quot;Click to open a video tutorial on YouTube&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About Phrasebooks</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open a tutorial on YouTube</source>
+        <extracomment>This is the label on a menu item that user clicks to issue the command. Means &quot;Click to open a video tutorial on YouTube&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

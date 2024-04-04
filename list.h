@@ -65,7 +65,7 @@ private:
     void numberOfItemsChanged();
     QStringList toStringList();
     void save();
-    void load();
+    void load(const QString &chapter);
     bool addItem(const QString &text);
 
     enum class Move { Next, Previuos,

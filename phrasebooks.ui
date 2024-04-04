@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
-    <height>419</height>
+    <width>285</width>
+    <height>393</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,25 +16,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QComboBox" name="comboBooks"/>
-     </item>
-     <item>
-      <widget class="QToolButton" name="toolAddBook">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="toolAddChapter">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="BooksAndChapters" name="widget" native="true"/>
    </item>
    <item row="1" column="0">
     <widget class="List" name="list" native="true">
@@ -91,7 +73,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>0</width>
          <height>20</height>
         </size>
        </property>
@@ -216,6 +198,12 @@
    <header>list.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>BooksAndChapters</class>
+   <extends>QWidget</extends>
+   <header>booksandchapters.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
   <include location="phrasebooks.qrc"/>
@@ -228,7 +216,7 @@
    <slot>targetDropped(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>19</x>
+     <x>9</x>
      <y>408</y>
     </hint>
     <hint type="destinationlabel">
@@ -244,7 +232,7 @@
    <slot>slotClearLinks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>19</x>
+     <x>9</x>
      <y>408</y>
     </hint>
     <hint type="destinationlabel">
@@ -260,7 +248,7 @@
    <slot>slotTargetMoving(QPoint)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>19</x>
+     <x>9</x>
      <y>408</y>
     </hint>
     <hint type="destinationlabel">
@@ -276,44 +264,12 @@
    <slot>slotTargetCancelled()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>19</x>
+     <x>9</x>
      <y>408</y>
     </hint>
     <hint type="destinationlabel">
      <x>61</x>
      <y>496</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolAddBook</sender>
-   <signal>clicked()</signal>
-   <receiver>Phrasebooks</receiver>
-   <slot>slotAddBook()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>195</x>
-     <y>25</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>316</x>
-     <y>88</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolAddChapter</sender>
-   <signal>clicked()</signal>
-   <receiver>Phrasebooks</receiver>
-   <slot>slotAddChapter()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>229</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>276</x>
-     <y>51</y>
     </hint>
    </hints>
   </connection>
@@ -323,8 +279,5 @@
   <slot>slotClearLinks()</slot>
   <slot>slotTargetMoving(QPoint)</slot>
   <slot>slotTargetCancelled()</slot>
-  <slot>slotFomcClicked()</slot>
-  <slot>slotAddBook()</slot>
-  <slot>slotAddChapter()</slot>
  </slots>
 </ui>
