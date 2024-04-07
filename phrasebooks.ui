@@ -16,7 +16,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
-    <widget class="BooksAndChapters" name="widget" native="true"/>
+    <widget class="BooksAndChapters" name="chapter"/>
    </item>
    <item row="1" column="0">
     <widget class="List" name="list" native="true">

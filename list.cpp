@@ -302,13 +302,6 @@ void List::save()
     qDebug("Saved in %ld ms.", static_cast<long int>(QDateTime::currentMSecsSinceEpoch() - t));
 }
 
-void List::load(const QString &chapter)
-{
-    qDebug("Loading lines from book \"%s\"", qPrintable(chapter));
-    // TODO
-    //addLines(Settings::instance()->tickersForGroup(m_section));
-}
-
 void List::addLines(const QStringList &nlines)
 {
     QStringList lines = nlines;

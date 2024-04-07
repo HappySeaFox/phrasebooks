@@ -130,6 +130,8 @@ Phrasebooks::Phrasebooks()
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
         QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
 
+    connect(ui->chapter, &BooksAndChapters::selected, this, &Phrasebooks::slotSelected);
+
     // watch for QWhatsThisClickedEvent
     qApp->installEventFilter(this);
 }
@@ -685,6 +687,30 @@ void Phrasebooks::slotFoolsDay()
 
         SETTINGS_SET_BOOL(SETTING_FOOLSDAY_SEEN, true);
     }
+}
+
+void Phrasebooks::slotSelected(const QString &book, const QString &chapter)
+{
+    QFile file(ui->chapter->chapterFullPath(book, chapter));
+
+    if(!file.open(QFile::ReadOnly))
+    {
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot open chapter: %1").arg(file.errorString()));
+        return;
+    }
+
+    m_currentChapter = book + '/' + chapter;
+
+    ui->chapter->setChapter(m_currentChapter);
+
+    QStringList lines;
+
+    while(!file.atEnd())
+    {
+        lines.append(file.readLine());
+    }
+
+    ui->list->addLines(lines);
 }
 
 bool Phrasebooks::setForeignFocus(const Link &link)

@@ -15,42 +15,52 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BOOKSANDCHAPTERS_H
-#define BOOKSANDCHAPTERS_H
+#ifndef SELECTCHAPTER_H
+#define SELECTCHAPTER_H
 
-#include <QFrame>
+#include <QDialog>
 #include <QDir>
 
-class SelectChapter;
+class QFileSystemModel;
+class QModelIndex;
 
 namespace Ui
 {
-    class BooksAndChapters;
+    class SelectChapter;
 }
 
-class BooksAndChapters : public QFrame
+class SelectChapter : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit BooksAndChapters(QWidget *parent = 0);
-    ~BooksAndChapters();
+    explicit SelectChapter(const QDir &root, QWidget *parent = 0);
+    ~SelectChapter();
 
-    QString chapterFullPath(const QString &book, const QString &chapter) const;
+private:
+    enum CreateStatus { Ok, Exists, Error };
 
-    void setChapter(const QString &chapter);
+    CreateStatus addBook(const QString &book) const;
+    CreateStatus addChapter(const QString &bookAndChapter) const;
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+private slots:
+    void slotAddBook();
+    void slotAddChapter();
+    void slotDelete();
 
 signals:
     void selected(const QString &book, const QString &chapter);
 
+// slots
 private:
-    Ui::BooksAndChapters *ui;
+    void slotClicked(const QModelIndex &index);
+    void slotSelected();
+
+private:
+    Ui::SelectChapter *ui;
     QDir m_root;
-    bool m_wasMousePress;
-    SelectChapter *m_selectChapter;
+    QFileSystemModel *m_model;
+    QString m_currentBook, m_currentChapter;
 };
 
-#endif // BOOKSANDCHAPTERS_H
+#endif // SELECTCHAPTER_H

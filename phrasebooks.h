@@ -106,6 +106,7 @@ private:
     void slotCurrentIndexChanged(int current, int total);
     void slotMessageReceived(const QString &);
     void slotFoolsDay();
+    void slotSelected(const QString &book, const QString &chapter);
 
 private:
     Ui::Phrasebooks *ui;
@@ -125,6 +126,7 @@ private:
     HWND m_drawnWindow;
     bool m_linksChanged;
     bool m_justTitle;
+    QString m_currentChapter;
 };
 
 #endif // Phrasebooks_H

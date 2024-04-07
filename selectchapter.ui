@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SelectChapter</class>
+ <widget class="QDialog" name="SelectChapter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>275</width>
+    <height>365</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Select chapter</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolAddBook">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolAddChapter">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolDelete">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTreeView" name="treeView">
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="headerHidden">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>treeView</tabstop>
+  <tabstop>toolAddBook</tabstop>
+  <tabstop>toolDelete</tabstop>
+  <tabstop>toolAddChapter</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>toolAddBook</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectChapter</receiver>
+   <slot>slotAddBook()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolAddChapter</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectChapter</receiver>
+   <slot>slotAddChapter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>304</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectChapter</receiver>
+   <slot>slotDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>251</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotAddBook()</slot>
+  <slot>slotAddChapter()</slot>
+  <slot>slotDelete()</slot>
+ </slots>
+</ui>
