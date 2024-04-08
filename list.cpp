@@ -592,6 +592,8 @@ void List::slotAddFromFile()
 
     bool error = false;
     QStringList errorFiles, lines;
+    EnglishValidator validator;
+    int pos = 0;
 
     SETTINGS_SET_STRING(SETTING_LAST_FILE_DIRECTORY, QFileInfo(fileNames.at(0)).absolutePath());
 
@@ -610,9 +612,9 @@ void List::slotAddFromFile()
 
         while(!file.atEnd())
         {
-            line = file.readLine();
+            line = file.readLine().trimmed();
 
-            if(!line.isEmpty())
+            if(!line.isEmpty() && validator.validate(line, pos) == QValidator::Acceptable)
                 lines.append(line);
         }
     }
