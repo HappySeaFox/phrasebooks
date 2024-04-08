@@ -81,7 +81,10 @@ void SelectChapter::slotDelete()
 
     const QString element = selected.at(0).data().toString();
 
-    if(QMessageBox::question(this, tr("Delete"), tr("Really delete \"%1\"?").arg(element)) == QMessageBox::Yes)
+    if(QMessageBox::question(this,
+                             tr("Delete"),
+                             //: %1 will be replaced with the directory name by the application
+                             tr("Really delete \"%1\"?").arg(element)) == QMessageBox::Yes)
     {
         QString path = m_model->filePath(selected.at(0));
         QFileInfo info(path);

@@ -210,6 +210,7 @@
     </message>
     <message>
         <source>Really delete &quot;%1&quot;?</source>
+        <extracomment>%1 will be replaced with the directory name by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
