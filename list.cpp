@@ -153,10 +153,6 @@ bool List::eventFilter(QObject *obj, QEvent *event)
 
         if(ke->matches(QKeySequence::New))
             clear();
-        else if(ke->matches(QKeySequence::Open))
-            slotAddFromFile();
-        else if(ke->matches(QKeySequence::Save))
-            save();
         else if(ke->matches(QKeySequence::Undo))
             undo();
         else if(ke->modifiers() == Qt::NoModifier
