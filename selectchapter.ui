@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>275</width>
-    <height>365</height>
+    <width>236</width>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Add book</string>
+        <string>Add a book</string>
        </property>
        <property name="text">
         <string/>
@@ -73,7 +73,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Add chapter</string>
+        <string>Add a chapter</string>
        </property>
        <property name="text">
         <string/>

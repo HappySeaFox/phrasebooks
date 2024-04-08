@@ -366,6 +366,9 @@ bool List::setCurrentChapterPath(const QString &path)
     ui->list->clear();
     addLines(lines);
 
+    if(!ui->list->count())
+        emit currentIndexChanged(-1, 0);
+
     return true;
 }
 

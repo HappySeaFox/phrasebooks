@@ -39,7 +39,7 @@ public:
     void createDefault();
 
 private:
-    enum CreateStatus { Ok, Exists, Error };
+    enum class CreateStatus { Ok, Exists, Error };
 
     CreateStatus addBook(const QString &book) const;
     CreateStatus addChapter(const QString &chapter) const;

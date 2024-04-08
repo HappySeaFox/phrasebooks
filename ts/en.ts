@@ -217,14 +217,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add chapter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot add a new book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -234,6 +226,22 @@
     </message>
     <message>
         <source>Select a chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add a default book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add a default chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a chapter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
