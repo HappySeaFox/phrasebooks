@@ -24,7 +24,6 @@
 
 #include "numericlabel.h"
 #include "target.h"
-#include "utils.h"
 
 Target::Target(QWidget *parent)
     : QWidget(parent)
@@ -51,10 +50,6 @@ Target::Target(QWidget *parent)
     m_number->move(width() - m_number->width(), height() - m_number->height());
 
     setMouseTracking(true);
-
-    // TODO
-    setWhatsThis(QString("<a href=\"http://www.youtube.com/playlist?list=PL5FURm9nDau8oTXumieXJl3DNDRTUlBSm\">%1</a>")
-                 .arg(Utils::openYoutubeTutorialTitle()));
 
     m_label->installEventFilter(this);
 }

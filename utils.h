@@ -80,11 +80,6 @@ public:
     static inline QString networkErrorTitle();
 
     /*
-     *  Returns translated version of "Open YouTube tutorial"
-     */
-    static inline QString openYoutubeTutorialTitle();
-
-    /*
      *  Simulate user input
      */
     static void sendKey(int key, bool extended = false);
@@ -131,13 +126,6 @@ QString Utils::networkErrorTitle()
 {
     //: %1 will be replaced with the error code by the application. It will look like "Network error #16"
     return QObject::tr("Network error #%1");
-}
-
-inline
-QString Utils::openYoutubeTutorialTitle()
-{
-    //: This is the label on a menu item that user clicks to issue the command. Means "Click to open a video tutorial on YouTube"
-    return QObject::tr("Open a tutorial on YouTube");
 }
 
 #define PHRASEBOOKS_SIZE_OF_ARRAY(array) (sizeof(array)/sizeof(array[0]))

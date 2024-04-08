@@ -185,11 +185,6 @@
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Open a tutorial on YouTube</source>
-        <extracomment>This is the label on a menu item that user clicks to issue the command. Means &quot;Click to open a video tutorial on YouTube&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SelectChapter</name>
