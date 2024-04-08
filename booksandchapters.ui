@@ -44,7 +44,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Click to select chapter...</string>
+      <string>Click to select a chapter...</string>
      </property>
     </widget>
    </item>

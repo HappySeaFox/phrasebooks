@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Select chapter</string>
+   <string>Select a chapter</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -116,7 +116,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QTreeView" name="treeView">
+    <widget class="ChaptersView" name="treeView">
      <property name="editTriggers">
       <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
      </property>
@@ -130,6 +130,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ChaptersView</class>
+   <extends>QTreeView</extends>
+   <header>chaptersview.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>treeView</tabstop>
   <tabstop>toolAddBook</tabstop>

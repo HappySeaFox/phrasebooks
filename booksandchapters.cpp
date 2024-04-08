@@ -16,9 +16,10 @@
  */
 
 #include <QStandardPaths>
+#include <QMessageBox>
 #include <QMouseEvent>
-#include <QDebug>
-#include <QDir>
+
+#include <cstdlib>
 
 #include "booksandchapters.h"
 #include "selectchapter.h"
@@ -36,10 +37,16 @@ BooksAndChapters::BooksAndChapters(QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_root.mkdir("English");
-    m_root.cd("English");
+    if(!m_root.mkpath("English"))
+    {
+        QMessageBox::warning(this,
+                             Utils::errorTitle(),
+                             //: %1 will be replaced with the directory name by the application
+                             tr("Cannot create the default directory. Check the file permissions under %1").arg(m_root.absolutePath()));
+        ::exit(1);
+    }
 
-    installEventFilter(this);
+    m_root.cd("English");
 }
 
 BooksAndChapters::~BooksAndChapters()

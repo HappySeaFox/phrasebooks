@@ -40,7 +40,7 @@ private:
     enum CreateStatus { Ok, Exists, Error };
 
     CreateStatus addBook(const QString &book) const;
-    CreateStatus addChapter(const QString &bookAndChapter) const;
+    CreateStatus addChapter(const QString &chapter) const;
 
 private slots:
     void slotAddBook();

@@ -56,7 +56,12 @@
 <context>
     <name>BooksAndChapters</name>
     <message>
-        <source>Click to select chapter...</source>
+        <source>Click to select a chapter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create the default directory. Check the file permissions under %1</source>
+        <extracomment>%1 will be replaced with the directory name by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,10 +194,6 @@
 <context>
     <name>SelectChapter</name>
     <message>
-        <source>Select chapter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -205,19 +206,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot add this book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New chapter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Chapter:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot add this chapter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -234,6 +227,18 @@
     </message>
     <message>
         <source>Add chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add a new book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add a new chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a chapter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

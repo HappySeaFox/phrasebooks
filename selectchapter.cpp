@@ -39,7 +39,6 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
     m_model->setRootPath(m_root.absolutePath());
     m_model->setReadOnly(false);
 
-    // TODO root item?
     ui->treeView->setModel(m_model);
     ui->treeView->setRootIndex(m_model->index(m_model->rootPath()));
 
@@ -88,6 +87,7 @@ void SelectChapter::slotActivated()
         return;
 
     emit selected(m_currentBook, m_currentChapter);
+
     accept();
 }
 
@@ -122,34 +122,29 @@ void SelectChapter::slotSelectionChanged()
     }
 }
 
-SelectChapter::CreateStatus SelectChapter::addBook(const QString &book) const
+SelectChapter::CreateStatus SelectChapter::addBook(const QString &bk) const
 {
-    if(m_root.exists(book))
+    const QString bookPath = m_currentBook.isEmpty() ? bk : (m_currentBook + '/' + bk);
+
+    if(m_root.exists(bookPath))
         return CreateStatus::Exists;
 
-    return m_root.mkdir(book) ? CreateStatus::Ok : CreateStatus::Error;
+    return m_root.mkpath(bookPath) ? CreateStatus::Ok : CreateStatus::Error;
 }
 
-SelectChapter::CreateStatus SelectChapter::addChapter(const QString &bookAndChapter) const
+SelectChapter::CreateStatus SelectChapter::addChapter(const QString &chapter) const
 {
-    int index = bookAndChapter.indexOf('/');
-
-    if(index < 1)
+    if(!m_root.exists(m_currentBook) && !m_root.mkpath(m_currentBook))
         return CreateStatus::Error;
 
-    const QString book = bookAndChapter.left(index);
+    QFile file(m_root.absoluteFilePath(m_currentBook + '/' + chapter));
 
-    if(!m_root.exists(book) && !m_root.mkdir(book))
-        return CreateStatus::Error;
-
-    QFile chapter(m_root.absoluteFilePath(bookAndChapter));
-
-    if(chapter.exists())
+    if(file.exists())
         return CreateStatus::Exists;
 
-    if(!chapter.open(QFile::WriteOnly | QFile::Truncate))
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
-        qWarning("Cannot open chapter %s for writing: %s", qPrintable(bookAndChapter), qPrintable(chapter.errorString()));
+        qWarning("Cannot open chapter %s for writing: %s", qPrintable(chapter), qPrintable(file.errorString()));
         return CreateStatus::Error;
     }
 
@@ -166,7 +161,7 @@ void SelectChapter::slotAddBook()
         return;
 
     if(addBook(book) != CreateStatus::Ok)
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add this book"));
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a new book"));
 }
 
 void SelectChapter::slotAddChapter()
@@ -181,6 +176,6 @@ void SelectChapter::slotAddChapter()
     if(chapter.isEmpty())
         return;
 
-    if(addChapter(m_currentBook + '/' + chapter) != CreateStatus::Ok)
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add this chapter"));
+    if(addChapter(chapter) != CreateStatus::Ok)
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a new chapter"));
 }
