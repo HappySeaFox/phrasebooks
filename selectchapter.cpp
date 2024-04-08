@@ -56,22 +56,6 @@ SelectChapter::~SelectChapter()
     delete ui;
 }
 
-void SelectChapter::createDefault()
-{
-    if(addBook("Default") == CreateStatus::Error)
-    {
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a default book"));
-        return;
-    }
-
-    m_currentBook = "Default";
-
-    if(addChapter("default") == CreateStatus::Error)
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a default chapter"));
-
-    m_currentBook.clear();
-}
-
 void SelectChapter::slotDelete()
 {
     QModelIndexList selected = ui->treeView->selectionModel()->selectedIndexes();

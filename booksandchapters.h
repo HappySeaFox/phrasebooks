@@ -55,7 +55,6 @@ private:
     QDir m_root;
     bool m_wasMousePress;
     SelectChapter *m_selectChapter;
-    bool m_createDefault;
 };
 
 #endif // BOOKSANDCHAPTERS_H
