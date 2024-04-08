@@ -222,6 +222,14 @@
         <source>Cannot delete &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Target</name>

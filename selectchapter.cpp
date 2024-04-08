@@ -47,7 +47,7 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
         ui->treeView->setColumnHidden(i, true);
 
     connect(ui->treeView, &QTreeView::clicked, this, &SelectChapter::slotClicked);
-    connect(ui->treeView, &QTreeView::doubleClicked, this, &SelectChapter::slotSelected);
+    connect(ui->treeView, &QTreeView::activated, this, &SelectChapter::slotActivated);
 
     new QShortcut(QKeySequence::Delete, this, SLOT(slotDelete()));
 }
@@ -100,7 +100,7 @@ void SelectChapter::slotClicked(const QModelIndex &index)
     }
 }
 
-void SelectChapter::slotSelected()
+void SelectChapter::slotActivated()
 {
     if(m_currentChapter.isEmpty())
         return;

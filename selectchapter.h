@@ -54,7 +54,7 @@ signals:
 // slots
 private:
     void slotClicked(const QModelIndex &index);
-    void slotSelected();
+    void slotActivated();
 
 private:
     Ui::SelectChapter *ui;

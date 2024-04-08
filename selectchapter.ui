@@ -31,8 +31,27 @@
      </item>
      <item>
       <widget class="QToolButton" name="toolAddBook">
+       <property name="minimumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Add book</string>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="phrasebooks.qrc">
+         <normaloff>:/images/addbook.png</normaloff>:/images/addbook.png</iconset>
        </property>
       </widget>
      </item>
@@ -41,15 +60,56 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Add chapter</string>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="phrasebooks.qrc">
+         <normaloff>:/images/addchapter.png</normaloff>:/images/addchapter.png</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="toolDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="phrasebooks.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
        </property>
       </widget>
      </item>
@@ -76,7 +136,9 @@
   <tabstop>toolDelete</tabstop>
   <tabstop>toolAddChapter</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="phrasebooks.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>toolAddBook</sender>
