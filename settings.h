@@ -119,6 +119,7 @@
 #define SETTING_LAST_FILE_DIRECTORY "last-file-directory"
 #define SETTING_SIZE                "size"
 #define SETTING_POSITION            "position"
+#define SETTING_SELECT_CHAPTER_SIZE "select-chapter-size"
 #define SETTING_FOOLSDAY_SEEN       "foolsday-seen"
 
 class SettingsPrivate;

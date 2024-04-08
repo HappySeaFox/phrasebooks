@@ -22,7 +22,6 @@
 #include <QDir>
 
 class QFileSystemModel;
-class QModelIndex;
 
 namespace Ui
 {
@@ -53,8 +52,8 @@ signals:
 
 // slots
 private:
-    void slotClicked(const QModelIndex &index);
     void slotActivated();
+    void slotSelectionChanged();
 
 private:
     Ui::SelectChapter *ui;

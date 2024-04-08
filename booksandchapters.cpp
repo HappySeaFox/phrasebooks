@@ -21,6 +21,7 @@
 
 #include "booksandchapters.h"
 #include "selectchapter.h"
+#include "settings.h"
 #include "utils.h"
 
 #include "ui_booksandchapters.h"
@@ -67,9 +68,13 @@ bool BooksAndChapters::eventFilter(QObject *obj, QEvent *event)
         {
             m_selectChapter = new SelectChapter(m_root, this);
             connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::selected);
+
+            if(SETTINGS_CONTAINS(SETTING_SELECT_CHAPTER_SIZE))
+                m_selectChapter->resize(SETTINGS_GET_SIZE(SETTING_SELECT_CHAPTER_SIZE));
         }
 
-        m_selectChapter->exec();
+        if(m_selectChapter->exec() == SelectChapter::Accepted)
+            SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
     }
 
     return QObject::eventFilter(obj, event);

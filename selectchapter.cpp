@@ -46,8 +46,8 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
     for(int i = 1;i < m_model->columnCount();i++)
         ui->treeView->setColumnHidden(i, true);
 
-    connect(ui->treeView, &QTreeView::clicked, this, &SelectChapter::slotClicked);
     connect(ui->treeView, &QTreeView::activated, this, &SelectChapter::slotActivated);
+    connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SelectChapter::slotSelectionChanged);
 
     new QShortcut(QKeySequence::Delete, this, SLOT(slotDelete()));
 }
@@ -82,24 +82,6 @@ void SelectChapter::slotDelete()
     }
 }
 
-void SelectChapter::slotClicked(const QModelIndex &index)
-{
-    ui->toolAddChapter->setEnabled(true);
-
-    if(m_model->fileInfo(index).isDir())
-    {
-        m_currentBook = m_root.relativeFilePath(m_model->filePath(index));
-        m_currentChapter.clear();
-        qDebug("Selected book \"%s\"", qPrintable(m_currentBook));
-    }
-    else
-    {
-        m_currentBook = m_root.relativeFilePath(m_model->filePath(index.parent()));
-        m_currentChapter = index.data().toString();
-        qDebug("Selected book \"%s\", chapter \"%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
-    }
-}
-
 void SelectChapter::slotActivated()
 {
     if(m_currentChapter.isEmpty())
@@ -107,6 +89,37 @@ void SelectChapter::slotActivated()
 
     emit selected(m_currentBook, m_currentChapter);
     accept();
+}
+
+void SelectChapter::slotSelectionChanged()
+{
+    const QModelIndexList selected = ui->treeView->selectionModel()->selectedIndexes();
+
+    ui->toolAddChapter->setEnabled(!selected.isEmpty());
+    ui->toolDelete->setEnabled(!selected.isEmpty());
+
+    if(selected.isEmpty())
+    {
+        m_currentBook.clear();
+        m_currentChapter.clear();
+    }
+    else
+    {
+        const QModelIndex index = selected.at(0);
+
+        if(m_model->fileInfo(index).isDir())
+        {
+            m_currentBook = m_root.relativeFilePath(m_model->filePath(index));
+            m_currentChapter.clear();
+            qDebug("Selected book \"%s\"", qPrintable(m_currentBook));
+        }
+        else
+        {
+            m_currentBook = m_root.relativeFilePath(m_model->filePath(index.parent()));
+            m_currentChapter = index.data().toString();
+            qDebug("Selected book \"%s\", chapter \"%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
+        }
+    }
 }
 
 SelectChapter::CreateStatus SelectChapter::addBook(const QString &book) const

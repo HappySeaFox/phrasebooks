@@ -138,9 +138,7 @@ Phrasebooks::Phrasebooks()
 
 Phrasebooks::~Phrasebooks()
 {
-    QSize size(width(), height());
-
-    SETTINGS_SET_SIZE(SETTING_SIZE, size, Settings::NoSync);
+    SETTINGS_SET_SIZE(SETTING_SIZE, size(), Settings::NoSync);
     SETTINGS_SET_POINT(SETTING_POSITION, pos());
 
     delete ui;
