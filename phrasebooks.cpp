@@ -221,7 +221,7 @@ void Phrasebooks::sendString(const QString &text)
         Utils::sendKey(text.at(i).toLatin1());
 
     // TODO
-    Sleep(50);
+    Sleep(75);
 
     Utils::sendKey(VK_RETURN);
 }
