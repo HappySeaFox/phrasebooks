@@ -25,6 +25,8 @@ ChaptersView::ChaptersView(QWidget *parent)
 
 void ChaptersView::mousePressEvent(QMouseEvent *event)
 {
-    clearSelection();
-    QTreeView::mousePressEvent(event);
+    if(!indexAt(event->pos()).isValid())
+        clearSelection();
+    else
+        QTreeView::mousePressEvent(event);
 }
