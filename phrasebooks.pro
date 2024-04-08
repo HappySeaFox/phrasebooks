@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     windowmarker.cpp \
     booksandchapters.cpp \
     selectchapter.cpp \
-    chaptersview.cpp
+    chaptersview.cpp \
+    options.cpp
 
 HEADERS += qtsingleapplication/qtsingleapplication.h \
     qtsingleapplication/qtlockedfile.h \
@@ -48,7 +49,8 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
     windowmarker.h \
     booksandchapters.h \
     selectchapter.h \
-    chaptersview.h
+    chaptersview.h \
+    options.h
 
 RESOURCES += phrasebooks.qrc
 
@@ -297,4 +299,5 @@ FORMS += \
     miniinput.ui \
     about.ui \
     booksandchapters.ui \
-    selectchapter.ui
+    selectchapter.ui \
+    options.ui

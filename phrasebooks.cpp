@@ -47,8 +47,7 @@
 #include "windowmarker.h"
 #include "phrasebooks.h"
 #include "settings.h"
-// TODO
-//#include "options.h"
+#include "options.h"
 #include "about.h"
 #include "utils.h"
 
@@ -229,7 +228,7 @@ void Phrasebooks::sendString(const QString &text)
     for(int i = 0;i < text.length();i++)
         Utils::sendKey(text.at(i).toLatin1());
 
-    // TODO
+    // FIXME
     Sleep(75);
 
     Utils::sendKey(VK_RETURN);
@@ -494,15 +493,10 @@ void Phrasebooks::slotQuit()
 
 void Phrasebooks::slotOptions()
 {
-    // TODO
-    /*
     Options opt(this);
 
-    if(opt.exec() == QDialog::Accepted)
-    {
+    if(opt.exec() == Options::Accepted)
         opt.saveSettings();
-    }
-    */
 }
 
 void Phrasebooks::slotLoadText(const QString &text)

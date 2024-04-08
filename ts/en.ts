@@ -123,6 +123,27 @@
     </message>
 </context>
 <context>
+    <name>Options</name>
+    <message>
+        <source>Options</source>
+        <extracomment>Window title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System</source>
+        <extracomment>Means &quot;The system language&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Need restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Phrasebooks</name>
     <message>
         <source>Options...</source>
