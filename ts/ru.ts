@@ -99,6 +99,16 @@
         <source>Undo clear</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot open chapter: %1</source>
+        <extracomment>%1 will be replaced with the error code by the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save chapter: %1</source>
+        <extracomment>%1 will be replaced with the error code by the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MiniInput</name>
@@ -147,10 +157,6 @@
     </message>
     <message>
         <source>Lock links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open chapter: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

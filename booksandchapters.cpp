@@ -16,6 +16,7 @@
  */
 
 #include <QStandardPaths>
+#include <QMouseEvent>
 #include <QDebug>
 #include <QDir>
 
@@ -56,26 +57,36 @@ void BooksAndChapters::setChapter(const QString &chapter)
     ui->chapter->setText(chapter);
 }
 
-bool BooksAndChapters::eventFilter(QObject *obj, QEvent *event)
+void BooksAndChapters::openSelector()
 {
-    if(event->type() == QEvent::MouseButtonPress)
-        m_wasMousePress = true;
-    else if(event->type() == QEvent::MouseButtonRelease && m_wasMousePress)
+    // create dialog
+    if(!m_selectChapter)
     {
-        m_wasMousePress = false;
+        m_selectChapter = new SelectChapter(m_root, this);
+        connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::selected);
 
-        if(!m_selectChapter)
-        {
-            m_selectChapter = new SelectChapter(m_root, this);
-            connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::selected);
-
-            if(SETTINGS_CONTAINS(SETTING_SELECT_CHAPTER_SIZE))
-                m_selectChapter->resize(SETTINGS_GET_SIZE(SETTING_SELECT_CHAPTER_SIZE));
-        }
-
-        if(m_selectChapter->exec() == SelectChapter::Accepted)
-            SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
+        if(SETTINGS_CONTAINS(SETTING_SELECT_CHAPTER_SIZE))
+            m_selectChapter->resize(SETTINGS_GET_SIZE(SETTING_SELECT_CHAPTER_SIZE));
     }
 
-    return QObject::eventFilter(obj, event);
+    if(m_selectChapter->exec() == SelectChapter::Accepted)
+        SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
+}
+
+void BooksAndChapters::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+
+    m_wasMousePress = true;
+}
+
+void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+
+    if(m_wasMousePress)
+    {
+        m_wasMousePress = false;
+        openSelector();
+    }
 }

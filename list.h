@@ -49,6 +49,8 @@ public:
 
     void addLines(const QStringList &nlines);
 
+    bool setCurrentChapterPath(const QString &path);
+
     QString currentText() const;
 
     enum class Load { Current,
@@ -97,6 +99,7 @@ private:
     bool m_ignoreInput;
     QStringList m_oldLines;
     QMenu *m_menu;
+    QString m_currentChapterPath;
 };
 
 inline

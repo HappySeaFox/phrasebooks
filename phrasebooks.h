@@ -94,6 +94,7 @@ private slots:
     void slotOptions();
     void slotClearLinks();
     void slotLockLinks();
+    void slotOpenChapter();
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
     void targetDropped(const QPoint &, bool beep = true);
@@ -126,7 +127,7 @@ private:
     HWND m_drawnWindow;
     bool m_linksChanged;
     bool m_justTitle;
-    QString m_currentChapter;
+    QString m_currentChapterPath;
 };
 
 #endif // Phrasebooks_H

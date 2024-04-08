@@ -40,8 +40,11 @@ public:
 
     void setChapter(const QString &chapter);
 
+    void openSelector();
+
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 signals:
     void selected(const QString &book, const QString &chapter);

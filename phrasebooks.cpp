@@ -81,6 +81,7 @@ Phrasebooks::Phrasebooks()
     QShortcut *help_shortcut = new QShortcut(QKeySequence::HelpContents, this, SLOT(slotAbout()));
     QShortcut *quit_shortcut = new QShortcut(Qt::CTRL+Qt::Key_Q, this, SLOT(slotQuit()));
     QShortcut *lock_shortcut = new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
+    new QShortcut(QKeySequence::Open, this, SLOT(slotOpenChapter()));
 
     m_menu = new QMenu(this);
     m_menu->addAction(QIcon(":/images/options.png"), tr("Options..."), this, SLOT(slotOptions()));
@@ -546,6 +547,11 @@ void Phrasebooks::slotLockLinks()
     ui->target->locked(m_locked);
 }
 
+void Phrasebooks::slotOpenChapter()
+{
+    ui->chapter->openSelector();
+}
+
 void Phrasebooks::bringToFront(HWND window)
 {
     qDebug("Bring to front %p", Utils::pointerToVoidPointer(window));
@@ -689,26 +695,11 @@ void Phrasebooks::slotFoolsDay()
 
 void Phrasebooks::slotSelected(const QString &book, const QString &chapter)
 {
-    QFile file(ui->chapter->chapterFullPath(book, chapter));
-
-    if(!file.open(QFile::ReadOnly))
+    if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(book, chapter)))
     {
-        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot open chapter: %1").arg(file.errorString()));
-        return;
+        m_currentChapterPath = book + '/' + chapter;
+        ui->chapter->setChapter(m_currentChapterPath);
     }
-
-    m_currentChapter = book + '/' + chapter;
-
-    ui->chapter->setChapter(m_currentChapter);
-
-    QStringList lines;
-
-    while(!file.atEnd())
-    {
-        lines.append(file.readLine());
-    }
-
-    ui->list->addLines(lines);
 }
 
 bool Phrasebooks::setForeignFocus(const Link &link)

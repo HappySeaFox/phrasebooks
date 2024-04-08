@@ -34,6 +34,7 @@
 #include <QColor>
 #include <QMenu>
 #include <QSize>
+#include <QFile>
 
 #include "settings.h"
 #include "utils.h"
@@ -297,7 +298,17 @@ void List::save()
     qint64 t = QDateTime::currentMSecsSinceEpoch();
 
     // TODO
-    //Settings::instance()->setTickersForGroup(m_section, toStringList());
+    QFile file(m_currentChapterPath);
+
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        //: %1 will be replaced with the error code by the application
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot save chapter: %1").arg(file.errorString()));
+        return;
+    }
+
+    file.write(toStringList().join("\n").toLatin1());
+    file.close();
 
     qDebug("Saved in %ld ms.", static_cast<long int>(QDateTime::currentMSecsSinceEpoch() - t));
 }
@@ -337,6 +348,36 @@ void List::addLines(const QStringList &nlines)
         numberOfItemsChanged();
         save();
     }
+}
+
+bool List::setCurrentChapterPath(const QString &path)
+{
+    QFile file(path);
+
+    if(!file.open(QFile::ReadOnly))
+    {
+        //: %1 will be replaced with the error code by the application
+        QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot open chapter: %1").arg(file.errorString()));
+        return false;
+    }
+
+    m_currentChapterPath = path;
+
+    QStringList lines;
+    QByteArray line;
+
+    while(!file.atEnd())
+    {
+        line = file.readLine().trimmed();
+
+        if(!line.isEmpty())
+            lines.append(line);
+    }
+
+    ui->list->clear();
+    addLines(lines);
+
+    return true;
 }
 
 bool List::addItem(const QString &text)
