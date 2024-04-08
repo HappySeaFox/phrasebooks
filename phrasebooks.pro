@@ -1,8 +1,8 @@
 TARGET = phrasebooks
 TEMPLATE = app
 
-NVER1=0
-NVER2=5
+NVER1=1
+NVER2=0
 NVER3=0
 
 QT += core gui network widgets
