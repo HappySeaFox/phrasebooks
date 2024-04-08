@@ -686,17 +686,16 @@ void Phrasebooks::slotFoolsDay()
 {
     const QDate day = QDate::currentDate();
 
-    // TODO
     // April, 1
     if(day.day() == 1 && day.month() == 4)
     {
         QMessageBox::information(this,
-                                 QString(),
+                                 tr("April, 1"),
                                  QString("<p>%1</p><p align=right><i>%2</i></p>")
-                                        //: Message displayed to the user in the April Fool's day. Preferably copy the translation from "The Little Golden Calf" by I.Ilf, E.Petrov, Chapter 10 "A Telegram from the Brothers Karamazov" (http://en.wikipedia.org/wiki/The_Little_Golden_Calf). If you don't have the book or its online translation then translate as usual
-                                        .arg(tr("All large contemporary fortunes were acquired<br>in the most dishonorable way."))
+                                        //: Message displayed to the user in the April Fool's day
+                                        .arg(tr("The limits of my language are the limits of my world."))
                                         //: See http://en.wikipedia.org/wiki/The_Little_Golden_Calf
-                                        .arg(tr("\"The Little Golden Calf\" I.Ilf, E.Petrov")));
+                                        .arg(tr("Ludwig Wittgenstein")));
 
         SETTINGS_SET_BOOL(SETTING_FOOLSDAY_SEEN, true);
     }

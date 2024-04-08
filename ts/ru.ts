@@ -143,14 +143,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All large contemporary fortunes were acquired&lt;br&gt;in the most dishonorable way.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&quot;The Little Golden Calf&quot; I.Ilf, E.Petrov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Phrasebooks is ready</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
@@ -162,6 +154,18 @@
     </message>
     <message>
         <source>Lock links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The limits of my language are the limits of my world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ludwig Wittgenstein</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>April, 1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
