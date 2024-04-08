@@ -36,6 +36,7 @@
 #include <QSize>
 #include <QFile>
 
+#include "englishvalidator.h"
 #include "settings.h"
 #include "utils.h"
 #include "list.h"
@@ -359,13 +360,15 @@ bool List::setCurrentChapterPath(const QString &path)
     m_currentChapterPath = path;
 
     QStringList lines;
-    QByteArray line;
+    QString line;
+    EnglishValidator validator;
+    int pos = 0;
 
     while(!file.atEnd())
     {
         line = file.readLine().trimmed();
 
-        if(!line.isEmpty())
+        if(!line.isEmpty() && validator.validate(line, pos) == QValidator::Acceptable)
             lines.append(line);
     }
 
