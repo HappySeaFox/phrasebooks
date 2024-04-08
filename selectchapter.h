@@ -36,6 +36,8 @@ public:
     explicit SelectChapter(const QDir &root, QWidget *parent = 0);
     ~SelectChapter();
 
+    void createDefault();
+
 private:
     enum CreateStatus { Ok, Exists, Error };
 

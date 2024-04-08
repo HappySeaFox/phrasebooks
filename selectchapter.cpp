@@ -56,6 +56,16 @@ SelectChapter::~SelectChapter()
     delete ui;
 }
 
+void SelectChapter::createDefault()
+{
+    addBook("Default");
+
+    m_currentBook = "Default";
+    addChapter("default");
+
+    m_currentBook.clear();
+}
+
 void SelectChapter::slotDelete()
 {
     QModelIndexList selected = ui->treeView->selectionModel()->selectedIndexes();
