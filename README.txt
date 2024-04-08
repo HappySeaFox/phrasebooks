@@ -20,7 +20,14 @@ http://sourceforge.net/projects/tht.
 Other license notes
 -------------------
 
-* Most icons are taken from Fugue Icons theme
+* "Phrasebooks" icon
+
+http://findicons.com/icon/177876/dictionary?id=177911
+
+Author: Jack Cai
+License: Creative Commons Attribution No Derivatives (by-nd)
+
+* Other icons are taken from the Fugue Icons theme
 
 http://p.yusukekamiyamane.com/
 
