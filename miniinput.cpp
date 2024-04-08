@@ -36,9 +36,6 @@ MiniInput::MiniInput(QWidget *parent)
 
     ui->lineMiniInput->setValidator(new EnglishValidator(ui->lineMiniInput));
     ui->lineMiniInput->installEventFilter(this);
-
-    // TODO
-    //ui->lineMiniInput->setToolTip(tr(""));
 }
 
 MiniInput::~MiniInput()

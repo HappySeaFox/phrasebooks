@@ -293,7 +293,6 @@ void List::save()
 
     qint64 t = QDateTime::currentMSecsSinceEpoch();
 
-    // TODO
     QFile file(m_currentChapterPath);
 
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
