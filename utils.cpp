@@ -173,8 +173,9 @@ void Utils::sendKey(int key, bool extended)
     int nelem = 2;
     int index = 0;
 
-    // do we need the SHIFT key? Don't check all the cases, we don't need all of them
-    const bool shift = (key >= '!' && key <= '+') || (key >= 'A' && key <= 'Z');
+    // do we need the SHIFT key?
+    static const QString shiftChars = "!@#$%^&*()_+~<>?:\"|{}ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const bool shift = shiftChars.indexOf(key) >= 0;
 
     // send SHIFT down
     if(shift)
