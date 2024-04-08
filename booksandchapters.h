@@ -37,6 +37,7 @@ public:
     ~BooksAndChapters();
 
     QString chapterFullPath(const QString &book, const QString &chapter) const;
+    QString chapterFullPath(const QString &bookAndChapter) const;
 
     void setChapter(const QString &chapter);
 

@@ -80,12 +80,12 @@ signals:
     void currentIndexChanged(int current, int total);
 
 public slots:
-    void addText(const QString &text);
     void clear();
     void loadItem(Load litem = Load::Current);
     void sort();
 
 private slots:
+    void slotAddText(const QString &text);
     void slotAddFromFile();
     void slotCurrentRowChanged(int);
     void undo();

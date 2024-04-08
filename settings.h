@@ -121,6 +121,7 @@
 #define SETTING_POSITION            "position"
 #define SETTING_SELECT_CHAPTER_SIZE "select-chapter-size"
 #define SETTING_FOOLSDAY_SEEN       "foolsday-seen"
+#define SETTING_LAST_CHAPTER        "last-chapter"
 
 class SettingsPrivate;
 

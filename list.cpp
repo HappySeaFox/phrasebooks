@@ -51,7 +51,7 @@ List::List(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->widgetInput, &MiniInput::focusUp,  this, &List::slotFocusUp);
-    connect(ui->widgetInput, &MiniInput::addText,  this, &List::addText);
+    connect(ui->widgetInput, &MiniInput::addText,  this, &List::slotAddText);
     connect(ui->widgetInput, &MiniInput::loadText, this, &List::loadText);
 
     // "List" menu
@@ -85,15 +85,6 @@ List::~List()
 int List::count() const
 {
     return ui->list->count();
-}
-
-void List::addText(const QString &text)
-{
-    if(addItem(text))
-    {
-        numberOfItemsChanged();
-        save();
-    }
 }
 
 void List::initialSelect(bool alsoSetFocus)
@@ -567,6 +558,18 @@ void List::moveItem(Move mi)
 void List::focusMiniEntry()
 {
     ui->widgetInput->setFocusAndSelect();
+}
+
+void List::slotAddText(const QString &text)
+{
+    if(m_currentChapterPath.isEmpty())
+        return;
+
+    if(addItem(text))
+    {
+        numberOfItemsChanged();
+        save();
+    }
 }
 
 void List::slotAddFromFile()

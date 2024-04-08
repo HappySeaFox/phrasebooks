@@ -133,6 +133,15 @@ Phrasebooks::Phrasebooks()
 
     connect(ui->chapter, &BooksAndChapters::selected, this, &Phrasebooks::slotSelected);
 
+    // load the last chapter
+    const QString lastChapter = SETTINGS_GET_STRING(SETTING_LAST_CHAPTER);
+
+    if(!lastChapter.isEmpty())
+    {
+        if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(lastChapter)))
+            ui->chapter->setChapter(lastChapter);
+    }
+
     // watch for QWhatsThisClickedEvent
     qApp->installEventFilter(this);
 }
@@ -697,8 +706,9 @@ void Phrasebooks::slotSelected(const QString &book, const QString &chapter)
 {
     if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(book, chapter)))
     {
-        m_currentChapterPath = book + '/' + chapter;
-        ui->chapter->setChapter(m_currentChapterPath);
+        const QString currentChapterPath = book + '/' + chapter;
+        ui->chapter->setChapter(currentChapterPath);
+        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, currentChapterPath);
     }
 }
 

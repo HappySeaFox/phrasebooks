@@ -127,7 +127,6 @@ private:
     HWND m_drawnWindow;
     bool m_linksChanged;
     bool m_justTitle;
-    QString m_currentChapterPath;
 };
 
 #endif // Phrasebooks_H

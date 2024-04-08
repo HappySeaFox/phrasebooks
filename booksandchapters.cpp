@@ -61,6 +61,11 @@ QString BooksAndChapters::chapterFullPath(const QString &book, const QString &ch
     return m_root.absoluteFilePath(book + '/' + chapter);
 }
 
+QString BooksAndChapters::chapterFullPath(const QString &bookAndChapter) const
+{
+    return m_root.absoluteFilePath(bookAndChapter);
+}
+
 void BooksAndChapters::setChapter(const QString &chapter)
 {
     ui->chapter->setText(chapter);
