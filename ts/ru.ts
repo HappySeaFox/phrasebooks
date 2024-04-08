@@ -5,64 +5,64 @@
     <name>About</name>
     <message>
         <source>Dmitry Baryshev</source>
-        <translation type="unfinished"></translation>
+        <translation>Барышев Дмитрий</translation>
     </message>
     <message>
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Документация</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Закачки</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Переводы</translation>
     </message>
     <message>
         <source>Youtube</source>
-        <translation type="unfinished"></translation>
+        <translation>Youtube</translation>
     </message>
     <message>
         <source>Update available</source>
         <extracomment>Means &quot;A new version of Phrasebooks is availabe on the website&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Доступно обновление</translation>
     </message>
     <message>
         <source>Phrasebooks is up to date</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application. Phrasebooks will check for updates and show this message when there are no new version available</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Phrasebooks имеет актуальную версию</translation>
     </message>
     <message>
         <source>Cannot check for updates (%1)</source>
         <extracomment>%1 will be replaced with the error code by the application. It will look like &quot;Cannot check for updates (Server is unavailable)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно проверить обновления (%1)</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверка обновлений...</translation>
     </message>
     <message>
         <source>Phrasebooks is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</source>
         <extracomment>See https://www.gnu.org/licenses/gpl-3.0.txt . &quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Phrasebooks распространяется в надежде, что она будет полезной, но БЕЗО ВСЯКИХ ГАРАНТИЙ; даже без неявной гарантии ТОВАРНОГО ВИДА или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЁННЫХ ЦЕЛЕЙ.</translation>
     </message>
     <message>
         <source>Phrasebooks is an application to manage English phrasebooks and load the specified English word or text into your favourite dictionary. Send your requests and report errors to our bug tracker. Also visit:</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Phrasebooks - это программа для управления английскими разговорниками и загрузки выбранного английского слова или текста в ваш любимый словарь. Присылайте ваши запросы и отчёты об ошибках в наш трекер. Также посетите:</translation>
     </message>
 </context>
 <context>
     <name>BooksAndChapters</name>
     <message>
         <source>Click to select a chapter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Кликните для выбора главы...</translation>
     </message>
     <message>
         <source>Cannot create the default directory. Check the file permissions under %1</source>
         <extracomment>%1 will be replaced with the directory name by the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно создать книгу по-умолчанию. Проверьте права в каталоге %1</translation>
     </message>
 </context>
 <context>
@@ -70,56 +70,56 @@
     <message>
         <source>Clear</source>
         <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <source>Sort</source>
         <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сортировать</translation>
     </message>
     <message>
         <source>Add from file...</source>
         <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Добавить из файла...</translation>
     </message>
     <message>
         <source>Choose a file</source>
         <extracomment>Appeal to the user. Means &quot;Please choose a file:&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл</translation>
     </message>
     <message>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Все файлы (*.*)</translation>
     </message>
     <message>
         <source>Cannot open the following files: %1</source>
         <extracomment>Message displayed to the user. %1 will be replaced with the list of files by the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть следующие файлы: %1</translation>
     </message>
     <message>
         <source>Undo clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить очистку</translation>
     </message>
     <message>
         <source>Cannot open chapter: %1</source>
         <extracomment>%1 will be replaced with the error code by the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть главу: %1</translation>
     </message>
     <message>
         <source>Cannot save chapter: %1</source>
         <extracomment>%1 will be replaced with the error code by the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно сохранить главу: %1</translation>
     </message>
 </context>
 <context>
     <name>MiniInput</name>
     <message>
         <source>Type a phrase or a word...</source>
-        <translation type="unfinished"></translation>
+        <translation>Впишите слово или фразу...</translation>
     </message>
 </context>
 <context>
@@ -127,162 +127,154 @@
     <message>
         <source>Options</source>
         <extracomment>Window title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык:</translation>
     </message>
     <message>
         <source>System</source>
         <extracomment>Means &quot;The system language&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Системный</translation>
     </message>
     <message>
         <source>Need restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется перезапуск</translation>
     </message>
 </context>
 <context>
     <name>Phrasebooks</name>
     <message>
         <source>Options...</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки...</translation>
     </message>
     <message>
         <source>Clear links</source>
         <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Очистить ссылки</translation>
     </message>
     <message>
         <source>About Qt...</source>
         <extracomment>Qt is a C++ crossplatform toolkit http://qt-project.org</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>О Qt...</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>Phrasebooks is ready</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Phrasebooks готова</translation>
     </message>
     <message>
         <source>Phrasebooks is busy</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Phrasebooks занята</translation>
     </message>
     <message>
         <source>Lock links</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокировать ссылки</translation>
     </message>
     <message>
         <source>The limits of my language are the limits of my world.</source>
-        <translation type="unfinished"></translation>
+        <translation>Границы моего языка есть границы моего мира.</translation>
     </message>
     <message>
         <source>Ludwig Wittgenstein</source>
-        <translation type="unfinished"></translation>
+        <translation>Людвиг Витгенштейн</translation>
     </message>
     <message>
         <source>April, 1</source>
-        <translation type="unfinished"></translation>
+        <translation>1 Апреля</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Network error #%1</source>
         <extracomment>%1 will be replaced with the error code by the application. It will look like &quot;Network error #16&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка сети #%1</translation>
     </message>
     <message>
         <source>About Phrasebooks</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>О Phrasebooks</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>SelectChapter</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>New book</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая книга</translation>
     </message>
     <message>
         <source>Book:</source>
-        <translation type="unfinished"></translation>
+        <translation>Книга:</translation>
     </message>
     <message>
         <source>New chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Новая глава</translation>
     </message>
     <message>
         <source>Chapter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Глава:</translation>
     </message>
     <message>
         <source>Really delete &quot;%1&quot;?</source>
         <extracomment>%1 will be replaced with the directory name by the application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Действительно удалить &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Cannot delete &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно удалить &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Cannot add a new book</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно добавить новую книгу</translation>
     </message>
     <message>
         <source>Cannot add a new chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно добавить новую главу</translation>
     </message>
     <message>
         <source>Select a chapter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot add a default book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot add a default chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите главу</translation>
     </message>
     <message>
         <source>Add a book</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить книгу</translation>
     </message>
     <message>
         <source>Add a chapter</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить главу</translation>
     </message>
 </context>
 <context>
     <name>Target</name>
     <message>
         <source>Drag and drop this target to the window you need to create a link to</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащите этот указатель на окно, на которое нужно создать ссылку</translation>
     </message>
 </context>
 <context>
     <name>UpdateChecker</name>
     <message>
         <source>Server answer is broken</source>
-        <translation type="unfinished"></translation>
+        <translation>Некорректный ответ от сервера</translation>
     </message>
 </context>
 </TS>
