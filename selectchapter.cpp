@@ -101,7 +101,7 @@ void SelectChapter::slotActivated()
     if(m_currentChapter.isEmpty())
         return;
 
-    emit selected(m_currentBook, m_currentChapter);
+    emit selected(m_currentBook + '/' + m_currentChapter);
 
     accept();
 }

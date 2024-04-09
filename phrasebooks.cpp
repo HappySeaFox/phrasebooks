@@ -695,13 +695,12 @@ void Phrasebooks::slotFoolsDay()
     }
 }
 
-void Phrasebooks::slotSelected(const QString &book, const QString &chapter)
+void Phrasebooks::slotSelected(const QString &bookAndChapter)
 {
-    if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(book, chapter)))
+    if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(bookAndChapter)))
     {
-        const QString currentChapterPath = book + '/' + chapter;
-        ui->chapter->setChapter(currentChapterPath);
-        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, currentChapterPath);
+        ui->chapter->setChapter(bookAndChapter);
+        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, bookAndChapter);
     }
 }
 

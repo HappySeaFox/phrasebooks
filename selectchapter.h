@@ -45,7 +45,7 @@ private slots:
     void slotDelete();
 
 signals:
-    void selected(const QString &book, const QString &chapter);
+    void selected(const QString &bookAndChapter);
 
 // slots
 private:

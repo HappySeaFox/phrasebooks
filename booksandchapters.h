@@ -36,7 +36,6 @@ public:
     explicit BooksAndChapters(QWidget *parent = 0);
     ~BooksAndChapters();
 
-    QString chapterFullPath(const QString &book, const QString &chapter) const;
     QString chapterFullPath(const QString &bookAndChapter) const;
 
     void setChapter(const QString &chapter);
@@ -48,7 +47,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 signals:
-    void selected(const QString &book, const QString &chapter);
+    void selected(const QString &bookAndChapter);
 
 private:
     Ui::BooksAndChapters *ui;

@@ -54,11 +54,6 @@ BooksAndChapters::~BooksAndChapters()
     delete ui;
 }
 
-QString BooksAndChapters::chapterFullPath(const QString &book, const QString &chapter) const
-{
-    return m_root.absoluteFilePath(book + '/' + chapter);
-}
-
 QString BooksAndChapters::chapterFullPath(const QString &bookAndChapter) const
 {
     return m_root.absoluteFilePath(bookAndChapter);
