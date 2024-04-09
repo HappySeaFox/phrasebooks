@@ -222,15 +222,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Book:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New chapter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chapter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -240,10 +232,6 @@
     </message>
     <message>
         <source>Cannot delete &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot add a new book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -260,6 +248,10 @@
     </message>
     <message>
         <source>Add a chapter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot add a new book</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -45,6 +45,7 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
     for(int i = 1;i < m_model->columnCount();i++)
         ui->treeView->setColumnHidden(i, true);
 
+    connect(m_model, &QFileSystemModel::rowsInserted, this, &SelectChapter::slotRowsInserted);
     connect(ui->treeView, &QTreeView::activated, this, &SelectChapter::slotActivated);
     connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SelectChapter::slotSelectionChanged);
 
@@ -54,6 +55,17 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
 SelectChapter::~SelectChapter()
 {
     delete ui;
+}
+
+void SelectChapter::expandParent(const QString &name)
+{
+    QFileInfo fileInfo(m_root.absoluteFilePath(name));
+    QModelIndex index = m_model->index(fileInfo.absoluteDir().absolutePath());
+
+    if(!index.isValid())
+        return;
+
+    ui->treeView->expand(index);
 }
 
 void SelectChapter::slotDelete()
@@ -125,46 +137,50 @@ void SelectChapter::slotSelectionChanged()
     }
 }
 
-SelectChapter::CreateStatus SelectChapter::addBook(const QString &bk) const
+void SelectChapter::slotRowsInserted(const QModelIndex &parent, int first, int last)
 {
-    const QString bookPath = m_currentBook.isEmpty() ? bk : (m_currentBook + '/' + bk);
+    if(m_nameToEdit.isEmpty())
+        return;
 
-    if(m_root.exists(bookPath))
-        return CreateStatus::Exists;
-
-    return m_root.mkpath(bookPath) ? CreateStatus::Ok : CreateStatus::Error;
-}
-
-SelectChapter::CreateStatus SelectChapter::addChapter(const QString &chapter) const
-{
-    if(!m_root.exists(m_currentBook) && !m_root.mkpath(m_currentBook))
-        return CreateStatus::Error;
-
-    QFile file(m_root.absoluteFilePath(m_currentBook + '/' + chapter));
-
-    if(file.exists())
-        return CreateStatus::Exists;
-
-    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    for(int i = first;i <= last;i++)
     {
-        qWarning("Cannot open chapter %s for writing: %s", qPrintable(chapter), qPrintable(file.errorString()));
-        return CreateStatus::Error;
+        QModelIndex index = parent.child(i, 0);
+
+        if(index.isValid())
+        {
+            if(m_root.relativeFilePath(m_model->filePath(index)) == m_nameToEdit)
+            {
+                ui->treeView->setCurrentIndex(index);
+                ui->treeView->edit(index);
+                break;
+            }
+        }
     }
 
-    return CreateStatus::Ok;
+    m_nameToEdit.clear();
 }
 
 void SelectChapter::slotAddBook()
 {
     qDebug("Adding book");
 
-    QString book = QInputDialog::getText(this, tr("New book"), tr("Book:"));
+    const QString book = tr("New book");
+    const QString baseName = m_currentBook.isEmpty() ? book : (m_currentBook + '/' + book);
 
-    if(book.isEmpty())
-        return;
+    QString name = baseName;
+    int index = 1;
 
-    if(addBook(book) != CreateStatus::Ok)
+    while(m_root.exists(name))
+    {
+        name = QString("%1 %2").arg(baseName).arg(index++);
+    }
+
+    expandParent(name);
+
+    if(!m_root.mkpath(name))
         QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a new book"));
+    else
+        m_nameToEdit = name;
 }
 
 void SelectChapter::slotAddChapter()
@@ -174,11 +190,36 @@ void SelectChapter::slotAddChapter()
     if(m_currentBook.isEmpty())
         return;
 
-    QString chapter = QInputDialog::getText(this, tr("New chapter"), tr("Chapter:"));
+    const QString chapter = tr("New chapter");
+    const QString baseName = m_currentBook + '/' + chapter;
 
-    if(chapter.isEmpty())
-        return;
+    QString name = baseName;
+    int index = 1;
 
-    if(addChapter(chapter) != CreateStatus::Ok)
+    while(m_root.exists(name))
+    {
+        name = QString("%1 %2").arg(baseName).arg(index++);
+    }
+
+    bool error = false;
+
+    if(!m_root.exists(m_currentBook) && !m_root.mkpath(m_currentBook))
+        error = true;
+    else
+    {
+        expandParent(name);
+
+        QFile file(m_root.absoluteFilePath(name));
+
+        if(!file.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            qWarning("Cannot open chapter %s for writing: %s", qPrintable(name), qPrintable(file.errorString()));
+            error = true;
+        }
+    }
+
+    if(error)
         QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot add a new chapter"));
+    else
+        m_nameToEdit = name;
 }

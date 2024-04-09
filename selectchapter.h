@@ -37,10 +37,7 @@ public:
     ~SelectChapter();
 
 private:
-    enum class CreateStatus { Ok, Exists, Error };
-
-    CreateStatus addBook(const QString &book) const;
-    CreateStatus addChapter(const QString &chapter) const;
+    void expandParent(const QString &name);
 
 private slots:
     void slotAddBook();
@@ -54,12 +51,14 @@ signals:
 private:
     void slotActivated();
     void slotSelectionChanged();
+    void slotRowsInserted(const QModelIndex &parent, int first, int last);
 
 private:
     Ui::SelectChapter *ui;
     QDir m_root;
     QFileSystemModel *m_model;
     QString m_currentBook, m_currentChapter;
+    QString m_nameToEdit;
 };
 
 #endif // SELECTCHAPTER_H

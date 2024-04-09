@@ -222,16 +222,8 @@
         <translation>Новая книга</translation>
     </message>
     <message>
-        <source>Book:</source>
-        <translation>Книга:</translation>
-    </message>
-    <message>
         <source>New chapter</source>
         <translation>Новая глава</translation>
-    </message>
-    <message>
-        <source>Chapter:</source>
-        <translation>Глава:</translation>
     </message>
     <message>
         <source>Really delete &quot;%1&quot;?</source>
@@ -241,10 +233,6 @@
     <message>
         <source>Cannot delete &quot;%1&quot;</source>
         <translation>Невозможно удалить &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Cannot add a new book</source>
-        <translation>Невозможно добавить новую книгу</translation>
     </message>
     <message>
         <source>Cannot add a new chapter</source>
@@ -261,6 +249,10 @@
     <message>
         <source>Add a chapter</source>
         <translation>Добавить главу</translation>
+    </message>
+    <message>
+        <source>Cannot add a new book</source>
+        <translation>Невозможно добавить новую кингу</translation>
     </message>
 </context>
 <context>
