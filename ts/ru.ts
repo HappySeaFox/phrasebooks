@@ -255,8 +255,8 @@
         <translation>Невозможно добавить новую кингу</translation>
     </message>
     <message>
-        <source>Open Windows Explorer</source>
-        <translation>Открыть обозреватель Windows</translation>
+        <source>Open in Windows Explorer</source>
+        <translation>Открыть в обозревателе Windows</translation>
     </message>
 </context>
 <context>

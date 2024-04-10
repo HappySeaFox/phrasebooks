@@ -20,6 +20,7 @@
 
 #include <QStringList>
 #include <QWidget>
+#include <QString>
 
 class QMenu;
 
@@ -50,8 +51,11 @@ public:
     void addLines(const QStringList &nlines);
 
     bool setCurrentChapterPath(const QString &path);
+    QString currentChapterPath() const;
 
     QString currentText() const;
+
+    void reset();
 
     enum class Load { Current,
                     Next, Previous,
@@ -112,6 +116,12 @@ inline
 bool List::ignoreInput() const
 {
     return m_ignoreInput;
+}
+
+inline
+QString List::currentChapterPath() const
+{
+    return m_currentChapterPath;
 }
 
 #endif // LIST_H

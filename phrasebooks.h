@@ -108,6 +108,7 @@ private:
     void slotMessageReceived(const QString &);
     void slotFoolsDay();
     void slotSelected(const QString &bookAndChapter);
+    void slotSelectorClosed();
 
 private:
     Ui::Phrasebooks *ui;

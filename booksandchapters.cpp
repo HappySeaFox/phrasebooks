@@ -37,6 +37,8 @@ BooksAndChapters::BooksAndChapters(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setChapter(QString());
+
     if(!m_root.mkpath("English"))
     {
         QMessageBox::warning(this,
@@ -61,7 +63,10 @@ QString BooksAndChapters::chapterFullPath(const QString &bookAndChapter) const
 
 void BooksAndChapters::setChapter(const QString &chapter)
 {
-    ui->chapter->setText(chapter);
+    if(chapter.isEmpty())
+        ui->chapter->setText(tr("Click to select a chapter..."));
+    else
+        ui->chapter->setText(chapter);
 }
 
 void BooksAndChapters::openSelector()
@@ -78,6 +83,8 @@ void BooksAndChapters::openSelector()
 
     if(m_selectChapter->exec() == SelectChapter::Accepted)
         SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
+
+    emit selectorClosed();
 }
 
 void BooksAndChapters::mousePressEvent(QMouseEvent *event)

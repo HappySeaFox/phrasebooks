@@ -407,6 +407,16 @@ QString List::currentText() const
     return item ? item->text() : QString();
 }
 
+void List::reset()
+{
+    ui->list->clear();
+
+    m_currentChapterPath.clear();
+    m_oldLines.clear();
+
+    numberOfItemsChanged();
+}
+
 void List::deleteCurrent()
 {
     QListWidgetItem *i = ui->list->currentItem();

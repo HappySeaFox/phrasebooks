@@ -255,7 +255,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open Windows Explorer</source>
+        <source>Open in Windows Explorer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

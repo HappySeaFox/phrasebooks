@@ -48,6 +48,7 @@ protected:
 
 signals:
     void selected(const QString &bookAndChapter);
+    void selectorClosed();
 
 private:
     Ui::BooksAndChapters *ui;

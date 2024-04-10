@@ -130,7 +130,8 @@ Phrasebooks::Phrasebooks()
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
         QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
 
-    connect(ui->chapter, &BooksAndChapters::selected, this, &Phrasebooks::slotSelected);
+    connect(ui->chapter, &BooksAndChapters::selected,       this, &Phrasebooks::slotSelected);
+    connect(ui->chapter, &BooksAndChapters::selectorClosed, this, &Phrasebooks::slotSelectorClosed);
 
     // load the last chapter
     const QString lastChapter = SETTINGS_GET_STRING(SETTING_LAST_CHAPTER);
@@ -328,8 +329,6 @@ Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p, bool allowThis
 
 void Phrasebooks::checkWindows()
 {
-    QString tooltip = "<table>";
-
     QList<Link>::iterator itEnd = m_windows.end();
 
     for(QList<Link>::iterator it = m_windows.begin();it != itEnd;)
@@ -701,6 +700,19 @@ void Phrasebooks::slotSelected(const QString &bookAndChapter)
     {
         ui->chapter->setChapter(bookAndChapter);
         SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, bookAndChapter);
+    }
+}
+
+void Phrasebooks::slotSelectorClosed()
+{
+    if(!QFile::exists(ui->list->currentChapterPath()))
+    {
+        qDebug("Current chapter has been deleted");
+
+        ui->list->reset();
+        ui->chapter->setChapter(QString());
+
+        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, QString());
     }
 }
 
