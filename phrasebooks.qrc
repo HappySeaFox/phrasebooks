@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>images/addbook.png</file>
         <file>images/addchapter.png</file>
+        <file>images/book.png</file>
+        <file>images/chapter.png</file>
         <file>images/clear.png</file>
         <file>images/delete.png</file>
         <file>images/drag.png</file>

@@ -26,6 +26,7 @@
 #include <QFile>
 #include <QUrl>
 
+#include "bookfileiconprovider.h"
 #include "selectchapter.h"
 #include "utils.h"
 #include "ui_selectchapter.h"
@@ -38,6 +39,10 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
     ui->setupUi(this);
 
     m_model = new QFileSystemModel(this);
+
+    m_iconProvider = new BookFileIconProvider;
+    m_model->setIconProvider(m_iconProvider);
+
     m_model->setRootPath(m_root.absolutePath());
     m_model->setReadOnly(false);
 
@@ -56,6 +61,9 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
 
 SelectChapter::~SelectChapter()
 {
+    delete m_iconProvider;
+    m_iconProvider = nullptr;
+
     delete ui;
 }
 

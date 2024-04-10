@@ -23,6 +23,8 @@
 
 class QFileSystemModel;
 
+class BookFileIconProvider;
+
 namespace Ui
 {
     class SelectChapter;
@@ -60,6 +62,7 @@ private:
     QFileSystemModel *m_model;
     QString m_currentBook, m_currentChapter;
     QString m_nameToEdit;
+    BookFileIconProvider *m_iconProvider;
 };
 
 #endif // SELECTCHAPTER_H
