@@ -254,6 +254,10 @@
         <source>Cannot add a new book</source>
         <translation>Невозможно добавить новую кингу</translation>
     </message>
+    <message>
+        <source>Open Windows Explorer</source>
+        <translation>Открыть обозреватель Windows</translation>
+    </message>
 </context>
 <context>
     <name>Target</name>

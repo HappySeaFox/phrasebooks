@@ -17,12 +17,14 @@
 
 #include <QItemSelectionModel>
 #include <QFileSystemModel>
+#include <QDesktopServices>
 #include <QInputDialog>
 #include <QModelIndex>
 #include <QMessageBox>
 #include <QShortcut>
 #include <QDebug>
 #include <QFile>
+#include <QUrl>
 
 #include "selectchapter.h"
 #include "utils.h"
@@ -94,6 +96,11 @@ void SelectChapter::slotDelete()
         if(!removed)
             QMessageBox::warning(this, Utils::errorTitle(), tr("Cannot delete \"%1\"").arg(element));
     }
+}
+
+void SelectChapter::slotExplorer()
+{
+    QDesktopServices::openUrl(QUrl::fromLocalFile(m_root.absolutePath()));
 }
 
 void SelectChapter::slotActivated()

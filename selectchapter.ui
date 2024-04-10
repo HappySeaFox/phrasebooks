@@ -17,19 +17,6 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QToolButton" name="toolAddBook">
        <property name="minimumSize">
         <size>
@@ -113,6 +100,38 @@
        </property>
       </widget>
      </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="toolExplorer">
+       <property name="minimumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>28</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Open Windows Explorer</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="1" column="0">
@@ -140,8 +159,9 @@
  <tabstops>
   <tabstop>treeView</tabstop>
   <tabstop>toolAddBook</tabstop>
-  <tabstop>toolDelete</tabstop>
   <tabstop>toolAddChapter</tabstop>
+  <tabstop>toolDelete</tabstop>
+  <tabstop>toolExplorer</tabstop>
  </tabstops>
  <resources>
   <include location="phrasebooks.qrc"/>
@@ -154,8 +174,8 @@
    <slot>slotAddBook()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>24</y>
+     <x>37</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
      <x>312</x>
@@ -170,8 +190,8 @@
    <slot>slotAddChapter()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>218</x>
-     <y>21</y>
+     <x>71</x>
+     <y>31</y>
     </hint>
     <hint type="destinationlabel">
      <x>304</x>
@@ -186,12 +206,28 @@
    <slot>slotDelete()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>23</y>
+     <x>105</x>
+     <y>33</y>
     </hint>
     <hint type="destinationlabel">
      <x>296</x>
      <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolExplorer</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectChapter</receiver>
+   <slot>slotExplorer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>251</x>
+     <y>28</y>
     </hint>
    </hints>
   </connection>
@@ -200,5 +236,6 @@
   <slot>slotAddBook()</slot>
   <slot>slotAddChapter()</slot>
   <slot>slotDelete()</slot>
+  <slot>slotExplorer()</slot>
  </slots>
 </ui>

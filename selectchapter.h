@@ -43,6 +43,7 @@ private slots:
     void slotAddBook();
     void slotAddChapter();
     void slotDelete();
+    void slotExplorer();
 
 signals:
     void selected(const QString &bookAndChapter);

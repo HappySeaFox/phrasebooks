@@ -254,6 +254,10 @@
         <source>Cannot add a new book</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open Windows Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Target</name>
