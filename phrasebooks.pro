@@ -258,7 +258,6 @@ QMAKE_EXTRA_TARGETS += tag
     iss.commands += $$mle(echo Root: HKLM; Subkey: \"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Layers\"; ValueType: String; ValueName: \"{app}\\$${TARGET}.exe\"; ValueData: \"RUNASADMIN\"; Flags: uninsdeletekeyifempty uninsdeletevalue; MinVersion: "0,6.1" >> $$ISS)
 
     iss.commands += $$mle(echo [Run] >> $$ISS)
-    iss.commands += $$mle(echo ;Filename: \"{app}\\$${TARGET}.exe\"; Description: \"{cm:LaunchProgram","{$${LITERAL_HASH}StringChange(MyAppName"," \'&\'"," \'&&\')}}\"; Flags: nowait postinstall skipifsilent >> $$ISS)
     iss.commands += $$mle(echo Filename: \"{$${LITERAL_HASH}MyAppURL}/wiki/howto\"; Flags: nowait shellexec >> $$ISS)
 
     iss.commands += $$mle(echo [Code] >> $$ISS)
