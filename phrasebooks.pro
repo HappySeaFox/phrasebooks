@@ -75,7 +75,7 @@ DOWNLOADROOT="http://sourceforge.net/projects/phrasebooks"
 
 # files to copy to the distribution
 IMAGEPLUGINS=qico.dll
-QTLIBS=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll
+QTLIBS=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll
 
 isEmpty(HOST64) {
     MINGW_BUILD_TYPE=dw2
