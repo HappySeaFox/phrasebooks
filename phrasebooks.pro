@@ -97,7 +97,7 @@ tag.commands += $$mle(git tag -a "\"$$VERSION\"" -m "\"$$VERSION\"")
 tag.commands += $$mle(git push -u origin master)
 QMAKE_EXTRA_TARGETS += tag
 
-!isEmpty(ZIP) {
+!isEmpty(GCCDIR):!isEmpty(ZIP) {
     message("7Z is found, will create custom dist targets")
 
     # standalone binary
@@ -157,11 +157,10 @@ QMAKE_EXTRA_TARGETS += tag
     warning("7Z is not found, will not create custom dist targets")
 }
 
-INNO_APPID="{{16AE5DDE-D073-4F5F-ABC3-11DD9FBF58E3}"
-
-exists($$INNO) {
+!isEmpty(GCCDIR):exists($$INNO) {
     message("Inno Setup is found, will create a setup file in a custom dist target")
 
+    INNO_APPID="{{16AE5DDE-D073-4F5F-ABC3-11DD9FBF58E3}"
     LANGS=$$system(dir /B \"$$INNO\\..\\Languages\")
 
     ISS="phrasebooks-$${VERSION}.iss"

@@ -52,11 +52,15 @@ defineReplace(mle) {
 }
 
 # check for gcc
-GCC=$$findexe("gcc.exe")
-GCCDIR=$$dirname(GCC)
+win32-g++ {
+    GCC=$$findexe("gcc.exe")
+    GCCDIR=$$dirname(GCC)
 
-isEmpty(GCC) {
-    error("MinGW is not found in PATH")
+    isEmpty(GCCDIR) {
+        message("MinGW is not found in PATH. Custom dist targets are disabled")
+    } else {
+        message("MinGW is found in PATH. Custom dist targets are enabled")
+    }
 }
 
 for(ts, LANGUAGES) {
