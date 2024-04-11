@@ -160,7 +160,7 @@ QMAKE_EXTRA_TARGETS += tag
 !isEmpty(GCCDIR):exists($$INNO) {
     message("Inno Setup is found, will create a setup file in a custom dist target")
 
-    INNO_APPID="{{16AE5DDE-D073-4F5F-ABC3-11DD9FBF58E3}"
+    INNO_APPID="{{C498F818-43DB-438C-8DAA-272DE94FFCE1}"
     LANGS=$$system(dir /B \"$$INNO\\..\\Languages\")
 
     ISS="phrasebooks-$${VERSION}.iss"
