@@ -31,7 +31,7 @@
     <message>
         <source>Phrasebooks is up to date</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application. Phrasebooks will check for updates and show this message when there are no new version available</extracomment>
-        <translation>Phrasebooks имеет актуальную версию</translation>
+        <translation>Установлена актуальная версия Phrasebooks</translation>
     </message>
     <message>
         <source>Cannot check for updates (%1)</source>

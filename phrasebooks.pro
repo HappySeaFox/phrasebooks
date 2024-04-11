@@ -76,6 +76,7 @@ DOWNLOADROOT="http://sourceforge.net/projects/phrasebooks"
 # files to copy to the distribution
 IMAGEPLUGINS=qico.dll
 QTLIBS=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll
+SSLLIBS=libeay32.dll ssleay32.dll
 
 isEmpty(HOST64) {
     MINGW_BUILD_TYPE=dw2
@@ -116,6 +117,10 @@ QMAKE_EXTRA_TARGETS += tag
 
     for(ql, QTLIBS) {
         distbin.commands += $$mle(copy /y \"$$[QT_INSTALL_BINS]\\$$ql\" \"$$T\")
+    }
+
+    for(sl, SSLLIBS) {
+        distbin.commands += $$mle(copy /y \"$${_PRO_FILE_PWD_}\\extra\\$$sl\" \"$$T\")
     }
 
     for(ml, MINGWLIBS) {
@@ -224,6 +229,10 @@ exists($$INNO) {
 
     for(ql, QTLIBS) {
         iss.commands += $$mle(echo Source: \"$$[QT_INSTALL_BINS]\\$$ql\"; DestDir: \"{app}\"; Flags: ignoreversion >> $$ISS)
+    }
+
+    for(sl, SSLLIBS) {
+        iss.commands += $$mle(echo Source: \"$${_PRO_FILE_PWD_}\\extra\\$$sl\"; DestDir: \"{app}\"; Flags: ignoreversion >> $$ISS)
     }
 
     for(ip, IMAGEPLUGINS) {
