@@ -749,11 +749,11 @@ bool Phrasebooks::setForeignFocus(const Link &link)
 
     if(!hwnd)
     {
-        qWarning("Cannot set focus to the window %p (%ld)", Utils::pointerToVoidPointer(link.subControl), GetLastError());
+        qWarning("Cannot set focus to the subcontrol %p (%ld)", Utils::pointerToVoidPointer(link.subControl), GetLastError());
         return false;
     }
     else
-        qDebug("Set focus to the window %p", Utils::pointerToVoidPointer(link.subControl));
+        qDebug("Subcontrol %p has been focused", Utils::pointerToVoidPointer(link.subControl));
 
     return true;
 }
