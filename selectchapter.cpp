@@ -97,7 +97,16 @@ void SelectChapter::slotDelete()
         bool removed;
 
         if(info.isDir())
-            removed = QDir(path).removeRecursively();
+        {
+            const int tries = 20;
+
+            int i = 0;
+            removed = false;
+
+            // dirty workaround for bug https://bugreports.qt.io/browse/QTBUG-52470
+            while(!removed && i++ < tries)
+                removed = QDir(path).removeRecursively();
+        }
         else
             removed = QFile::remove(path);
 
