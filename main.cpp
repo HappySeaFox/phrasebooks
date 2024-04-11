@@ -171,14 +171,18 @@ int main(int argc, char *argv[])
 
     ts = ts.isEmpty() ? locale : (ts + ".qm");
 
-    QTranslator translator;
-    qDebug("Loading translation: %s", translator.load(ts, dir) ? "ok" : "failed");
-
     QTranslator translator_qt;
     qDebug("Loading Qt translation: %s", translator_qt.load("qt_" + ts, dir) ? "ok" : "failed");
 
+    QTranslator translator_qtbase;
+    qDebug("Loading Qt Base translation: %s", translator_qtbase.load("qtbase_" + ts, dir) ? "ok" : "failed");
+
+    QTranslator translator;
+    qDebug("Loading translation: %s", translator.load(ts, dir) ? "ok" : "failed");
+
     app.setProperty("translation", ts);
     app.installTranslator(&translator_qt);
+    app.installTranslator(&translator_qtbase);
     app.installTranslator(&translator);
 
     // main window

@@ -134,9 +134,12 @@ QMAKE_EXTRA_TARGETS += tag
     distbin.commands += $$mle(copy /y \"$$TRANSLATIONS_DIR\\*.qm\" \"$$T/translations\")
 
     for(l, LANGUAGES) {
-        l=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm
-        exists($$l) {
-            distbin.commands += $$mle(copy /y \"$$l\" \"$$T/translations\")
+        qtl=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm $$[QT_INSTALL_TRANSLATIONS]\\qtbase_$${l}.qm
+
+        for(l, qtl) {
+            exists($$l) {
+                distbin.commands += $$mle(copy /y \"$$l\" \"$$T/translations\")
+            }
         }
     }
 
@@ -221,9 +224,12 @@ exists($$INNO) {
     iss.commands += $$mle(echo Source: \"$$TRANSLATIONS_DIR/*.qm\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
 
     for(l, LANGUAGES) {
-        l=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm
-        exists($$l) {
-            iss.commands += $$mle(echo Source: \"$$l\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
+        qtl=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm $$[QT_INSTALL_TRANSLATIONS]\\qtbase_$${l}.qm
+
+        for(l, qtl) {
+            exists($$l) {
+                iss.commands += $$mle(echo Source: \"$$l\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
+            }
         }
     }
 
