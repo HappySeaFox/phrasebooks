@@ -56,7 +56,7 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
 
 RESOURCES += phrasebooks.qrc
 
-LIBS += -lpsapi -lgdi32
+LIBS += -lpsapi -lgdi32 -luser32
 
 OTHER_FILES += \
     phrasebooks.rc \

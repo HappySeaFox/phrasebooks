@@ -20,7 +20,6 @@ LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\")
 LANGUAGES=$$replace(LANGUAGES, .ts, )
 
 CONFIG += warn_on c++11
-QMAKE_CXXFLAGS_WARN_ON *= -Wextra
 
 VERSION=$$sprintf("%1.%2.%3", $$NVER1, $$NVER2, $$NVER3)
 
