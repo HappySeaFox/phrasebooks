@@ -15,10 +15,8 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QWhatsThisClickedEvent>
 #include <QMutableListIterator>
 #include <QContextMenuEvent>
-#include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>
@@ -143,9 +141,6 @@ Phrasebooks::Phrasebooks()
         if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(lastChapter)))
             ui->chapter->setChapter(lastChapter);
     }
-
-    // watch for QWhatsThisClickedEvent
-    qApp->installEventFilter(this);
 }
 
 Phrasebooks::~Phrasebooks()
@@ -160,28 +155,6 @@ void Phrasebooks::contextMenuEvent(QContextMenuEvent *event)
 {
     event->accept();
     m_menu->exec(event->globalPos());
-}
-
-bool Phrasebooks::eventFilter(QObject *o, QEvent *e)
-{
-    QEvent::Type type = e->type();
-
-    if(type == QEvent::WhatsThisClicked)
-    {
-        QWhatsThisClickedEvent *ce = static_cast<QWhatsThisClickedEvent *>(e);
-
-        if(ce)
-        {
-            QUrl url(ce->href());
-
-            if(url.isValid())
-                QDesktopServices::openUrl(url);
-        }
-
-        return true;
-    }
-
-    return QObject::eventFilter(o, e);
 }
 
 void Phrasebooks::dragEnterEvent(QDragEnterEvent *e)
