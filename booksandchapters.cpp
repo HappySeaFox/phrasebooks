@@ -75,16 +75,18 @@ void BooksAndChapters::openSelector()
     if(!m_selectChapter)
     {
         m_selectChapter = new SelectChapter(m_root, this);
-        connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::selected);
+        connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::slotSelected);
 
         if(SETTINGS_CONTAINS(SETTING_SELECT_CHAPTER_SIZE))
             m_selectChapter->resize(SETTINGS_GET_SIZE(SETTING_SELECT_CHAPTER_SIZE));
     }
 
+    m_bookAndChapter.clear();
+
     if(m_selectChapter->exec() == SelectChapter::Accepted)
         SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
 
-    emit selectorClosed();
+    emit selectorClosed(m_bookAndChapter);
 }
 
 void BooksAndChapters::mousePressEvent(QMouseEvent *event)
@@ -103,4 +105,9 @@ void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
         m_wasMousePress = false;
         openSelector();
     }
+}
+
+void BooksAndChapters::slotSelected(const QString &bookAndChapter)
+{
+    m_bookAndChapter = bookAndChapter;
 }

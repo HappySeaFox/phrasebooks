@@ -130,7 +130,6 @@ Phrasebooks::Phrasebooks()
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
         QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
 
-    connect(ui->chapter, &BooksAndChapters::selected,       this, &Phrasebooks::slotSelected);
     connect(ui->chapter, &BooksAndChapters::selectorClosed, this, &Phrasebooks::slotSelectorClosed);
 
     // load the last chapter
@@ -679,20 +678,19 @@ void Phrasebooks::slotFoolsDay()
     }
 }
 
-void Phrasebooks::slotSelected(const QString &bookAndChapter)
+void Phrasebooks::slotSelectorClosed(const QString &bookAndChapter)
 {
-    qDebug("Loading chapter %s", qPrintable(bookAndChapter));
-
-    if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(bookAndChapter)))
+    if(!bookAndChapter.isEmpty())
     {
-        ui->chapter->setChapter(bookAndChapter);
-        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, bookAndChapter);
-    }
-}
+        qDebug("Loading chapter %s", qPrintable(bookAndChapter));
 
-void Phrasebooks::slotSelectorClosed()
-{
-    if(!QFile::exists(ui->list->currentChapterPath()))
+        if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(bookAndChapter)))
+        {
+            ui->chapter->setChapter(bookAndChapter);
+            SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, bookAndChapter);
+        }
+    }
+    else if(!QFile::exists(ui->list->currentChapterPath()))
     {
         qDebug("Current chapter has been deleted");
 
@@ -701,6 +699,8 @@ void Phrasebooks::slotSelectorClosed()
 
         SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, QString());
     }
+    else
+        ui->list->maybeUpdateCurrentChapter();
 }
 
 bool Phrasebooks::setForeignFocus(const Link &link)

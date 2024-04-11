@@ -19,6 +19,7 @@
 #define LIST_H
 
 #include <QStringList>
+#include <QDateTime>
 #include <QWidget>
 #include <QString>
 
@@ -52,6 +53,8 @@ public:
 
     bool setCurrentChapterPath(const QString &path);
     QString currentChapterPath() const;
+
+    void maybeUpdateCurrentChapter();
 
     QString currentText() const;
 
@@ -104,6 +107,7 @@ private:
     QStringList m_oldLines;
     QMenu *m_menu;
     QString m_currentChapterPath;
+    QDateTime m_currentChapterTime;
 };
 
 inline

@@ -46,15 +46,19 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
+// slots
+private:
+    void slotSelected(const QString &bookAndChapter);
+
 signals:
-    void selected(const QString &bookAndChapter);
-    void selectorClosed();
+    void selectorClosed(const QString &bookAndChapter);
 
 private:
     Ui::BooksAndChapters *ui;
     QDir m_root;
     bool m_wasMousePress;
     SelectChapter *m_selectChapter;
+    QString m_bookAndChapter;
 };
 
 #endif // BOOKSANDCHAPTERS_H

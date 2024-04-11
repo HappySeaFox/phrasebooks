@@ -363,6 +363,9 @@ bool List::setCurrentChapterPath(const QString &path)
             lines.append(line);
     }
 
+    file.close();
+    m_currentChapterTime = QFileInfo(m_currentChapterPath).lastModified();
+
     ui->list->clear();
     addLines(lines);
 
@@ -370,6 +373,21 @@ bool List::setCurrentChapterPath(const QString &path)
         emit currentIndexChanged(-1, 0);
 
     return true;
+}
+
+void List::maybeUpdateCurrentChapter()
+{
+    QFileInfo fileInfo(m_currentChapterPath);
+
+    qDebug("Comparing chapter timestamps: current:%s, cached:%s",
+           qPrintable(fileInfo.lastModified().toString()),
+           qPrintable(m_currentChapterTime.toString()));
+
+    if(fileInfo.lastModified() != m_currentChapterTime)
+    {
+        qDebug("Rereading current chapter");
+        setCurrentChapterPath(m_currentChapterPath);
+    }
 }
 
 bool List::addItem(const QString &text)
