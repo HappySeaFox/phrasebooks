@@ -27,7 +27,6 @@ class SettingsPrivate
 public:
     QSettings *settings;
     QMap<QString, QString> translations;
-    QHash<QString, QVariant> defaultValues;
 };
 
 /*******************************************************/
@@ -54,21 +53,6 @@ Settings::~Settings()
 {
     delete d->settings;
     delete d;
-}
-
-void Settings::addDefaultValues(const QHash<QString, QVariant> &defaultValues)
-{
-    QHash<QString, QVariant>::const_iterator itEnd = defaultValues.end();
-
-    for(QHash<QString, QVariant>::const_iterator it = defaultValues.begin();it != itEnd;++it)
-    {
-        d->defaultValues.insert(it.key(), it.value());
-    }
-}
-
-QVariant Settings::defaultValue(const QString &key) const
-{
-    return d->defaultValues.value(key);
 }
 
 void Settings::sync()
@@ -131,11 +115,6 @@ void Settings::fillTranslations()
 
     // http://www.loc.gov/standards/iso639-2/php/code_list.php
     d->translations.insert("ru", QString::fromUtf8("Русский"));
-}
-
-QHash<QString, QVariant>& Settings::defaultValues()
-{
-    return d->defaultValues;
 }
 
 QSettings *Settings::settings()

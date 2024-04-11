@@ -155,28 +155,10 @@ public:
     T value(const QString &key);
 
     /*
-     *  Get the key value. Return 'def' if the key is not found
-     */
-    template <typename T>
-    T value(const QString &key, const T &def);
-
-    /*
      *  Set the value of the key. If 'sync' is 'Sync', then call sync()
      */
     template <typename T>
     void setValue(const QString &key, const T &value, SyncType sync = Sync);
-
-    /*
-     *  Add your default values for your settings
-     */
-    void addDefaultValues(const QHash<QString, QVariant> &defaultValues);
-
-    /*
-     *  Returns the default value of the setting 'key'. Returns
-     *  an invalid QVariant if the settings is not found in the
-     *  default values
-     */
-    QVariant defaultValue(const QString &key) const;
 
     /*
      *  Returns 'true' if the setting 'key' exists. If 'key' starts with '/'
@@ -216,8 +198,6 @@ private:
 
     void fillTranslations();
 
-    QHash<QString, QVariant> &defaultValues();
-
     QSettings *settings();
 
 private:
@@ -229,22 +209,10 @@ private:
 template <typename T>
 T Settings::value(const QString &key)
 {
-    T def = T();
-    QHash<QString, QVariant>::iterator it = defaultValues().find(key);
-
-    if(it != defaultValues().end())
-        def = it.value().value<T>();
-
-    return value<T>(key, def);
-}
-
-template <typename T>
-T Settings::value(const QString &key, const T &def)
-{
     QSettings *s = settings();
 
     s->beginGroup("settings");
-    QVariant value = s->value(key, QVariant::fromValue(def));
+    QVariant value = s->value(key);
     s->endGroup();
 
     return value.value<T>();
