@@ -38,7 +38,8 @@ public:
 private:
     void load();
 
-private slots:
+// slots
+private:
     void slotSomethingImportantChanged();
 
 private:

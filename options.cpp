@@ -36,9 +36,11 @@ Options::Options(QWidget *parent)
     ui->labelRestart->hide();
 
     //: Means "The system language"
-    ui->comboLang->addItem('<' + tr("System") + '>');
+    ui->comboLang->addItem(QIcon(":/images/windows.png"), '<' + tr("System") + '>');
 
     load();
+
+    connect(ui->comboLang, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Options::slotSomethingImportantChanged);
 }
 
 Options::~Options()

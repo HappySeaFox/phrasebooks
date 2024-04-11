@@ -120,22 +120,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>comboLang</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>Options</receiver>
-   <slot>slotSomethingImportantChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>266</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>375</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>slotSomethingImportantChanged()</slot>
