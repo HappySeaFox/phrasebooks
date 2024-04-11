@@ -17,6 +17,7 @@
 
 #include <QCoreApplication>
 #include <QStandardPaths>
+#include <QMetaType>
 #include <QDir>
 
 #include "settings.h"
@@ -34,6 +35,8 @@ public:
 Settings::Settings()
 {
     d = new SettingsPrivate;
+
+    qRegisterMetaTypeStreamOperators<QList<QPoint>>("QList<QPoint>");
 
     d->settings = new QSettings(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
                                     + QDir::separator()

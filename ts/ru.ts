@@ -175,6 +175,7 @@
     </message>
     <message>
         <source>Lock links</source>
+        <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
         <translation>Заблокировать ссылки</translation>
     </message>
     <message>
@@ -188,6 +189,11 @@
     <message>
         <source>April, 1</source>
         <translation>1 Апреля</translation>
+    </message>
+    <message>
+        <source>Restore last links</source>
+        <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
+        <translation>Восстановить последние ссылки</translation>
     </message>
 </context>
 <context>

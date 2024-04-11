@@ -98,6 +98,9 @@
 #define SETTINGS_GET_POINTF Settings::instance()->value<QPointF>
 #define SETTINGS_SET_POINTF Settings::instance()->setValue<QPointF>
 
+#define SETTINGS_GET_POINTS Settings::instance()->value<QList<QPoint>>
+#define SETTINGS_SET_POINTS Settings::instance()->setValue<QList<QPoint>>
+
 #define SETTINGS_GET_RECT Settings::instance()->value<QRect>
 #define SETTINGS_SET_RECT Settings::instance()->setValue<QRect>
 
@@ -122,6 +125,7 @@
 #define SETTING_SELECT_CHAPTER_SIZE "select-chapter-size"
 #define SETTING_FOOLSDAY_SEEN       "foolsday-seen"
 #define SETTING_LAST_CHAPTER        "last-chapter"
+#define SETTING_LAST_LINK_POINTS    "last-link-points"
 
 class SettingsPrivate;
 

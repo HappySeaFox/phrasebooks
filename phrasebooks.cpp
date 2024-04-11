@@ -67,7 +67,6 @@ Phrasebooks::Phrasebooks()
     , m_running(false)
     , m_locked(false)
     , m_drawnWindow(0)
-    , m_linksChanged(false)
     , m_justTitle(false)
 {
     ui->setupUi(this);
@@ -87,7 +86,10 @@ Phrasebooks::Phrasebooks()
     m_menu->addSeparator();
 
     //: This is the label on a menu item that user clicks to issue the command
+    m_menu->addAction(tr("Restore last links"), this, SLOT(slotRestoreLastLinks()));
+    //: This is the label on a menu item that user clicks to issue the command
     m_menu->addAction(tr("Clear links"), this, SLOT(slotClearLinks()));
+    //: This is the label on a menu item that user clicks to issue the command
     m_menu->addAction(tr("Lock links") + '\t' + lock_shortcut->key().toString(), this, SLOT(slotLockLinks()));
     m_menu->addSeparator();
 
@@ -498,6 +500,22 @@ void Phrasebooks::slotOptions()
         opt.saveSettings();
 }
 
+void Phrasebooks::slotRestoreLastLinks()
+{
+    qDebug("Restoring last links");
+
+    slotClearLinks();
+
+    QList<QPoint> points = SETTINGS_GET_POINTS(SETTING_LAST_LINK_POINTS);
+
+    foreach(const QPoint &point, points)
+    {
+        qDebug("Restoring link point %dx%d", point.x(), point.y());
+        targetDropped(point);
+    }
+
+}
+
 void Phrasebooks::slotLoadText(const QString &text)
 {
     if(isBusy())
@@ -537,8 +555,6 @@ void Phrasebooks::slotClearLinks()
     m_windows.clear();
 
     checkWindows();
-
-    m_linksChanged = true;
 }
 
 void Phrasebooks::slotLockLinks()
@@ -614,7 +630,7 @@ bool Phrasebooks::detectForegroundWindowAndActivate()
     return true;
 }
 
-void Phrasebooks::targetDropped(const QPoint &p, bool beep)
+void Phrasebooks::targetDropped(const QPoint &p)
 {
     if(isBusy())
         return;
@@ -631,14 +647,19 @@ void Phrasebooks::targetDropped(const QPoint &p, bool beep)
     link.dropPoint = p;
 
     // beep
-    if(beep)
-        MessageBeep(MB_OK);
+    MessageBeep(MB_OK);
 
     m_windows.append(link);
 
-    checkWindows();
+    // save
+    QList<QPoint> points;
 
-    m_linksChanged = true;
+    foreach(const Link &link, m_windows)
+        points.append(link.dropPoint);
+
+    SETTINGS_SET_POINTS(SETTING_LAST_LINK_POINTS, points);
+
+    checkWindows();
 }
 
 void Phrasebooks::slotTargetMoving(const QPoint &pt)

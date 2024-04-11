@@ -175,6 +175,7 @@
     </message>
     <message>
         <source>Lock links</source>
+        <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -187,6 +188,11 @@
     </message>
     <message>
         <source>April, 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore last links</source>
+        <extracomment>This is the label on a menu item that user clicks to issue the command</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

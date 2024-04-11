@@ -92,12 +92,13 @@ private slots:
     void slotAboutQt();
     void slotQuit();
     void slotOptions();
+    void slotRestoreLastLinks();
     void slotClearLinks();
     void slotLockLinks();
     void slotOpenChapter();
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
-    void targetDropped(const QPoint &, bool beep = true);
+    void targetDropped(const QPoint &);
 
 // slots
 private:
@@ -126,7 +127,6 @@ private:
     bool m_useKeyboardInRegion;
     bool m_locked;
     HWND m_drawnWindow;
-    bool m_linksChanged;
     bool m_justTitle;
 };
 
