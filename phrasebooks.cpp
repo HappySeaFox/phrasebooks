@@ -681,6 +681,8 @@ void Phrasebooks::slotFoolsDay()
 
 void Phrasebooks::slotSelected(const QString &bookAndChapter)
 {
+    qDebug("Loading chapter %s", qPrintable(bookAndChapter));
+
     if(ui->list->setCurrentChapterPath(ui->chapter->chapterFullPath(bookAndChapter)))
     {
         ui->chapter->setChapter(bookAndChapter);

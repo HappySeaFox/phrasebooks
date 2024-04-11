@@ -69,8 +69,7 @@ SelectChapter::~SelectChapter()
 
 void SelectChapter::expandParent(const QString &name)
 {
-    QFileInfo fileInfo(m_root.absoluteFilePath(name));
-    QModelIndex index = m_model->index(fileInfo.absoluteDir().absolutePath());
+    QModelIndex index = m_model->index(QFileInfo(m_root.absoluteFilePath(name)).absoluteDir().absolutePath());
 
     if(!index.isValid())
         return;
@@ -125,7 +124,7 @@ void SelectChapter::slotActivated()
     if(m_currentChapter.isEmpty())
         return;
 
-    emit selected(m_currentBook + '/' + m_currentChapter);
+    emit selected(m_currentBook.isEmpty() ? m_currentChapter : (m_currentBook + '/' + m_currentChapter));
 
     accept();
 }
@@ -134,7 +133,6 @@ void SelectChapter::slotSelectionChanged()
 {
     const QModelIndexList selected = ui->treeView->selectionModel()->selectedIndexes();
 
-    ui->toolAddChapter->setEnabled(!selected.isEmpty());
     ui->toolDelete->setEnabled(!selected.isEmpty());
 
     if(selected.isEmpty())
@@ -150,13 +148,14 @@ void SelectChapter::slotSelectionChanged()
         {
             m_currentBook = m_root.relativeFilePath(m_model->filePath(index));
             m_currentChapter.clear();
-            qDebug("Selected book \"%s\"", qPrintable(m_currentBook));
         }
         else
         {
             m_currentBook = m_root.relativeFilePath(m_model->filePath(index.parent()));
             m_currentChapter = index.data().toString();
-            qDebug("Selected book \"%s\", chapter \"%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
+
+            if(m_currentBook == ".")
+                m_currentBook.clear();
         }
     }
 }
@@ -211,11 +210,8 @@ void SelectChapter::slotAddChapter()
 {
     qDebug("Adding chapter");
 
-    if(m_currentBook.isEmpty())
-        return;
-
     const QString chapter = tr("New chapter");
-    const QString baseName = m_currentBook + '/' + chapter;
+    const QString baseName = m_currentBook.isEmpty() ? chapter : (m_currentBook + '/' + chapter);
 
     QString name = baseName;
     int index = 1;
@@ -227,7 +223,7 @@ void SelectChapter::slotAddChapter()
 
     bool error = false;
 
-    if(!m_root.exists(m_currentBook) && !m_root.mkpath(m_currentBook))
+    if(!m_currentBook.isEmpty() && !m_root.exists(m_currentBook) && !m_root.mkpath(m_currentBook))
         error = true;
     else
     {

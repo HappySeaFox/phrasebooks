@@ -45,9 +45,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="toolAddChapter">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="minimumSize">
         <size>
          <width>28</width>
@@ -143,6 +140,9 @@
     <widget class="ChaptersView" name="treeView">
      <property name="editTriggers">
       <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
