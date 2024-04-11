@@ -237,16 +237,6 @@ void Phrasebooks::sendString(const QString &text)
     Utils::sendKey(VK_RETURN);
 }
 
-void Phrasebooks::checkWindow(Link *link)
-{
-    if(!link)
-        return;
-
-    link->threadId = GetWindowThreadProcessId(link->hwnd, &link->processId);
-
-    qDebug("Window under cursor is %p", Utils::pointerToVoidPointer(link->hwnd));
-}
-
 Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p, bool allowThisWindow)
 {
     POINT pnt = {0, 0};
@@ -642,9 +632,10 @@ void Phrasebooks::targetDropped(const QPoint &p)
     if(!link.hwnd)
         return;
 
-    checkWindow(&link);
-
+    link.threadId = GetWindowThreadProcessId(link.hwnd, &link.processId);
     link.dropPoint = p;
+
+    qDebug("Window under cursor is %p", Utils::pointerToVoidPointer(link.hwnd));
 
     // beep
     MessageBeep(MB_OK);

@@ -71,7 +71,6 @@ private:
     };
 
     void sendString(const QString &text);
-    void checkWindow(Link *);
     Link checkTargetWindow(const QPoint &, bool allowThisWindow);
     void checkWindows();
     void nextLoadableWindowIndex(int delta = 0);
