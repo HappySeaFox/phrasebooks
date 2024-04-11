@@ -180,7 +180,6 @@ int main(int argc, char *argv[])
     QTranslator translator;
     qDebug("Loading translation: %s", translator.load(ts, dir) ? "ok" : "failed");
 
-    app.setProperty("translation", ts);
     app.installTranslator(&translator_qt);
     app.installTranslator(&translator_qtbase);
     app.installTranslator(&translator);
