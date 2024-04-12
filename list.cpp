@@ -295,7 +295,7 @@ void List::save()
 {
     qDebug("Saving section");
 
-    qint64 t = QDateTime::currentMSecsSinceEpoch();
+    const qint64 t = QDateTime::currentMSecsSinceEpoch();
 
     QFile file(m_currentChapterPath);
 
@@ -308,6 +308,8 @@ void List::save()
 
     file.write(toStringList().join("\n").toLatin1());
     file.close();
+
+    m_currentChapterTime = QFileInfo(m_currentChapterPath).lastModified();
 
     qDebug("Saved in %ld ms.", static_cast<long int>(QDateTime::currentMSecsSinceEpoch() - t));
 }
@@ -376,7 +378,6 @@ bool List::setCurrentChapterPath(const QString &path)
     }
 
     file.close();
-    m_currentChapterTime = QFileInfo(m_currentChapterPath).lastModified();
 
     ui->list->clear();
     addLines(lines);
