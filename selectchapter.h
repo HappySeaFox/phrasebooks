@@ -55,6 +55,7 @@ private:
     void slotActivated();
     void slotSelectionChanged();
     void slotRowsInserted(const QModelIndex &parent, int first, int last);
+    void slotFileRenamed(const QString &path, const QString &oldName, const QString &newName);
 
 private:
     Ui::SelectChapter *ui;

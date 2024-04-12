@@ -53,6 +53,8 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
         ui->treeView->setColumnHidden(i, true);
 
     connect(m_model, &QFileSystemModel::rowsInserted, this, &SelectChapter::slotRowsInserted);
+    connect(m_model, &QFileSystemModel::fileRenamed, this, &SelectChapter::slotFileRenamed);
+
     connect(ui->treeView, &QTreeView::activated, this, &SelectChapter::slotActivated);
     connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SelectChapter::slotSelectionChanged);
 
@@ -158,6 +160,8 @@ void SelectChapter::slotSelectionChanged()
                 m_currentBook.clear();
         }
     }
+
+    qDebug("Selected book/chapter: \"%s/%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
 }
 
 void SelectChapter::slotRowsInserted(const QModelIndex &parent, int first, int last)
@@ -181,6 +185,27 @@ void SelectChapter::slotRowsInserted(const QModelIndex &parent, int first, int l
     }
 
     m_nameToEdit.clear();
+}
+
+void SelectChapter::slotFileRenamed(const QString &path, const QString &oldName, const QString &newName)
+{
+    qDebug("Renamed %s => %s", qPrintable(oldName), qPrintable(newName));
+
+    const QString selected = m_currentBook.isEmpty()
+                            ? m_currentChapter
+                            : (m_currentChapter.isEmpty() ? m_currentBook : (m_currentBook + '/' + m_currentChapter));
+
+    if(selected.isEmpty())
+        return;
+
+    const QString selectedPath = m_root.absoluteFilePath(selected);
+    const QString old = m_root.absoluteFilePath(path + '/' + oldName);
+
+    if(old == selectedPath)
+    {
+        qDebug("Updating the currently selected item");
+        slotSelectionChanged();
+    }
 }
 
 void SelectChapter::slotAddBook()
