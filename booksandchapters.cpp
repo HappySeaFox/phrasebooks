@@ -63,10 +63,12 @@ QString BooksAndChapters::chapterFullPath(const QString &bookAndChapter) const
 
 void BooksAndChapters::setChapter(const QString &chapter)
 {
-    if(chapter.isEmpty())
+    m_currentChapterRelativePath = chapter;
+
+    if(m_currentChapterRelativePath.isEmpty())
         ui->chapter->setText(tr("Click to select a chapter..."));
     else
-        ui->chapter->setText(chapter);
+        ui->chapter->setText(m_currentChapterRelativePath);
 }
 
 void BooksAndChapters::openSelector()
@@ -75,18 +77,21 @@ void BooksAndChapters::openSelector()
     if(!m_selectChapter)
     {
         m_selectChapter = new SelectChapter(m_root, this);
+
+        m_selectChapter->setInitialChapter(m_currentChapterRelativePath);
+
         connect(m_selectChapter, &SelectChapter::selected, this, &BooksAndChapters::slotSelected);
 
         if(SETTINGS_CONTAINS(SETTING_SELECT_CHAPTER_SIZE))
             m_selectChapter->resize(SETTINGS_GET_SIZE(SETTING_SELECT_CHAPTER_SIZE));
     }
 
-    m_bookAndChapter.clear();
+    m_selectedChapterRelativePath.clear();
 
     if(m_selectChapter->exec() == SelectChapter::Accepted)
         SETTINGS_SET_SIZE(SETTING_SELECT_CHAPTER_SIZE, m_selectChapter->size());
 
-    emit selectorClosed(m_bookAndChapter);
+    emit selectorClosed(m_selectedChapterRelativePath);
 }
 
 void BooksAndChapters::mousePressEvent(QMouseEvent *event)
@@ -109,5 +114,5 @@ void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
 
 void BooksAndChapters::slotSelected(const QString &bookAndChapter)
 {
-    m_bookAndChapter = bookAndChapter;
+    m_selectedChapterRelativePath = bookAndChapter;
 }

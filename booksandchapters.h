@@ -58,7 +58,8 @@ private:
     QDir m_root;
     bool m_wasMousePress;
     SelectChapter *m_selectChapter;
-    QString m_bookAndChapter;
+    QString m_selectedChapterRelativePath;
+    QString m_currentChapterRelativePath;
 };
 
 #endif // BOOKSANDCHAPTERS_H

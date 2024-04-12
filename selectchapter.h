@@ -18,6 +18,7 @@
 #ifndef SELECTCHAPTER_H
 #define SELECTCHAPTER_H
 
+#include <QStringList>
 #include <QDialog>
 #include <QDir>
 
@@ -37,6 +38,8 @@ class SelectChapter : public QDialog
 public:
     explicit SelectChapter(const QDir &root, QWidget *parent = 0);
     ~SelectChapter();
+
+    void setInitialChapter(const QString &chapterRelativePath);
 
 private:
     void expandParent(const QString &name);
@@ -64,6 +67,7 @@ private:
     QString m_currentBook, m_currentChapter;
     QString m_nameToEdit;
     BookFileIconProvider *m_iconProvider;
+    QStringList m_initialPaths;
 };
 
 #endif // SELECTCHAPTER_H

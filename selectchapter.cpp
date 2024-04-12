@@ -69,6 +69,31 @@ SelectChapter::~SelectChapter()
     delete ui;
 }
 
+void SelectChapter::setInitialChapter(const QString &chapterRelativePath)
+{
+    m_initialPaths.clear();
+
+    QStringList initialPaths = QDir::fromNativeSeparators(chapterRelativePath).split(QChar('/'), QString::SkipEmptyParts);
+
+    if(initialPaths.isEmpty())
+        return;
+
+    if(!m_root.exists(chapterRelativePath))
+    {
+        qWarning("Initial chapter \"%s\" doesn't exist, ignoring it", qPrintable(chapterRelativePath));
+        return;
+    }
+
+    qDebug("Initial chapter: \"%s\"", qPrintable(chapterRelativePath));
+
+    for(int i = 0;i < initialPaths.size();i++)
+    {
+        m_initialPaths.append(initialPaths.mid(0, i+1).join(QChar('/')));
+    }
+
+    qDebug() << "Inital chapter search index:" << m_initialPaths;
+}
+
 void SelectChapter::expandParent(const QString &name)
 {
     QModelIndex index = m_model->index(QFileInfo(m_root.absoluteFilePath(name)).absoluteDir().absolutePath());
@@ -166,25 +191,46 @@ void SelectChapter::slotSelectionChanged()
 
 void SelectChapter::slotRowsInserted(const QModelIndex &parent, int first, int last)
 {
-    if(m_nameToEdit.isEmpty())
-        return;
-
-    for(int i = first;i <= last;i++)
+    if(!m_nameToEdit.isEmpty())
     {
-        QModelIndex index = parent.child(i, 0);
-
-        if(index.isValid())
+        for(int i = first;i <= last;i++)
         {
-            if(m_root.relativeFilePath(m_model->filePath(index)) == m_nameToEdit)
+            QModelIndex index = parent.child(i, 0);
+
+            if(index.isValid())
             {
-                ui->treeView->setCurrentIndex(index);
-                ui->treeView->edit(index);
-                break;
+                if(m_root.relativeFilePath(m_model->filePath(index)) == m_nameToEdit)
+                {
+                    ui->treeView->setCurrentIndex(index);
+                    ui->treeView->edit(index);
+                    break;
+                }
+            }
+        }
+
+        m_nameToEdit.clear();
+    }
+    else if(!m_initialPaths.isEmpty())
+    {
+        for(int i = first;i <= last;i++)
+        {
+            QModelIndex index = parent.child(i, 0);
+
+            if(index.isValid())
+            {
+                if(m_root.relativeFilePath(m_model->filePath(index)) == m_initialPaths.at(0))
+                {
+                    if(m_model->fileInfo(index).isDir())
+                        ui->treeView->expand(index);
+                    else
+                        ui->treeView->setCurrentIndex(index);
+
+                    m_initialPaths.takeFirst();
+                    break;
+                }
             }
         }
     }
-
-    m_nameToEdit.clear();
 }
 
 void SelectChapter::slotFileRenamed(const QString &path, const QString &oldName, const QString &newName)
