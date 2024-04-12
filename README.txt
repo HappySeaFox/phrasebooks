@@ -34,6 +34,12 @@ http://findicons.com/icon/88993/windows2
 Author: Tidav
 License: Freeware
 
+* Country flags are taken from
+
+http://icondrawer.com/free.php
+
+License: Free
+
 * Other icons are taken from the Fugue Icons theme
 
 http://p.yusukekamiyamane.com/
