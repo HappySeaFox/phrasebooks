@@ -28,6 +28,7 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include <QKeyEvent>
+#include <QLineEdit>
 #include <QTimer>
 #include <QLabel>
 #include <QEvent>
@@ -73,6 +74,11 @@ List::List(QWidget *parent)
 
     // handle internal dnd
     connect(ui->list->model(), &QAbstractItemModel::rowsMoved, [this]{
+        save();
+    });
+
+    // handle item rename
+    connect(ui->list, &QListWidget::itemChanged, [this]{
         save();
     });
 }
@@ -167,7 +173,11 @@ bool List::eventFilter(QObject *obj, QEvent *event)
 
                 case Qt::Key_Return:
                 case Qt::Key_Enter:
-                    loadItem(Load::Current);
+                {
+                    // does editor exist?
+                    if(!qobject_cast<QLineEdit *>(qApp->focusWidget()) || qApp->focusWidget()->parent() != ui->list->viewport())
+                        loadItem(Load::Current);
+                }
                 break;
 
                 case Qt::Key_R:
@@ -275,6 +285,8 @@ QStringList List::toStringList()
     {
         items.append(item->text());
     }
+
+    items.removeDuplicates();
 
     return items;
 }
@@ -398,7 +410,11 @@ bool List::addItem(const QString &text)
     // check if empty
     bool wasEmpty = !ui->list->count();
 
-    ui->list->addItem(new QListWidgetItem(text, ui->list));
+    QListWidgetItem *item = new QListWidgetItem(text);
+
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
+
+    ui->list->addItem(item);
 
     if(wasEmpty)
         initialSelect(ui->list->hasFocus());
