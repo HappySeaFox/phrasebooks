@@ -96,7 +96,12 @@ void SelectChapter::setInitialChapter(const QString &chapterRelativePath)
 
 void SelectChapter::expandParent(const QString &name)
 {
-    QModelIndex index = m_model->index(QFileInfo(m_root.absoluteFilePath(name)).absoluteDir().absolutePath());
+    const int lastSlash = name.lastIndexOf(QChar('/'));
+
+    if(lastSlash < 0)
+        return;
+
+    const QModelIndex index = m_model->index(m_root.absoluteFilePath(name.left(lastSlash)));
 
     if(!index.isValid())
         return;
@@ -170,8 +175,9 @@ void SelectChapter::slotSelectionChanged()
     else
     {
         const QModelIndex index = selected.at(0);
+        QFileInfo info(m_model->filePath(index));
 
-        if(m_model->fileInfo(index).isDir())
+        if(info.isDir())
         {
             m_currentBook = m_root.relativeFilePath(m_model->filePath(index));
             m_currentChapter.clear();
@@ -186,7 +192,7 @@ void SelectChapter::slotSelectionChanged()
         }
     }
 
-    qDebug("Selected book/chapter: \"%s/%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
+    qDebug("Selected book/chapter: \"%s\" \"%s\"", qPrintable(m_currentBook), qPrintable(m_currentChapter));
 }
 
 void SelectChapter::slotRowsInserted(const QModelIndex &parent, int first, int last)
@@ -256,7 +262,7 @@ void SelectChapter::slotFileRenamed(const QString &path, const QString &oldName,
 
 void SelectChapter::slotAddBook()
 {
-    qDebug("Adding book");
+    qDebug("Adding book under \"%s\"", m_currentBook.isEmpty() ? "." : qPrintable(m_currentBook));
 
     const QString book = tr("New book");
     const QString baseName = m_currentBook.isEmpty() ? book : (m_currentBook + '/' + book);
@@ -279,7 +285,7 @@ void SelectChapter::slotAddBook()
 
 void SelectChapter::slotAddChapter()
 {
-    qDebug("Adding chapter");
+    qDebug("Adding chapter under \"%s\"", m_currentBook.isEmpty() ? "." : qPrintable(m_currentBook));
 
     const QString chapter = tr("New chapter");
     const QString baseName = m_currentBook.isEmpty() ? chapter : (m_currentBook + '/' + chapter);
