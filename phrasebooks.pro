@@ -100,8 +100,8 @@ QMAKE_EXTRA_TARGETS += tag
 !isEmpty(GCCDIR):!isEmpty(ZIP) {
     message("7Z is found, will create custom dist targets")
 
-    # standalone binary
-    T="$${OUT_PWD}/phrasebooks-standalone-$$VERSION"
+    # portable binary
+    T="$${OUT_PWD}/phrasebooks-portable-$$VERSION"
 
     distbin.commands += $$mle(if exist \"$$T\" rd /S /Q \"$$T\")
     distbin.commands += $$mle(mkdir \"$$T\")
@@ -148,8 +148,8 @@ QMAKE_EXTRA_TARGETS += tag
     }
 
     # compress
-    distbin.commands += $$mle(del /F /Q phrasebooks-standalone-$${VERSION}$${HOST64}.zip)
-    distbin.commands += $$mle($$ZIP a -r -tzip -mx=9 phrasebooks-standalone-$${VERSION}$${HOST64}.zip \"$$T\")
+    distbin.commands += $$mle(del /F /Q phrasebooks-portable-$${VERSION}$${HOST64}.zip)
+    distbin.commands += $$mle($$ZIP a -r -tzip -mx=9 phrasebooks-portable-$${VERSION}$${HOST64}.zip \"$$T\")
     distbin.commands += $$mle(rd /S /Q \"$$T\")
 
     QMAKE_EXTRA_TARGETS += distbin
