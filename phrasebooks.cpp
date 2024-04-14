@@ -224,7 +224,7 @@ Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p)
     }
 
     // this window
-    if(hwnd == static_cast<Platform::WindowId>(winId()))
+    if(hwnd == Utils::winIdToNativeWindow(winId()))
     {
         qDebug("Ignoring ourselves");
         return Link();
@@ -620,7 +620,7 @@ void Phrasebooks::slotTargetMoving(const QPoint &pt)
     POINT pnt = { pt.x(), pt.y() };
 
     HWND rnewHwnd = RealChildWindowFromPoint(GetDesktopWindow(), pnt);
-    HWND newHwnd = Utils::RealWindowFromPoint(pnt);
+    HWND newHwnd = Utils::RealWindowFromPoint(pt);
 
     if(m_drawnWindow != newHwnd)
         WindowMarker::remove(&m_drawnWindow);

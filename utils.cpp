@@ -18,7 +18,6 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QDateTime>
-#include <QX11Info>
 #include <QThread>
 #include <QWidget>
 #include <QDebug>
@@ -31,6 +30,8 @@
 #include "utils.h"
 
 #ifdef Q_OS_UNIX
+    #include <QX11Info>
+
     #include <X11/Intrinsic.h>
     #include <X11/extensions/XTest.h>
 
@@ -91,6 +92,15 @@ void Utils::moveWindow(QWidget *w, const QPoint &pt)
             break;
         }
     }
+}
+
+Platform::WindowId Utils::winIdToNativeWindow(WId wid)
+{
+#ifdef Q_OS_WIN32
+    return reinterpret_cast<Platform::WindowId>(wid);
+#else
+    return static_cast<Platform::WindowId>(wid);
+#endif
 }
 
 /*
@@ -354,7 +364,7 @@ void Utils::sendKey(int key, bool extended)
     }
 
     XTestFakeKeyEvent(QX11Info::display(), keycode, True, 0);
-    XTestFakeKeyEvent(QX11Info::display(), keycode, False, 0); 
+    XTestFakeKeyEvent(QX11Info::display(), keycode, False, 0);
 
     if(shift)
         XTestFakeKeyEvent(QX11Info::display(), modcode, False, 0);

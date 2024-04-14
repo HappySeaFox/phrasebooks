@@ -20,6 +20,7 @@
 
 #include "platform.h"
 
+#include <QWidget>
 #include <QString>
 #include <QObject>
 
@@ -31,26 +32,16 @@ class Utils
 public:
     static QString currentTime();
 
-    /*
-     *  Show and raise the specified window
-     */
     static void raiseWindow(QWidget *);
 
-    /*
-     *  Move the window to the specified point
-     */
     static void moveWindow(QWidget *w, const QPoint &pt);
 
-    /*
-     *  RealWindowFromPoint() from WIN32 API with fixes
-     */
+    static Platform::WindowId winIdToNativeWindow(WId wid);
+
 #ifdef Q_OS_WIN32
     static Platform::WindowId RealWindowFromPoint(const QPoint &qtpt);
 #endif
 
-    /*
-     *  Top-level window under the point
-     */
     static Platform::WindowId topLevelWindowFromPoint(const QPoint &qtpt);
 
     static Platform::WindowId activeWindow();
@@ -63,43 +54,22 @@ public:
 
     static void sleep(const int ms);
 
-    /*
-     *  Is the specified window desktop (or background shell window)?
-     */
     static bool isDesktop(Platform::WindowId hwnd);
 
     static unsigned long windowHandleToLong(const Platform::WindowId &id);
 
-    /*
-     *  Returns translated version of "About Phrasebooks"
-     */
     static inline QString aboutPhrasebooks();
 
-    /*
-     *  Returns translated version of "OK"
-     */
     static inline QString oKTitle();
 
-    /*
-     *  Returns translated version of "Error"
-     */
     static inline QString errorTitle();
 
-    /*
-     *  Returns translated version of "Network error #%1"
-     */
     static inline QString networkErrorTitle();
 
-    /*
-     *  Simulate user input
-     */
     static void sendKey(int key, bool extended = false);
 
     static void sendReturn();
 
-    /*
-     *  Invalid QPoint
-     */
     static const QPoint invalidQPoint;
 
 private:
