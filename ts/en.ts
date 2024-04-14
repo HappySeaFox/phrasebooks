@@ -56,12 +56,12 @@
 <context>
     <name>BooksAndChapters</name>
     <message>
-        <source>Click to select a chapter...</source>
+        <source>Cannot create the default directory. Check the file permissions under %1</source>
+        <extracomment>%1 will be replaced with the directory name by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot create the default directory. Check the file permissions under %1</source>
-        <extracomment>%1 will be replaced with the directory name by the application</extracomment>
+        <source>Click or press %1...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -249,19 +249,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add a book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add a chapter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot add a new book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open in Windows Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a book (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a chapter (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

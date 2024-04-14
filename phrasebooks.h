@@ -93,7 +93,6 @@ private slots:
     void slotRestoreLastLinks();
     void slotClearLinks();
     void slotLockLinks();
-    void slotOpenChapter();
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
     void targetDropped(const QPoint &);

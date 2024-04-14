@@ -74,10 +74,9 @@ Phrasebooks::Phrasebooks()
     setAcceptDrops(true);
 
     // context menu
-    QShortcut *help_shortcut = new QShortcut(QKeySequence::HelpContents, this, SLOT(slotAbout()));
-    QShortcut *quit_shortcut = new QShortcut(Qt::CTRL+Qt::Key_Q, this, SLOT(slotQuit()));
-    QShortcut *lock_shortcut = new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
-    new QShortcut(QKeySequence::Open, this, SLOT(slotOpenChapter()));
+    QShortcut *shortcutHelp = new QShortcut(QKeySequence::HelpContents, this, SLOT(slotAbout()));
+    QShortcut *shortcutQuit = new QShortcut(Qt::CTRL+Qt::Key_Q, this, SLOT(slotQuit()));
+    QShortcut *shortcutLock = new QShortcut(Qt::CTRL+Qt::Key_L, this, SLOT(slotLockLinks()));
 
     m_menu = new QMenu(this);
     m_menu->addAction(QIcon(":/images/options.png"), tr("Options..."), this, SLOT(slotOptions()));
@@ -88,20 +87,20 @@ Phrasebooks::Phrasebooks()
     //: This is the label on a menu item that user clicks to issue the command
     m_menu->addAction(tr("Clear links"), this, SLOT(slotClearLinks()));
     //: This is the label on a menu item that user clicks to issue the command
-    m_menu->addAction(tr("Lock links") + '\t' + lock_shortcut->key().toString(), this, SLOT(slotLockLinks()));
+    m_menu->addAction(tr("Lock links") + '\t' + shortcutLock->key().toString(), this, SLOT(slotLockLinks()));
     m_menu->addSeparator();
 
     m_menu->addAction(QIcon(":/images/phrasebooks.ico"),
                       Utils::aboutPhrasebooks()
                         + "...\t"
-                        + help_shortcut->key().toString(),
+                        + shortcutHelp->key().toString(),
                       this,
                       SLOT(slotAbout()));
 
     //: Qt is a C++ crossplatform toolkit http://qt-project.org
     m_menu->addAction(tr("About Qt..."), this, SLOT(slotAboutQt()));
     m_menu->addSeparator();
-    m_menu->addAction(QIcon(":/images/quit.png"), tr("Quit") + '\t' + quit_shortcut->key().toString(), this, SLOT(slotQuit()));
+    m_menu->addAction(QIcon(":/images/quit.png"), tr("Quit") + '\t' + shortcutQuit->key().toString(), this, SLOT(slotQuit()));
 
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);
@@ -525,11 +524,6 @@ void Phrasebooks::slotLockLinks()
 
     ui->stackBusy->setCurrentIndex(m_locked);
     ui->target->locked(m_locked);
-}
-
-void Phrasebooks::slotOpenChapter()
-{
-    ui->chapter->openSelector();
 }
 
 void Phrasebooks::bringToFront(HWND window)

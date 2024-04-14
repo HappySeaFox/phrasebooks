@@ -16,8 +16,10 @@
  */
 
 #include <QStandardPaths>
+#include <QFontMetrics>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QShortcut>
 
 #include <cstdlib>
 
@@ -34,6 +36,7 @@ BooksAndChapters::BooksAndChapters(QWidget *parent)
     , m_root(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))
     , m_wasMousePress(false)
     , m_selectChapter(nullptr)
+    , m_shortcutOpen(new QShortcut(QKeySequence::Open, this, SLOT(openSelector())))
 {
     ui->setupUi(this);
 
@@ -66,9 +69,10 @@ void BooksAndChapters::setChapter(const QString &chapter)
     m_currentChapterRelativePath = chapter;
 
     if(m_currentChapterRelativePath.isEmpty())
-        ui->chapter->setText(tr("Click to select a chapter..."));
+        //: %1 will be replaced with the hotkey by the application
+        ui->chapter->setText(tr("Click or press %1...").arg(m_shortcutOpen->key().toString()));
     else
-        ui->chapter->setText(m_currentChapterRelativePath);
+        updateText();
 }
 
 void BooksAndChapters::openSelector()
@@ -110,6 +114,11 @@ void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
         m_wasMousePress = false;
         openSelector();
     }
+}
+
+void BooksAndChapters::updateText()
+{
+    ui->chapter->setText(m_currentChapterRelativePath);
 }
 
 void BooksAndChapters::slotSelected(const QString &bookAndChapter)

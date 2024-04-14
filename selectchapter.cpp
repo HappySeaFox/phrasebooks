@@ -38,6 +38,17 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
 {
     ui->setupUi(this);
 
+    QShortcut *shortcutNewBook = new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_B), this, SLOT(slotAddBook()));
+    QShortcut *shortcutNewChapter = new QShortcut(QKeySequence::New, this, SLOT(slotAddChapter()));
+    QShortcut *shortcutDelete = new QShortcut(QKeySequence::Delete, this, SLOT(slotDelete()));
+
+    //: %1 will be replaced with the hotkey by the application
+    ui->toolAddBook->setToolTip(tr("Add a book (%1)").arg(shortcutNewBook->key().toString()));
+    //: %1 will be replaced with the hotkey by the application
+    ui->toolAddChapter->setToolTip(tr("Add a chapter (%1)").arg(shortcutNewChapter->key().toString()));
+    //: %1 will be replaced with the hotkey by the application
+    ui->toolDelete->setToolTip(tr("Delete (%1)").arg(shortcutDelete->key().toString()));
+
     m_model = new QFileSystemModel(this);
 
     m_iconProvider = new BookFileIconProvider;
@@ -57,8 +68,6 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
 
     connect(ui->treeView, &QTreeView::activated, this, &SelectChapter::slotActivated);
     connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SelectChapter::slotSelectionChanged);
-
-    new QShortcut(QKeySequence::Delete, this, SLOT(slotDelete()));
 }
 
 SelectChapter::~SelectChapter()

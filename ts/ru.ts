@@ -56,13 +56,13 @@
 <context>
     <name>BooksAndChapters</name>
     <message>
-        <source>Click to select a chapter...</source>
-        <translation>Кликните для выбора главы...</translation>
-    </message>
-    <message>
         <source>Cannot create the default directory. Check the file permissions under %1</source>
         <extracomment>%1 will be replaced with the directory name by the application</extracomment>
         <translation>Невозможно создать книгу по-умолчанию. Проверьте права в каталоге %1</translation>
+    </message>
+    <message>
+        <source>Click or press %1...</source>
+        <translation>Кликните или нажмите %1...</translation>
     </message>
 </context>
 <context>
@@ -249,20 +249,27 @@
         <translation>Выберите главу</translation>
     </message>
     <message>
-        <source>Add a book</source>
-        <translation>Добавить книгу</translation>
-    </message>
-    <message>
-        <source>Add a chapter</source>
-        <translation>Добавить главу</translation>
-    </message>
-    <message>
         <source>Cannot add a new book</source>
         <translation>Невозможно добавить новую кингу</translation>
     </message>
     <message>
         <source>Open in Windows Explorer</source>
         <translation>Открыть в обозревателе Windows</translation>
+    </message>
+    <message>
+        <source>Add a book (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation>Добавить книгу (%1)</translation>
+    </message>
+    <message>
+        <source>Add a chapter (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation>Добавить главу (%1)</translation>
+    </message>
+    <message>
+        <source>Delete (%1)</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation>Удалить (%1)</translation>
     </message>
 </context>
 <context>

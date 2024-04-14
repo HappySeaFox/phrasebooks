@@ -21,6 +21,8 @@
 #include <QFrame>
 #include <QDir>
 
+class QShortcut;
+
 class SelectChapter;
 
 namespace Ui
@@ -40,11 +42,12 @@ public:
 
     void setChapter(const QString &chapter);
 
-    void openSelector();
-
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+
+private:
+    void updateText();
 
 // slots
 private:
@@ -53,6 +56,9 @@ private:
 signals:
     void selectorClosed(const QString &bookAndChapter);
 
+private slots:
+    void openSelector();
+
 private:
     Ui::BooksAndChapters *ui;
     QDir m_root;
@@ -60,6 +66,7 @@ private:
     SelectChapter *m_selectChapter;
     QString m_selectedChapterRelativePath;
     QString m_currentChapterRelativePath;
+    QShortcut *m_shortcutOpen;
 };
 
 #endif // BOOKSANDCHAPTERS_H
