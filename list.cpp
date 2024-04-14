@@ -363,6 +363,7 @@ bool List::setCurrentChapterPath(const QString &path)
     }
 
     m_currentChapterPath = path;
+    m_currentChapterTime = QFileInfo(m_currentChapterPath).lastModified();
 
     QStringList lines;
     QString line;
