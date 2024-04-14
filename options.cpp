@@ -36,7 +36,7 @@ Options::Options(QWidget *parent)
     ui->labelRestart->hide();
 
     //: Means "The system language"
-    ui->comboLang->addItem(QIcon(":/images/windows.png"), '<' + tr("System") + '>');
+    ui->comboLang->addItem('<' + tr("System") + '>');
 
     load();
 

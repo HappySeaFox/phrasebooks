@@ -253,10 +253,6 @@
         <translation>Невозможно добавить новую кингу</translation>
     </message>
     <message>
-        <source>Open in Windows Explorer</source>
-        <translation>Открыть в обозревателе Windows</translation>
-    </message>
-    <message>
         <source>Add a book (%1)</source>
         <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
         <translation>Добавить книгу (%1)</translation>
@@ -270,6 +266,10 @@
         <source>Delete (%1)</source>
         <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
         <translation>Удалить (%1)</translation>
+    </message>
+    <message>
+        <source>Open in file browser</source>
+        <translation>Открыть в обозревателе файлов</translation>
     </message>
 </context>
 <context>

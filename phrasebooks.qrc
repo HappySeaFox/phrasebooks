@@ -8,7 +8,7 @@
         <file>images/delete.png</file>
         <file>images/drag.png</file>
         <file>images/error.png</file>
-        <file>images/explorer.png</file>
+        <file>images/filebrowser.png</file>
         <file>images/export.png</file>
         <file>images/file.png</file>
         <file>images/list.png</file>
@@ -22,7 +22,6 @@
         <file>images/save.png</file>
         <file>images/update.png</file>
         <file>images/wait.gif</file>
-        <file>images/windows.png</file>
         <file>images/transparent.png</file>
         <file>images/flags/en.png</file>
         <file>images/flags/ru.png</file>

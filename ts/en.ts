@@ -253,10 +253,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open in Windows Explorer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a book (%1)</source>
         <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
         <translation type="unfinished"></translation>
@@ -269,6 +265,10 @@
     <message>
         <source>Delete (%1)</source>
         <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open in file browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
