@@ -18,10 +18,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <QString>
-#include <QRegExp>
+#include "platform.h"
 
-#include <windows.h>
+#include <QString>
+#include <QObject>
 
 class QWidget;
 class QPoint;
@@ -44,20 +44,31 @@ public:
     /*
      *  RealWindowFromPoint() from WIN32 API with fixes
      */
-    static HWND RealWindowFromPoint(POINT pt);
+#ifdef Q_OS_WIN32
+    static Platform::WindowId RealWindowFromPoint(const QPoint &qtpt);
+#endif
+
+    /*
+     *  Top-level window under the point
+     */
+    static Platform::WindowId topLevelWindowFromPoint(const QPoint &qtpt);
+
+    static Platform::WindowId activeWindow();
+
+    static void bringToFront(Platform::WindowId window);
+
+    static bool isWindow(const Platform::WindowId &id);
+
+    static void beep();
+
+    static void sleep(const int ms);
 
     /*
      *  Is the specified window desktop (or background shell window)?
      */
-    static bool isDesktop(HWND hwnd);
+    static bool isDesktop(Platform::WindowId hwnd);
 
-    template<typename T>
-    static void *pointerToVoidPointer(const T *p);
-
-    /*
-     *  Replace all whitespaces with &nbsp;
-     */
-    static QString nonBreakable(const QString &str);
+    static unsigned long windowHandleToLong(const Platform::WindowId &id);
 
     /*
      *  Returns translated version of "About Phrasebooks"
@@ -84,6 +95,8 @@ public:
      */
     static void sendKey(int key, bool extended = false);
 
+    static void sendReturn();
+
     /*
      *  Invalid QPoint
      */
@@ -92,14 +105,16 @@ public:
 private:
     Utils();
 
+#ifdef Q_OS_WIN32
     static HWND FindBestChild(HWND hwndFound, POINT pt);
     static BOOL CALLBACK FindBestChildProc(HWND hwnd, LPARAM lParam);
+#endif
 };
 
-template<typename T>
-void *Utils::pointerToVoidPointer(const T *p)
+inline
+unsigned long Utils::windowHandleToLong(const Platform::WindowId &id)
 {
-    return reinterpret_cast<void *>(const_cast<T *>(p));
+    return reinterpret_cast<unsigned long>(id);
 }
 
 inline

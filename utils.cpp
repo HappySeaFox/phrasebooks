@@ -18,9 +18,10 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QDateTime>
+#include <QX11Info>
+#include <QThread>
 #include <QWidget>
-#include <QRegExp>
-#include <QObject>
+#include <QDebug>
 #include <QPoint>
 #include <QRect>
 
@@ -29,8 +30,16 @@
 
 #include "utils.h"
 
+#ifdef Q_OS_UNIX
+    #include <X11/Intrinsic.h>
+    #include <X11/extensions/XTest.h>
+
+    #include "x11.h"
+#endif
+
 const QPoint Utils::invalidQPoint(INT_MIN, INT_MIN);
 
+#ifdef Q_OS_WIN32
 class UtilsPrivate
 {
 public:
@@ -40,6 +49,7 @@ public:
 
 HWND UtilsPrivate::hwndGlobal;
 DWORD UtilsPrivate::dwArea;
+#endif
 
 /*****************************/
 
@@ -56,6 +66,10 @@ void Utils::raiseWindow(QWidget *w)
     w->show();
     w->setWindowState(w->windowState() & ~Qt::WindowMinimized);
     w->raise();
+
+#ifdef Q_OS_UNIX
+    X11::netwmSetActiveWindow(static_cast<Platform::WindowId>(w->winId()));
+#endif
 }
 
 void Utils::moveWindow(QWidget *w, const QPoint &pt)
@@ -90,6 +104,7 @@ void Utils::moveWindow(QWidget *w, const QPoint &pt)
  *
  * License: Freeware
  */
+#ifdef Q_OS_WIN32
 BOOL CALLBACK Utils::FindBestChildProc(HWND hwnd, LPARAM lParam)
 {
     RECT rect;
@@ -137,8 +152,10 @@ HWND Utils::FindBestChild(HWND hwndFound, POINT pt)
     return UtilsPrivate::hwndGlobal;
 }
 
-HWND Utils::RealWindowFromPoint(POINT pt)
+Platform::WindowId Utils::RealWindowFromPoint(const QPoint &qtpt)
 {
+    const POINT pt = { qtpt.x(), qtpt.y() };
+
     HWND hWndPoint = WindowFromPoint(pt);
 
     if(!hWndPoint)
@@ -151,20 +168,117 @@ HWND Utils::RealWindowFromPoint(POINT pt)
 
     return hWndPoint;
 }
+#endif
 
-bool Utils::isDesktop(HWND hwnd)
+Platform::WindowId Utils::topLevelWindowFromPoint(const QPoint &qtpt)
 {
-    return IsWindow(hwnd) && (hwnd == GetDesktopWindow() || hwnd == GetShellWindow());
+#ifdef Q_OS_WIN32
+    const POINT pt = { qtpt.x(), qtpt.y() };
+    return RealChildWindowFromPoint(GetDesktopWindow(), pt);
+#else
+    Platform::WindowId found = 0;
+
+    QList<Window> windows = X11::netwmWindowList();
+
+    for(int i = windows.size()-1;i >= 0;i--)
+    {
+        Window window = windows.at(i);
+
+        if(!X11::netwmIsWindowNormal(window))
+            continue;
+
+        XWindowAttributes attr;
+
+        if(!XGetWindowAttributes(QX11Info::display(), window, &attr))
+            continue;
+
+        if(QRect(attr.x, attr.y, attr.width, attr.height).contains(qtpt))
+        {
+            found = window;
+            break;
+        }
+    }
+
+    return found;
+#endif
 }
 
-QString Utils::nonBreakable(const QString &str)
+Platform::WindowId Utils::activeWindow()
 {
-    static QRegExp rxSpace("\\s");
-    return QString(str).replace(rxSpace, "&nbsp;");
+#ifdef Q_OS_WIN32
+    return GetForegroundWindow();
+#else
+    return X11::netwmActiveWindow();
+#endif
+}
+
+void Utils::bringToFront(Platform::WindowId window)
+{
+#ifdef Q_OS_WIN32
+    qDebug("Bring to front 0x%lx", Utils::windowHandleToLong(window));
+
+    // window flags to set
+    int flags = SW_SHOWNORMAL;
+
+    if(IsZoomed(window))
+        flags |= SW_SHOWMAXIMIZED;
+
+    // try to switch to this window
+    ShowWindow(window, flags);
+    SetForegroundWindow(window);
+#else
+    X11::netwmSetActiveWindow(window);
+#endif
+}
+
+bool Utils::isWindow(const Platform::WindowId &id)
+{
+#ifdef Q_OS_WIN32
+    return IsWindow(id);
+#else
+    XWindowAttributes attr;
+    return XGetWindowAttributes(QX11Info::display(), id, &attr);
+#endif
+}
+
+void Utils::beep()
+{
+#ifdef Q_OS_WIN32
+    MessageBeep(MB_OK);
+#endif
+}
+
+class Sleeper : private QThread
+{
+public:
+    static void sleep(const int ms)
+    {
+        QThread::msleep(ms);
+    }
+};
+
+void Utils::sleep(const int ms)
+{
+    Sleeper::sleep(ms);
+}
+
+bool Utils::isDesktop(Platform::WindowId hwnd)
+{
+#ifdef Q_OS_WIN32
+    return IsWindow(hwnd) && (hwnd == GetDesktopWindow() || hwnd == GetShellWindow());
+#else
+    Q_UNUSED(hwnd)
+    return false;
+#endif
 }
 
 void Utils::sendKey(int key, bool extended)
 {
+    // do we need the SHIFT key?
+    static const QString shiftChars = "!@#$%^&*()_+~<>?:\"|{}ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const bool shift = shiftChars.indexOf(key) >= 0;
+
+#ifdef Q_OS_WIN32
     KEYBDINPUT kbInput = {0, 0, 0, 0, 0};
     INPUT input[4];
 
@@ -172,10 +286,6 @@ void Utils::sendKey(int key, bool extended)
 
     int nelem = 2;
     int index = 0;
-
-    // do we need the SHIFT key?
-    static const QString shiftChars = "!@#$%^&*()_+~<>?:\"|{}ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const bool shift = shiftChars.indexOf(key) >= 0;
 
     // send SHIFT down
     if(shift)
@@ -228,4 +338,36 @@ void Utils::sendKey(int key, bool extended)
 
     // send both combinations
     SendInput(nelem, input, sizeof(INPUT));
+#else
+    Q_UNUSED(extended)
+
+    KeyCode keycode = XKeysymToKeycode(QX11Info::display(), key);
+    KeyCode modcode = 0;
+
+    if(!keycode)
+        return;
+
+    if(shift)
+    {
+        modcode = XKeysymToKeycode(QX11Info::display(), XK_Shift_L);
+        XTestFakeKeyEvent(QX11Info::display(), modcode, True, 0);
+    }
+
+    XTestFakeKeyEvent(QX11Info::display(), keycode, True, 0);
+    XTestFakeKeyEvent(QX11Info::display(), keycode, False, 0); 
+
+    if(shift)
+        XTestFakeKeyEvent(QX11Info::display(), modcode, False, 0);
+
+    XSync(QX11Info::display(), False);
+#endif
+}
+
+void Utils::sendReturn()
+{
+#ifdef Q_OS_WIN32
+    sendKey(VK_RETURN);
+#else
+    sendKey(XK_Return);
+#endif
 }

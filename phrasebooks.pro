@@ -7,13 +7,16 @@ NVER3=0
 
 QT += core gui network widgets
 
+unix {
+    QT += x11extras
+}
+
 INCLUDEPATH += . qtsingleapplication
 DEPENDPATH += . qtsingleapplication
 
 SOURCES += main.cpp \
     qtsingleapplication/qtsingleapplication.cpp \
     qtsingleapplication/qtlockedfile.cpp \
-    qtsingleapplication/qtlockedfile_win.cpp \
     qtsingleapplication/qtlocalpeer.cpp \
     utils.cpp \
     phrasebooks.cpp \
@@ -26,7 +29,6 @@ SOURCES += main.cpp \
     numericlabel.cpp \
     englishvalidator.cpp \
     about.cpp \
-    windowmarker.cpp \
     booksandchapters.cpp \
     selectchapter.cpp \
     chaptersview.cpp \
@@ -48,7 +50,6 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
     numericlabel.h \
     englishvalidator.h \
     about.h \
-    windowmarker.h \
     booksandchapters.h \
     selectchapter.h \
     chaptersview.h \
@@ -56,17 +57,31 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
     bookfileiconprovider.h \
     chapterlabel.h
 
+win32 {
+    SOURCES += qtsingleapplication/qtlockedfile_win.cpp \
+    windowmarker.cpp
+
+    HEADERS += windowmarker.h \
+                x11.h
+} else {
+    SOURCES += qtsingleapplication/qtlockedfile_unix.cpp \
+                x11.cpp
+}
+
 RESOURCES += phrasebooks.qrc
 
-LIBS += -lpsapi -lgdi32 -luser32
+win32 {
+    RC_FILE = phrasebooks.rc
+    LIBS += -lpsapi -lgdi32 -luser32
+} else:unix {
+    LIBS += -lX11 -lXtst -lXext
+}
 
 OTHER_FILES += \
     phrasebooks.rc \
     README.txt \
     LICENSE.txt \
     phrasebooks-version.tag
-
-RC_FILE = phrasebooks.rc
 
 include(phrasebooks-common.pri)
 

@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+export DEB_CXXFLAGS_MAINT_APPEND := $(shell dpkg-buildflags --get CPPFLAGS)
+export LFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+# Qt5
+export QT_SELECT := qt5
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	qmake CONFIG+=release
+
+override_dh_auto_install:
+	install -D -m 755 phrasebooks $(CURDIR)/debian/phrasebooks/usr/bin/phrasebooks
+	strip $(CURDIR)/debian/phrasebooks/usr/bin/phrasebooks
+	install -d -m 755 $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations
+	find translations -name '*.qm' -exec install -m 644 '{}' $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations/ ';'
+	for i in 16 24 32 48 64 72 96 128; do install -D -m 644 icons/phrasebooks-$$i.png $(CURDIR)/debian/phrasebooks/usr/share/icons/hicolor/$$ix$$i/apps/phrasebooks.png; done
+	install -D -m 644 man/phrasebooks.1 $(CURDIR)/debian/phrasebooks/usr/share/man/man1/phrasebooks.1
+	install -D -m 644 phrasebooks.desktop $(CURDIR)/debian/phrasebooks/usr/share/applications/phrasebooks.desktop

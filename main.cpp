@@ -16,11 +16,13 @@
  */
 
 #include <QStandardPaths>
+#include <QLibraryInfo>
 #include <QTranslator>
 #include <QByteArray>
 #include <QSslSocket>
 #include <QDateTime>
 #include <QLocale>
+#include <QIcon>
 #include <QDir>
 
 #include <cstdlib>
@@ -153,6 +155,10 @@ int main(int argc, char *argv[])
     if(app.sendMessage("activate-window"))
         return 0;
 
+#ifdef Q_OS_UNIX
+    QApplication::setWindowIcon(QIcon(":/images/phrasebooks.ico"));
+#endif
+
     // workaround to speed up the SSL initialization
     const bool haveSsl = QSslSocket::supportsSsl();
 
@@ -162,23 +168,36 @@ int main(int argc, char *argv[])
         qDebug("SSL is not supported");
 
     // load translations
-    QString locale = QLocale::system().name();
+    const QString locale = QLocale::system().name();
+
+    const QString translationsDir =
+#ifdef Q_OS_WIN32
+            QCoreApplication::applicationDirPath() + QDir::separator() + "translations";
+#else
+            "/usr/share/phrasebooks/translations";
+#endif
+
+    const QString qtTranslationsDir =
+#ifdef Q_OS_WIN32
+            translationsDir;
+#else
+            QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
 
     QString ts = SETTINGS_GET_STRING(SETTING_TRANSLATION);
-    QString dir = QCoreApplication::applicationDirPath() + QDir::separator() + "translations";
 
     qDebug("Locale \"%s\", translation \"%s\"", qPrintable(locale), qPrintable(ts));
 
     ts = ts.isEmpty() ? locale : (ts + ".qm");
 
     QTranslator translator_qt;
-    qDebug("Loading Qt translation: %s", translator_qt.load("qt_" + ts, dir) ? "ok" : "failed");
+    qDebug("Loading Qt translation: %s", translator_qt.load("qt_" + ts, qtTranslationsDir) ? "ok" : "failed");
 
     QTranslator translator_qtbase;
-    qDebug("Loading Qt Base translation: %s", translator_qtbase.load("qtbase_" + ts, dir) ? "ok" : "failed");
+    qDebug("Loading Qt Base translation: %s", translator_qtbase.load("qtbase_" + ts, qtTranslationsDir) ? "ok" : "failed");
 
     QTranslator translator;
-    qDebug("Loading translation: %s", translator.load(ts, dir) ? "ok" : "failed");
+    qDebug("Loading translation: %s", translator.load(ts, translationsDir) ? "ok" : "failed");
 
     app.installTranslator(&translator_qt);
     app.installTranslator(&translator_qtbase);

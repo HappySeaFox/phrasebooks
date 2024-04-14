@@ -2,10 +2,6 @@ isEmpty(TARGET) {
     error("TARGET is not defined")
 }
 
-!win32 {
-    error("$$TARGET requires Windows platform")
-}
-
 lessThan(QT_MAJOR_VERSION, 5) {
     error("This project requires Qt 5.5 or greater")
 } else {
@@ -16,7 +12,12 @@ lessThan(QT_MAJOR_VERSION, 5) {
     }
 }
 
-LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\")
+win32 {
+    LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\")
+} else {
+    LANGUAGES=$$system(ls \"$${_PRO_FILE_PWD_}/ts\")
+}
+
 LANGUAGES=$$replace(LANGUAGES, .ts, )
 
 CONFIG += warn_on c++11
@@ -31,7 +32,9 @@ DEFINES += NVER_STRING=$$sprintf("\"\\\"%1\\\"\"", $$VERSION)
 DEFINES += TARGET=$$TARGET
 
 # require at least Windows XP
-DEFINES += _WIN32_WINNT=0x0501 WINVER=0x0501
+win32 {
+    DEFINES += _WIN32_WINNT=0x0501 WINVER=0x0501
+}
 
 # use fast string concat
 DEFINES *= QT_USE_QSTRINGBUILDER
@@ -60,10 +63,17 @@ win32-g++ {
     } else {
         message("MinGW is found in PATH. Custom dist targets are enabled")
     }
+
+    # check for 7z
+    ZIP=$$findexe("7z.exe")
 }
 
 for(ts, LANGUAGES) {
-    MTRANSLATIONS += $${_PRO_FILE_PWD_}\\ts\\$${ts}.ts
+    win32 {
+        MTRANSLATIONS += $${_PRO_FILE_PWD_}\\ts\\$${ts}.ts
+    } else {
+        MTRANSLATIONS += $${_PRO_FILE_PWD_}/ts/$${ts}.ts
+    }
 }
 
 message(Translations: $$MTRANSLATIONS)
@@ -72,20 +82,31 @@ message(Translations: $$MTRANSLATIONS)
 QMAKE_POST_LINK += $$mle(lupdate -no-obsolete $$_PRO_FILE_ -ts $$MTRANSLATIONS)
 
 # lrelease for each ts
-TRANSLATIONS_DIR="$${OUT_PWD}/$(DESTDIR_TARGET)/../translations"
-
-QMAKE_POST_LINK += $$mle(if not exist \"$${OUT_PWD}/$(DESTDIR_TARGET)/../translations\" mkdir \"$$TRANSLATIONS_DIR\")
-
-for(ts, LANGUAGES) {
-    QMAKE_POST_LINK += $$mle(lrelease \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+win32 {
+    TRANSLATIONS_DIR="$${OUT_PWD}/$(DESTDIR_TARGET)/../translations"
+} else {
+    TRANSLATIONS_DIR="$${OUT_PWD}/translations"
 }
 
-# check for 7z
-ZIP=$$findexe("7z.exe")
+win32 {
+    QMAKE_POST_LINK += $$mle(if not exist \"$$TRANSLATIONS_DIR\" mkdir \"$$TRANSLATIONS_DIR\")
+
+    for(ts, LANGUAGES) {
+        QMAKE_POST_LINK += $$mle(lrelease \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+    }
+} else {
+    QMAKE_POST_LINK += $$mle(mkdir -p \"$$TRANSLATIONS_DIR\")
+
+    for(ts, LANGUAGES) {
+        QMAKE_POST_LINK += $$mle(lrelease \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+    }
+}
 
 # INNO setup
-INNO=$$system(echo %ProgramFiles(x86)%)\\Inno Setup 5\\iscc.exe
+win32 {
+    INNO=$$system(echo %ProgramFiles(x86)%)\\Inno Setup 5\\iscc.exe
 
-!exists($$INNO) {
-    INNO=$$system(echo %ProgramFiles%)\\Inno Setup 5\\iscc.exe
+    !exists($$INNO) {
+        INNO=$$system(echo %ProgramFiles%)\\Inno Setup 5\\iscc.exe
+    }
 }

@@ -23,7 +23,7 @@
 #include <QString>
 #include <QList>
 
-#include <windows.h>
+#include "platform.h"
 
 class QGridLayout;
 class QPoint;
@@ -53,7 +53,7 @@ protected:
 private:
     struct Link
     {
-        Link(HWND h = (HWND)0)
+        Link(Platform::WindowId h = static_cast<Platform::WindowId>(0))
             : hwnd(h)
             , processId(0)
             , threadId(0)
@@ -61,16 +61,16 @@ private:
             , subControlSupportsClearing(false)
         {}
 
-        HWND hwnd;
-        DWORD processId;
-        DWORD threadId;
+        Platform::WindowId hwnd;
+        Platform::ResourceId processId;
+        Platform::ResourceId threadId;
         QPoint dropPoint;
-        HWND subControl;
+        Platform::WindowId subControl;
         bool subControlSupportsClearing;
     };
 
     void sendString(const QString &text);
-    Link checkTargetWindow(const QPoint &, bool allowThisWindow);
+    Link checkTargetWindow(const QPoint &);
     void checkWindows();
     void nextLoadableWindowIndex(int delta = 0);
     void loadNextWindow();
@@ -78,7 +78,6 @@ private:
     void loadText(const QString &text);
     bool setForeignFocus(const Link &);
     void rebuildLinks();
-    void bringToFront(HWND);
     bool isBusy() const;
     bool detectForegroundWindowAndActivate();
 
@@ -122,7 +121,11 @@ private:
     bool m_wasVisible;
     bool m_useKeyboardInRegion;
     bool m_locked;
-    HWND m_drawnWindow;
+
+#ifdef Q_OS_WIN32
+    Platform::WindowId m_drawnWindow;
+#endif
+
     bool m_justTitle;
 };
 

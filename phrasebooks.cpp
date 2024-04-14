@@ -36,13 +36,16 @@
 #include <QDate>
 #include <QUrl>
 
-#include <windows.h>
-#include <winnt.h>
-#include <psapi.h>
+#ifdef Q_OS_WIN32
+    #include <windows.h>
+    #include <winnt.h>
+    #include <psapi.h>
+
+    #include "windowmarker.h"
+#endif
 
 #include "qtsingleapplication.h"
 #include "englishvalidator.h"
-#include "windowmarker.h"
 #include "phrasebooks.h"
 #include "settings.h"
 #include "options.h"
@@ -64,7 +67,9 @@ Phrasebooks::Phrasebooks()
     , ui(new Ui::Phrasebooks)
     , m_running(false)
     , m_locked(false)
+#ifdef Q_OS_WIN32
     , m_drawnWindow(0)
+#endif
     , m_justTitle(false)
 {
     ui->setupUi(this);
@@ -203,28 +208,23 @@ void Phrasebooks::sendString(const QString &text)
         Utils::sendKey(text.at(i).toLatin1());
 
     // FIXME
-    Sleep(75);
+    Utils::sleep(75);
 
-    Utils::sendKey(VK_RETURN);
+    Utils::sendReturn();
 }
 
-Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p, bool allowThisWindow)
+Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p)
 {
-    POINT pnt = {0, 0};
+    Platform::WindowId hwnd = Utils::topLevelWindowFromPoint(p);
 
-    pnt.x = p.x();
-    pnt.y = p.y();
-
-    HWND hwnd = RealChildWindowFromPoint(GetDesktopWindow(), pnt);
-
-    if(!IsWindow(hwnd))
+    if(!Utils::isWindow(hwnd))
     {
         qDebug("Cannot find window under cursor %d,%d", p.x(), p.y());
         return Link();
     }
 
     // this window
-    if(!allowThisWindow && hwnd == reinterpret_cast<HWND>(winId()))
+    if(hwnd == static_cast<Platform::WindowId>(winId()))
     {
         qDebug("Ignoring ourselves");
         return Link();
@@ -239,8 +239,31 @@ Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p, bool allowThis
 
     Link link = Link(hwnd);
 
+    // already linked?
+    QList<Link>::iterator itEnd = m_windows.end();
+
+    for(QList<Link>::iterator it = m_windows.begin();it != itEnd;++it)
+    {
+        if(link.subControl)
+        {
+            if((*it).subControl == link.subControl)
+            {
+                qDebug("Window 0x%lx/0x%lx is already linked", Utils::windowHandleToLong(hwnd),
+                                                                Utils::windowHandleToLong(link.subControl));
+
+                return Link();
+            }
+        }
+        else if(!(*it).subControl && (*it).hwnd == link.hwnd)
+        {
+            qDebug("Window 0x%lx is already linked", Utils::windowHandleToLong(hwnd));
+            return Link();
+        }
+    }
+
     // get and check subcontrol
-    link.subControl = Utils::RealWindowFromPoint(pnt);
+#ifdef Q_OS_WIN32
+    link.subControl = Utils::RealWindowFromPoint(p);
 
     if(link.subControl == link.hwnd)
     {
@@ -253,39 +276,18 @@ Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p, bool allowThis
         link.subControl = 0;
     }
 
-    // already linked?
-    QList<Link>::iterator itEnd = m_windows.end();
-
-    for(QList<Link>::iterator it = m_windows.begin();it != itEnd;++it)
-    {
-        if(link.subControl)
-        {
-            if((*it).subControl == link.subControl)
-            {
-                qDebug("Window %p/%p is already linked", Utils::pointerToVoidPointer(hwnd),
-                                                         Utils::pointerToVoidPointer(link.subControl));
-
-                return Link();
-            }
-        }
-        else if(!(*it).subControl && (*it).hwnd == link.hwnd)
-        {
-            qDebug("Window %p is already linked", Utils::pointerToVoidPointer(hwnd));
-            return Link();
-        }
-    }
-
     if(link.subControl)
     {
         TCHAR name[MAX_PATH];
 
         if(!GetClassName(link.subControl, name, PHRASEBOOKS_SIZE_OF_ARRAY(name)))
-            qWarning("Cannot get a class name for subcontrol %p (%ld)", Utils::pointerToVoidPointer(link.subControl), GetLastError());
+            qWarning("Cannot get a class name for subcontrol 0x%lx (0x%lx)", Utils::windowHandleToLong(link.subControl), GetLastError());
         else if(!lstrcmp(name, TEXT("Edit")) || !lstrcmp(name, TEXT("TEdit")))
             link.subControlSupportsClearing = true;
     }
 
-    qDebug("Subcontrol: %p", Utils::pointerToVoidPointer(link.subControl));
+    qDebug("Subcontrol: 0x%lx", Utils::windowHandleToLong(link.subControl));
+#endif
 
     return link;
 }
@@ -297,9 +299,9 @@ void Phrasebooks::checkWindows()
     for(QList<Link>::iterator it = m_windows.begin();it != itEnd;)
     {
         // remove dead windows
-        if(!IsWindow((*it).hwnd))
+        if(!Utils::isWindow((*it).hwnd))
         {
-            qDebug("Window id %p is not valid, removing", Utils::pointerToVoidPointer((*it).hwnd));
+            qDebug("Window id 0x%lx is not valid, removing", Utils::windowHandleToLong((*it).hwnd));
             it = m_windows.erase(it);
             itEnd = m_windows.end();
         }
@@ -333,7 +335,9 @@ void Phrasebooks::loadNextWindow()
         busy(false);
         activate();
 
+#ifdef Q_OS_WIN32
         LockSetForegroundWindow(LSFW_LOCK);
+#endif
 
         m_running = false;
     }
@@ -402,7 +406,7 @@ void Phrasebooks::slotCheckActive()
 
     const Link &link = m_windows[m_currentWindow];
 
-    if(GetForegroundWindow() == link.hwnd)
+    if(Utils::activeWindow() == link.hwnd)
     {
         qDebug("Found window, sending data");
 
@@ -492,11 +496,11 @@ void Phrasebooks::slotCurrentIndexChanged(int current, int total)
 
 void Phrasebooks::slotLoadToNextWindow()
 {
-    HWND window = m_windows.at(m_currentWindow).hwnd;
+    Platform::WindowId window = m_windows.at(m_currentWindow).hwnd;
 
-    qDebug("Trying window %p", Utils::pointerToVoidPointer(window));
+    qDebug("Trying window 0x%lx", Utils::windowHandleToLong(window));
 
-    bringToFront(window);
+    Utils::bringToFront(window);
 
     m_timerCheckActive->start();
 }
@@ -511,7 +515,7 @@ void Phrasebooks::slotClearLinks()
 
     qDebug("Clear links");
 
-    MessageBeep(MB_OK);
+    Utils::beep();
 
     m_windows.clear();
 
@@ -524,21 +528,6 @@ void Phrasebooks::slotLockLinks()
 
     ui->stackBusy->setCurrentIndex(m_locked);
     ui->target->locked(m_locked);
-}
-
-void Phrasebooks::bringToFront(HWND window)
-{
-    qDebug("Bring to front %p", Utils::pointerToVoidPointer(window));
-
-    // window flags to set
-    int flags = SW_SHOWNORMAL;
-
-    if(IsZoomed(window))
-        flags |= SW_SHOWMAXIMIZED;
-
-    // try to switch to this window
-    ShowWindow(window, flags);
-    SetForegroundWindow(window);
 }
 
 bool Phrasebooks::isBusy() const
@@ -560,6 +549,7 @@ bool Phrasebooks::isBusy() const
 
 bool Phrasebooks::detectForegroundWindowAndActivate()
 {
+#ifdef Q_OS_WIN32
     DWORD foregroundProcessId;
 
     const HWND foregroundWindow = GetForegroundWindow();
@@ -571,7 +561,7 @@ bool Phrasebooks::detectForegroundWindowAndActivate()
 
         if(!AttachThreadInput(foregroundThreadId, currentThreadId, TRUE))
         {
-            qWarning("Cannot attach to the thread %ld (%ld)", foregroundThreadId, GetLastError());
+            qWarning("Cannot attach to the thread 0x%lx (0x%lx)", foregroundThreadId, GetLastError());
             return false;
         }
 
@@ -581,6 +571,7 @@ bool Phrasebooks::detectForegroundWindowAndActivate()
         AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
     }
     else
+#endif
         activate();
 
     return true;
@@ -591,20 +582,24 @@ void Phrasebooks::targetDropped(const QPoint &p)
     if(isBusy())
         return;
 
+#ifdef Q_OS_WIN32
     WindowMarker::remove(&m_drawnWindow);
+#endif
 
-    Link link = checkTargetWindow(p, false);
+    Link link = checkTargetWindow(p);
 
     if(!link.hwnd)
         return;
 
+#ifdef Q_OS_WIN32
     link.threadId = GetWindowThreadProcessId(link.hwnd, &link.processId);
+#endif
+
     link.dropPoint = p;
 
-    qDebug("Window under cursor is %p", Utils::pointerToVoidPointer(link.hwnd));
+    qDebug("Window under cursor is 0x%lx", Utils::windowHandleToLong(link.hwnd));
 
-    // beep
-    MessageBeep(MB_OK);
+    Utils::beep();
 
     m_windows.append(link);
 
@@ -621,10 +616,8 @@ void Phrasebooks::targetDropped(const QPoint &p)
 
 void Phrasebooks::slotTargetMoving(const QPoint &pt)
 {
-    POINT pnt = {0, 0};
-
-    pnt.x = pt.x();
-    pnt.y = pt.y();
+#ifdef Q_OS_WIN32
+    POINT pnt = { pt.x(), pt.y() };
 
     HWND rnewHwnd = RealChildWindowFromPoint(GetDesktopWindow(), pnt);
     HWND newHwnd = Utils::RealWindowFromPoint(pnt);
@@ -638,11 +631,16 @@ void Phrasebooks::slotTargetMoving(const QPoint &pt)
     m_drawnWindow = newHwnd;
 
     WindowMarker::draw(m_drawnWindow);
+#else
+    Q_UNUSED(pt)
+#endif
 }
 
 void Phrasebooks::slotTargetCancelled()
 {
+#ifdef Q_OS_WIN32
     WindowMarker::remove(&m_drawnWindow);
+#endif
 }
 
 void Phrasebooks::slotMessageReceived(const QString &msg)
@@ -702,11 +700,12 @@ void Phrasebooks::slotSelectorClosed(const QString &bookAndChapter)
 
 bool Phrasebooks::setForeignFocus(const Link &link)
 {
+#ifdef Q_OS_WIN32
     const DWORD currentThreadId = GetCurrentThreadId();
 
     if(!AttachThreadInput(link.threadId, currentThreadId, TRUE))
     {
-        qWarning("Cannot attach to the thread %ld (%ld)", link.threadId, GetLastError());
+        qWarning("Cannot attach to the thread 0x%lx (0x%lx)", link.threadId, GetLastError());
         return false;
     }
 
@@ -721,11 +720,14 @@ bool Phrasebooks::setForeignFocus(const Link &link)
 
     if(!hwnd)
     {
-        qWarning("Cannot set focus to the subcontrol %p (%ld)", Utils::pointerToVoidPointer(link.subControl), GetLastError());
+        qWarning("Cannot set focus to the subcontrol 0x%lx (0x%lx)", Utils::windowHandleToLong(link.subControl), GetLastError());
         return false;
     }
     else
-        qDebug("Subcontrol %p has been focused", Utils::pointerToVoidPointer(link.subControl));
+        qDebug("Subcontrol 0x%lx has been focused", Utils::windowHandleToLong(link.subControl));
+#else
+    Q_UNUSED(link)
+#endif
 
     return true;
 }

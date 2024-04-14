@@ -71,6 +71,8 @@ About::About(QWidget *parent)
 
     m_checker->start();
     m_timer->start();
+
+    adjustSize();
 }
 
 About::~About()

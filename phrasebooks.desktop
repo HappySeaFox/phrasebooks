@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Education;Languages
+Exec=phrasebooks
+Icon=phrasebooks
+Terminal=false
+Name=Phrasebooks
+Comment=Phrasebooks manager
+Comment[ru]=Утилита для управления разговорниками
