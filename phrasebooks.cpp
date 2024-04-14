@@ -684,17 +684,20 @@ void Phrasebooks::slotSelectorClosed(const QString &bookAndChapter)
             SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, bookAndChapter);
         }
     }
-    else if(!QFile::exists(ui->list->currentChapterPath()))
+    else if(!ui->list->currentChapterPath().isEmpty())
     {
-        qDebug("Current chapter has been deleted");
+        if(!QFile::exists(ui->list->currentChapterPath()))
+        {
+            qDebug("Current chapter has been deleted");
 
-        ui->list->reset();
-        ui->chapter->setChapter(QString());
+            ui->list->reset();
+            ui->chapter->setChapter(QString());
 
-        SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, QString());
+            SETTINGS_SET_STRING(SETTING_LAST_CHAPTER, QString());
+        }
+        else
+            ui->list->maybeUpdateCurrentChapter();
     }
-    else
-        ui->list->maybeUpdateCurrentChapter();
 }
 
 bool Phrasebooks::setForeignFocus(const Link &link)
