@@ -99,14 +99,15 @@ void BooksAndChapters::openSelector()
 
 void BooksAndChapters::mousePressEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
+    event->accept();
 
-    m_wasMousePress = true;
+    if(event->button() == Qt::LeftButton)
+        m_wasMousePress = true;
 }
 
 void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
+    event->accept();
 
     if(m_wasMousePress)
     {
