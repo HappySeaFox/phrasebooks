@@ -103,14 +103,13 @@ bool NetworkAccess::get(const QUrl &url)
     // cache data
     d->url = url;
 
-    connect(d->reply, &QNetworkReply::downloadProgress, this, &NetworkAccess::downloadProgress);
-
-    connect(d->reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),
+    connect(d->reply.data(), static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),
             this, &NetworkAccess::slotNetworkError);
 
-    connect(d->reply, &QNetworkReply::sslErrors,        this, &NetworkAccess::slotSslErrors);
-    connect(d->reply, &QNetworkReply::finished,         this, &NetworkAccess::slotNetworkDone);
-    connect(d->reply, &QNetworkReply::readyRead,        this, &NetworkAccess::slotNetworkData);
+    connect(d->reply.data(), &QNetworkReply::downloadProgress, this, &NetworkAccess::downloadProgress);
+    connect(d->reply.data(), &QNetworkReply::sslErrors,        this, &NetworkAccess::slotSslErrors);
+    connect(d->reply.data(), &QNetworkReply::finished,         this, &NetworkAccess::slotNetworkDone);
+    connect(d->reply.data(), &QNetworkReply::readyRead,        this, &NetworkAccess::slotNetworkData);
 
     return true;
 }
