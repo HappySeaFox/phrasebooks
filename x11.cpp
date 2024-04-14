@@ -10,7 +10,6 @@
 #include <unistd.h>
 
 #include <X11/Xutil.h>
-#include <X11/extensions/Xcomposite.h>
 
 #include "x11.h"
 
