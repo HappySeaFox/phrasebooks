@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     selectchapter.cpp \
     chaptersview.cpp \
     options.cpp \
-    bookfileiconprovider.cpp
+    bookfileiconprovider.cpp \
+    chapterlabel.cpp
 
 HEADERS += qtsingleapplication/qtsingleapplication.h \
     qtsingleapplication/qtlockedfile.h \
@@ -52,7 +53,8 @@ HEADERS += qtsingleapplication/qtsingleapplication.h \
     selectchapter.h \
     chaptersview.h \
     options.h \
-    bookfileiconprovider.h
+    bookfileiconprovider.h \
+    chapterlabel.h
 
 RESOURCES += phrasebooks.qrc
 

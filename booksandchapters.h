@@ -46,9 +46,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-private:
-    void updateText();
-
 // slots
 private:
     void slotSelected(const QString &bookAndChapter);
