@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QShortcut>
+#include <QTimer>
 
 #include <cstdlib>
 
@@ -112,7 +113,7 @@ void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
     if(m_wasMousePress)
     {
         m_wasMousePress = false;
-        openSelector();
+        QTimer::singleShot(0, this, &BooksAndChapters::openSelector);
     }
 }
 
