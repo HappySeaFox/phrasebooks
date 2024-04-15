@@ -188,7 +188,7 @@ Platform::WindowId Utils::topLevelWindowFromPoint(const QPoint &qtpt)
 #else
     Platform::WindowId found = 0;
 
-    QList<Window> windows = X11::netwmWindowList();
+    const QList<Window> windows = X11::netwmWindowList();
 
     for(int i = windows.size()-1;i >= 0;i--)
     {
@@ -197,12 +197,16 @@ Platform::WindowId Utils::topLevelWindowFromPoint(const QPoint &qtpt)
         if(!X11::netwmIsWindowNormal(window))
             continue;
 
-        XWindowAttributes attr;
+        Window wunused;
+        int x, y;
+        unsigned int width, height, rest;
 
-        if(!XGetWindowAttributes(QX11Info::display(), window, &attr))
+        if(!XGetGeometry(QX11Info::display(), window, &wunused, &x, &y, &width, &height, &rest, &rest))
             continue;
 
-        if(QRect(attr.x, attr.y, attr.width, attr.height).contains(qtpt))
+        XTranslateCoordinates(QX11Info::display(), window, QX11Info::appRootWindow(), 0, 0, &x, &y, &wunused);
+
+        if(QRect(x, y, width, height).contains(qtpt))
         {
             found = window;
             break;
