@@ -388,6 +388,7 @@ void Utils::stopSendingKeys()
 #ifndef Q_OS_WIN32
     XSync(QX11Info::display(), False);
     XTestGrabControl(QX11Info::display(), False);
+    sleep(250);
 #endif
 }
 

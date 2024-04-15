@@ -216,10 +216,6 @@ void Phrasebooks::sendString(const QString &text)
 
     Utils::sendReturn();
     Utils::stopSendingKeys();
-
-#ifndef Q_OS_WIN32
-    Utils::sleep(250);
-#endif
 }
 
 Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p)
