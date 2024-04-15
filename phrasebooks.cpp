@@ -105,7 +105,8 @@ Phrasebooks::Phrasebooks()
     //: Qt is a C++ crossplatform toolkit http://qt-project.org
     m_menu->addAction(tr("About Qt..."), this, SLOT(slotAboutQt()));
     m_menu->addSeparator();
-    m_menu->addAction(QIcon(":/images/quit.png"), tr("Quit") + '\t' + shortcutQuit->key().toString(), this, SLOT(slotQuit()));
+    m_menu->addAction(QIcon::fromTheme("application-exit", QIcon(":/images/quit.png")),
+                      tr("Quit") + '\t' + shortcutQuit->key().toString(), this, SLOT(slotQuit()));
 
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);

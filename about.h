@@ -37,6 +37,9 @@ public:
     explicit About(QWidget *parent = 0);
     ~About();
 
+protected:
+    virtual bool eventFilter(QObject *obj, QEvent *event);
+
 // slots
 private:
     void slotSetWaitIcon();
@@ -47,6 +50,8 @@ private:
     Ui::About *ui;
     UpdateChecker *m_checker;
     QTimer *m_timer;
+    bool m_wasMousePress;
+    bool m_newVersionAvailable;
 };
 
 #endif // ABOUT_H

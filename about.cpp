@@ -15,10 +15,14 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopServices>
 #include <QKeySequence>
+#include <QMouseEvent>
 #include <QShortcut>
 #include <QTimer>
 #include <QMovie>
+#include <QIcon>
+#include <QUrl>
 
 #include "updatechecker.h"
 #include "settings.h"
@@ -30,6 +34,8 @@
 About::About(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::About)
+    , m_wasMousePress(false)
+    , m_newVersionAvailable(false)
 {
     setWindowTitle(Utils::aboutPhrasebooks());
 
@@ -72,6 +78,9 @@ About::About(QWidget *parent)
     m_checker->start();
     m_timer->start();
 
+    // catch mouse events
+    ui->labelUpdate->installEventFilter(this);
+
     adjustSize();
 }
 
@@ -80,36 +89,53 @@ About::~About()
     delete ui;
 }
 
+bool About::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent *me = static_cast<QMouseEvent *>(event);
+
+        if(me->button() == Qt::LeftButton)
+            m_wasMousePress = true;
+    }
+    else if(event->type() == QEvent::MouseButtonRelease)
+    {
+        QMouseEvent *me = static_cast<QMouseEvent *>(event);
+
+        if(me->button() == Qt::LeftButton && m_wasMousePress && m_newVersionAvailable)
+        {
+            m_wasMousePress = false;
+            QDesktopServices::openUrl(QUrl(DOWNLOADROOT));
+        }
+    }
+
+    return QObject::eventFilter(obj, event);
+}
+
 void About::slotNewVersion(const QString &newVersion)
 {
     QString tooltip;
-    QString text;
 
     m_timer->stop();
 
     if(!newVersion.isEmpty())
     {
-        text = "<html><head><meta name=\"qrichtext\" content=\"1\" /></head>"
-                "<body><a href=\"" DOWNLOADROOT "/files\">"
-                    "<img src=\":/images/update.png\"></img>"
-                "</a>"
-                "</body></html>";
         //: Means "A new version of Phrasebooks is availabe on the website"
         tooltip = tr("Update available");
+
+        ui->labelUpdate->setPixmap(QIcon::fromTheme("software-update-available", QIcon(":/images/update.png")).pixmap(16, 16));
+        ui->labelUpdate->setCursor(Qt::PointingHandCursor);
+        m_newVersionAvailable = true;
     }
     else
     {
-        text = "<html><head><meta name=\"qrichtext\" content=\"1\" /></head>"
-                "<body>"
-                "<img src=\":/images/ok.png\"></img>"
-                "</body></html>";
         //: "Phrasebooks" is the name of the application. Phrasebooks will check for updates and show this message when there are no new version available
         tooltip = tr("Phrasebooks is up to date");
+        ui->labelUpdate->setPixmap(QIcon(":/images/ok.png").pixmap(16, 16));
     }
 
     delete ui->labelUpdate->movie();
 
-    ui->labelUpdate->setText(text);
     ui->labelUpdate->setToolTip(tooltip);
 }
 
@@ -119,7 +145,8 @@ void About::slotError(const QString &err)
 
     delete ui->labelUpdate->movie();
 
-    ui->labelUpdate->setPixmap(QPixmap(":/images/error.png"));
+    ui->labelUpdate->setPixmap(QIcon::fromTheme("error",
+                                                QIcon::fromTheme("dialog-error", QIcon(":/images/error.png"))).pixmap(16, 16));
     //: %1 will be replaced with the error code by the application. It will look like "Cannot check for updates (Server is unavailable)"
     ui->labelUpdate->setToolTip(tr("Cannot check for updates (%1)").arg(err));
 }

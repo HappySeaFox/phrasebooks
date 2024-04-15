@@ -37,10 +37,12 @@ Options::Options(QWidget *parent)
 
     //: Means "The system language"
     ui->comboLang->addItem('<' + tr("System") + '>');
+    ui->labelRestart->setPixmap(QIcon::fromTheme("view-refresh", QIcon(":/images/restart.png")).pixmap(16, 16));
 
     load();
 
-    connect(ui->comboLang, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Options::slotSomethingImportantChanged);
+    connect(ui->comboLang, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &Options::slotSomethingImportantChanged);
 }
 
 Options::~Options()

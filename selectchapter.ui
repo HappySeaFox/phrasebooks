@@ -83,10 +83,6 @@
        <property name="text">
         <string/>
        </property>
-       <property name="icon">
-        <iconset resource="phrasebooks.qrc">
-         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-       </property>
       </widget>
      </item>
      <item>
@@ -96,7 +92,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>0</width>
          <height>20</height>
         </size>
        </property>
@@ -118,10 +114,6 @@
        </property>
        <property name="toolTip">
         <string>Open in file browser</string>
-       </property>
-       <property name="icon">
-        <iconset resource="phrasebooks.qrc">
-         <normaloff>:/images/filebrowser.png</normaloff>:/images/filebrowser.png</iconset>
        </property>
       </widget>
      </item>

@@ -42,6 +42,10 @@ SelectChapter::SelectChapter(const QDir &root, QWidget *parent)
     QShortcut *shortcutNewChapter = new QShortcut(QKeySequence::New, this, SLOT(slotAddChapter()));
     QShortcut *shortcutDelete = new QShortcut(QKeySequence::Delete, this, SLOT(slotDelete()));
 
+    // theme icons
+    ui->toolDelete->setIcon(QIcon::fromTheme("edit-delete", QIcon(":/images/delete.png")));
+    ui->toolExplorer->setIcon(QIcon::fromTheme("folder-open", QIcon(":/images/filebrowser.png")));
+
     //: %1 will be replaced with the hotkey by the application
     ui->toolAddBook->setToolTip(tr("Add a book (%1)").arg(shortcutNewBook->key().toString()));
     //: %1 will be replaced with the hotkey by the application

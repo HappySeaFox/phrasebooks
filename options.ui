@@ -36,9 +36,6 @@
        <property name="toolTip">
         <string>Need restart</string>
        </property>
-       <property name="pixmap">
-        <pixmap resource="phrasebooks.qrc">:/images/restart.png</pixmap>
-       </property>
       </widget>
      </item>
      <item>
@@ -84,9 +81,7 @@
  <tabstops>
   <tabstop>buttonBox</tabstop>
  </tabstops>
- <resources>
-  <include location="phrasebooks.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
