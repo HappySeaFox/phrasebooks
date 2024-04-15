@@ -58,7 +58,8 @@ List::List(QWidget *parent)
     // "List" menu
     m_menu = new QMenu(this);
     //: This is the label on a menu item that user clicks to issue the command
-    m_menu->addAction(QIcon(":/images/clear.png"), tr("Clear") + '\t' + QKeySequence(QKeySequence::New).toString(), this, SLOT(clear()));
+    m_menu->addAction(QIcon::fromTheme("edit-clear", QIcon(":/images/clear.png")),
+                      tr("Clear") + '\t' + QKeySequence(QKeySequence::New).toString(), this, SLOT(clear()));
     m_menu->addAction(tr("Undo clear") + '\t' + QKeySequence(QKeySequence::Undo).toString(), this, SLOT(undo()));
     m_menu->addSeparator();
     //: This is the label on a menu item that user clicks to issue the command
