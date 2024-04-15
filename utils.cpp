@@ -286,6 +286,14 @@ bool Utils::isDesktop(Platform::WindowId hwnd)
 #endif
 }
 
+void Utils::startSendingKeys()
+{
+#ifndef Q_OS_WIN32
+    XSync(QX11Info::display(), False);
+    XTestGrabControl(QX11Info::display(), True);
+#endif
+}
+
 void Utils::sendKey(int key, bool extended)
 {
     // do we need the SHIFT key?
@@ -372,8 +380,14 @@ void Utils::sendKey(int key, bool extended)
 
     if(shift)
         XTestFakeKeyEvent(QX11Info::display(), modcode, False, 0);
+#endif
+}
 
+void Utils::stopSendingKeys()
+{
+#ifndef Q_OS_WIN32
     XSync(QX11Info::display(), False);
+    XTestGrabControl(QX11Info::display(), False);
 #endif
 }
 

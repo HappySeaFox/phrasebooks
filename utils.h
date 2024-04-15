@@ -66,7 +66,11 @@ public:
 
     static inline QString networkErrorTitle();
 
+    static void startSendingKeys();
+
     static void sendKey(int key, bool extended = false);
+
+    static void stopSendingKeys();
 
     static void sendReturn();
 

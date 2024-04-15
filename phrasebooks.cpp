@@ -205,13 +205,21 @@ void Phrasebooks::sendString(const QString &text)
         return;
     }
 
+    Utils::startSendingKeys();
+
     for(int i = 0;i < text.length();i++)
         Utils::sendKey(text.at(i).toLatin1());
 
-    // FIXME
+#ifdef Q_OS_WIN32
     Utils::sleep(75);
+#endif
 
     Utils::sendReturn();
+    Utils::stopSendingKeys();
+
+#ifndef Q_OS_WIN32
+    Utils::sleep(250);
+#endif
 }
 
 Phrasebooks::Link Phrasebooks::checkTargetWindow(const QPoint &p)
