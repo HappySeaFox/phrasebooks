@@ -7,11 +7,6 @@
 
 #define NVER NVER1.NVER2.NVER3
 
-STRINGTABLE LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-BEGIN
-        1 "Phrasebooks"quote(TARGET)"\0"
-END
-
 IDI_ICON1 ICON DISCARDABLE "images/phrasebooks.ico"
 
 1 VERSIONINFO
@@ -24,12 +19,11 @@ BEGIN
         BEGIN
           BLOCK "040904e4"
           BEGIN
-          VALUE "Comments",           quote(TARGET) " helps you to do your home task in trading. It can link different trading platforms and charts together and manage a list of tickers."
           VALUE "CompanyName",        "Dmitry Baryshev"
           VALUE "FileDescription",    "Phrasebooks"
           VALUE "FileVersion",        quote(NVER)
-          VALUE "InternalName",       quote(TARGET)
-          VALUE "LegalCopyright",     "(C) 2012,2013 Dmitry Baryshev"
+          VALUE "InternalName",       "Phrasebooks"
+          VALUE "LegalCopyright",     "(C) 2016 Dmitry Baryshev"
           VALUE "ProductName",        "Phrasebooks"
           VALUE "ProductVersion",     quote(NVER)
           VALUE "Builder",            "Dmitry Baryshev"
