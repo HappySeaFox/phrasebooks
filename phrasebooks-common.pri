@@ -3,11 +3,11 @@ isEmpty(TARGET) {
 }
 
 lessThan(QT_MAJOR_VERSION, 5) {
-    error("This project requires Qt 5.3 or greater")
+    error("This project requires Qt 5.2 or greater")
 } else {
     equals(QT_MAJOR_VERSION, 5) {
-        lessThan(QT_MINOR_VERSION, 3) {
-            error("This project requires Qt 5.3 or greater")
+        lessThan(QT_MINOR_VERSION, 2) {
+            error("This project requires Qt 5.2 or greater")
         }
     }
 }
