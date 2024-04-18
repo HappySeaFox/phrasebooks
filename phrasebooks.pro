@@ -211,7 +211,9 @@ QMAKE_EXTRA_TARGETS += tag
     iss.commands += $$mle(echo UninstallDisplayName={$${LITERAL_HASH}MyAppName} >> $$ISS)
     iss.commands += $$mle(echo UninstallDisplayIcon={app}\\$${TARGET}.exe >> $$ISS)
     iss.commands += $$mle(echo MinVersion="0,5.1" >> $$ISS)
+
     iss.commands += $$mle(echo [Languages] >> $$ISS)
+    iss.commands += $$mle(echo Name: \"Default\"; MessagesFile: \"compiler:Default.isl\" >> $$ISS)
 
     for(lng, LANGS) {
         lng = $$find(lng, .isl$)
