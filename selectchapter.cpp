@@ -101,7 +101,7 @@ void SelectChapter::setInitialChapter(const QString &chapterRelativePath)
 
     for(int i = 0;i < initialPaths.size();i++)
     {
-        m_initialPaths.append(initialPaths.mid(0, i+1).join(QChar('/')));
+        m_initialPaths.append(QStringList(initialPaths.mid(0, i+1)).join(QChar('/')));
     }
 
     qDebug() << "Inital chapter search index:" << m_initialPaths;

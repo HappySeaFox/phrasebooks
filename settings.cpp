@@ -37,11 +37,12 @@ Settings::Settings()
 
     qRegisterMetaTypeStreamOperators<QList<QPoint>>("QList<QPoint>");
 
-    d->settings = new QSettings(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                                    + QDir::separator()
-                                    + QCoreApplication::applicationName()
-                                    + ".ini",
-                                QSettings::IniFormat);
+    d->settings = new QSettings(
+                Settings::appDataLocation()
+                    + QDir::separator()
+                    + QCoreApplication::applicationName()
+                    + ".ini",
+                QSettings::IniFormat);
 
     d->settings->setFallbacksEnabled(false);
 

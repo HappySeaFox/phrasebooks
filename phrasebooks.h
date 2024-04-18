@@ -95,9 +95,6 @@ private slots:
     void slotTargetMoving(const QPoint &);
     void slotTargetCancelled();
     void targetDropped(const QPoint &);
-
-// slots
-private:
     void slotCheckActive();
     void slotLoadToNextWindow();
     void slotLoadText(const QString &text);

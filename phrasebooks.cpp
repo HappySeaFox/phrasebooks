@@ -74,7 +74,8 @@ Phrasebooks::Phrasebooks()
 {
     ui->setupUi(this);
 
-    connect(static_cast<QtSingleApplication *>(qApp), &QtSingleApplication::messageReceived, this, &Phrasebooks::slotMessageReceived);
+    connect(static_cast<QtSingleApplication *>(qApp), SIGNAL(messageReceived(QString)),
+            this, SLOT(slotMessageReceived(QString)));
 
     setAcceptDrops(true);
 
@@ -111,15 +112,15 @@ Phrasebooks::Phrasebooks()
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);
     m_timerCheckActive->setInterval(50);
-    connect(m_timerCheckActive, &QTimer::timeout, this, &Phrasebooks::slotCheckActive);
+    connect(m_timerCheckActive, SIGNAL(timeout()), this, SLOT(slotCheckActive()));
 
     m_timerLoadToNextWindow = new QTimer(this);
     m_timerLoadToNextWindow->setSingleShot(true);
     m_timerLoadToNextWindow->setInterval(10);
-    connect(m_timerLoadToNextWindow, &QTimer::timeout, this, &Phrasebooks::slotLoadToNextWindow);
+    connect(m_timerLoadToNextWindow, SIGNAL(timeout()), this, SLOT(slotLoadToNextWindow()));
 
-    connect(ui->list, &List::loadText,            this, &Phrasebooks::slotLoadText);
-    connect(ui->list, &List::currentIndexChanged, this, &Phrasebooks::slotCurrentIndexChanged);
+    connect(ui->list, SIGNAL(loadText(QString)),            this, SLOT(slotLoadText(QString)));
+    connect(ui->list, SIGNAL(currentIndexChanged(int,int)), this, SLOT(slotCurrentIndexChanged(int,int)));
 
     // restore geometry
     QSize sz = SETTINGS_GET_SIZE(SETTING_SIZE);
@@ -133,9 +134,9 @@ Phrasebooks::Phrasebooks()
     checkWindows();
 
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
-        QTimer::singleShot(0, this, &Phrasebooks::slotFoolsDay);
+        QTimer::singleShot(0, this, SLOT(slotFoolsDay()));
 
-    connect(ui->chapter, &BooksAndChapters::selectorClosed, this, &Phrasebooks::slotSelectorClosed);
+    connect(ui->chapter, SIGNAL(selectorClosed(QString)), this, SLOT(slotSelectorClosed(QString)));
 
     // load the last chapter
     const QString lastChapter = SETTINGS_GET_STRING(SETTING_LAST_CHAPTER);

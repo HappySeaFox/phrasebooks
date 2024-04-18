@@ -46,14 +46,11 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-// slots
-private:
-    void slotSelected(const QString &bookAndChapter);
-
 signals:
     void selectorClosed(const QString &bookAndChapter);
 
 private slots:
+    void slotSelected(const QString &bookAndChapter);
     void openSelector();
 
 private:

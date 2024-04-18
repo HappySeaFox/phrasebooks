@@ -33,7 +33,7 @@
 BooksAndChapters::BooksAndChapters(QWidget *parent)
     : QFrame(parent)
     , ui(new Ui::BooksAndChapters)
-    , m_root(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))
+    , m_root(Settings::appDataLocation())
     , m_wasMousePress(false)
     , m_selectChapter(nullptr)
     , m_shortcutOpen(new QShortcut(QKeySequence::Open, this, SLOT(openSelector())))
@@ -113,7 +113,7 @@ void BooksAndChapters::mouseReleaseEvent(QMouseEvent *event)
     if(m_wasMousePress)
     {
         m_wasMousePress = false;
-        QTimer::singleShot(0, this, &BooksAndChapters::openSelector);
+        QTimer::singleShot(0, this, SLOT(openSelector()));
     }
 }
 

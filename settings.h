@@ -18,6 +18,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QCoreApplication>
+#include <QStandardPaths>
 #include <QStringList>
 #include <QDataStream>
 #include <QByteArray>
@@ -29,6 +31,7 @@
 #include <QList>
 #include <QHash>
 #include <QMap>
+#include <QDir>
 
 #define SETTINGS_CONTAINS Settings::instance()->contains
 
@@ -143,6 +146,8 @@ public:
 
     ~Settings();
 
+    static inline QString appDataLocation();
+
     enum SyncType { NoSync, Sync };
 
     /*
@@ -205,6 +210,14 @@ private:
 };
 
 /**********************************/
+
+inline
+QString Settings::appDataLocation()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+            + QDir::separator()
+            + QCoreApplication::applicationName();
+}
 
 template <typename T>
 T Settings::value(const QString &key)

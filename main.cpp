@@ -46,7 +46,10 @@ static char messageTypeToChar(QtMsgType type)
         case QtWarningMsg:  return 'W';
         case QtCriticalMsg: return 'C';
         case QtFatalMsg:    return 'F';
+
+#if QT_VERSION >= QT_VERSION_CHECK(5,5,0)
         case QtInfoMsg:     return 'I';
+#endif
 
         default:
             return 'U';
