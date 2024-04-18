@@ -74,7 +74,7 @@ win32 {
     RC_FILE = phrasebooks.rc
     LIBS += -lpsapi -lgdi32 -luser32
 } else:unix {
-    LIBS += -lX11 -lXtst -lXext
+    LIBS += -lX11 -lXtst
 }
 
 OTHER_FILES += \
