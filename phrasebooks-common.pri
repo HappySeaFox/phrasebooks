@@ -3,11 +3,11 @@ isEmpty(TARGET) {
 }
 
 lessThan(QT_MAJOR_VERSION, 5) {
-    error("This project requires Qt 5.2 or greater")
+    error("This project requires Qt 5.1 or greater")
 } else {
     equals(QT_MAJOR_VERSION, 5) {
-        lessThan(QT_MINOR_VERSION, 2) {
-            error("This project requires Qt 5.2 or greater")
+        lessThan(QT_MINOR_VERSION, 1) {
+            error("This project requires Qt 5.1 or greater")
         }
     }
 }
@@ -70,8 +70,12 @@ win32-g++ {
 
 for(ts, LANGUAGES) {
     win32 {
+        LRELEASE=$$findexe("lrelease.exe")
+        LUPDATE=$$findexe("lupdate.exe")
         MTRANSLATIONS += $${_PRO_FILE_PWD_}\\ts\\$${ts}.ts
     } else {
+        LRELEASE=$$system(which lrelease)
+        LUPDATE=$$system(which lupdate)
         MTRANSLATIONS += $${_PRO_FILE_PWD_}/ts/$${ts}.ts
     }
 }
@@ -79,26 +83,27 @@ for(ts, LANGUAGES) {
 message(Translations: $$MTRANSLATIONS)
 
 # copy translations
-QMAKE_POST_LINK += $$mle(lupdate -no-obsolete $$_PRO_FILE_ -ts $$MTRANSLATIONS)
-
-# lrelease for each ts
-win32 {
-    TRANSLATIONS_DIR="$${OUT_PWD}/$(DESTDIR_TARGET)/../translations"
-} else {
-    TRANSLATIONS_DIR="$${OUT_PWD}/translations"
+!isEmpty(LUPDATE) {
+    message("lupdate is found, will update the translations")
+    QMAKE_POST_LINK += $$mle($$LUPDATE -no-obsolete $$_PRO_FILE_ -ts $$MTRANSLATIONS)
 }
 
-win32 {
-    QMAKE_POST_LINK += $$mle(if not exist \"$$TRANSLATIONS_DIR\" mkdir \"$$TRANSLATIONS_DIR\")
+# lrelease for each ts
+!isEmpty(LRELEASE) {
+    win32 {
+        TRANSLATIONS_DIR="$${OUT_PWD}/$(DESTDIR_TARGET)/../translations"
+        QMAKE_POST_LINK += $$mle(if not exist \"$$TRANSLATIONS_DIR\" mkdir \"$$TRANSLATIONS_DIR\")
 
-    for(ts, LANGUAGES) {
-        QMAKE_POST_LINK += $$mle(lrelease \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
-    }
-} else {
-    QMAKE_POST_LINK += $$mle(mkdir -p \"$$TRANSLATIONS_DIR\")
+        for(ts, LANGUAGES) {
+            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\")
+        }
+    } else {
+        TRANSLATIONS_DIR="$${OUT_PWD}/translations"
+        QMAKE_POST_LINK += $$mle(mkdir -p \"$$TRANSLATIONS_DIR\")
 
-    for(ts, LANGUAGES) {
-        QMAKE_POST_LINK += $$mle(lrelease \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+        for(ts, LANGUAGES) {
+            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\")
+        }
     }
 }
 
