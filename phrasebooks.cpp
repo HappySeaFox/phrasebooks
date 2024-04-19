@@ -369,7 +369,7 @@ void Phrasebooks::loadText(const QString &text)
     if(m_windows.isEmpty())
     {
         qDebug("No windows configured");
-        activate();
+        ui->target->blink();
         return;
     }
 

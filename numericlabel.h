@@ -33,7 +33,8 @@ public:
     /*
      *  Only [0...20] values are accepted
      */
-    void setValue(uint val);
+    enum SetValueForce { Force, DontForce };
+    void setValue(uint val, SetValueForce force);
     uint value() const;
 
 private:

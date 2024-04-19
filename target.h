@@ -20,6 +20,7 @@
 
 #include <QWidget>
 
+class QTimer;
 class QLabel;
 
 class NumericLabel;
@@ -33,9 +34,9 @@ public:
 
     void setNumberOfLinks(uint n);
 
-    void setNumberToolTip(const QString &);
-
     void locked(bool);
+
+    void blink();
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event);
@@ -49,10 +50,15 @@ signals:
     void cancelled();
     void middleClick();
 
+private slots:
+    void slotRevertIcon();
+
 private:
     QLabel *m_label;
     NumericLabel *m_number;
     bool m_dragging;
+    QTimer *m_timerRevert;
+    uint m_blinkStep;
 };
 
 #endif // TARGET_H
