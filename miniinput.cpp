@@ -36,6 +36,25 @@ MiniInput::MiniInput(QWidget *parent)
 
     ui->lineMiniInput->setValidator(new EnglishValidator(ui->lineMiniInput));
     ui->lineMiniInput->installEventFilter(this);
+
+    ui->lineMiniInput->setToolTip(QString("<table>"
+                                          "<tr>"
+                                            "<td><nobr><b>%1</b></nobr></td>"
+                                            "<td></td>"
+                                            "<td>%2</td>"
+                                          "</tr>"
+                                          "<tr>"
+                                            "<td><nobr><b>%3</b></nobr></td>"
+                                            "<td></td>"
+                                            "<td>%4</td>"
+                                          "</tr>"
+                                          "</table>")
+                                  //: Means "Enter" key on a keyboard
+                                  .arg(tr("Enter"))
+                                  .arg(tr("Load the text into an external dictionary"))
+                                  //: Means "Up Arrow" key on a keyboard
+                                  .arg(tr("Up Arrow"))
+                                  .arg(tr("Add the text to the current chapter")));
 }
 
 MiniInput::~MiniInput()

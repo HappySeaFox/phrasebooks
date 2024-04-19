@@ -121,6 +121,22 @@
         <source>Type a phrase or a word...</source>
         <translation>Впишите слово или фразу...</translation>
     </message>
+    <message>
+        <source>Enter</source>
+        <translation>Ввод</translation>
+    </message>
+    <message>
+        <source>Load the text into an external dictionary</source>
+        <translation>Загрузить текст во внешний словарь</translation>
+    </message>
+    <message>
+        <source>Up Arrow</source>
+        <translation>Стрелка Вверх</translation>
+    </message>
+    <message>
+        <source>Add the text to the current chapter</source>
+        <translation>Добавить текст в текущую главу</translation>
+    </message>
 </context>
 <context>
     <name>Options</name>
