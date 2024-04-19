@@ -117,6 +117,17 @@ QMAKE_EXTRA_TARGETS += tag
 !isEmpty(GCCDIR):!isEmpty(ZIP) {
     message("7Z is found, will create custom dist targets")
 
+    # source archive
+    T="$${OUT_PWD}/phrasebooks-$$VERSION"
+    distsrc.commands += $$mle(if exist \"$$T\" rd /S /Q \"$$T\")
+    distsrc.commands += $$mle(xcopy /s /q /y /i /h \"$${_PRO_FILE_PWD_}\" \"$$T\\\")
+    distsrc.commands += $$mle(git -C \"$$T\" clean -dfx)
+    distsrc.commands += $$mle(rd /S /Q \"$$T/.git\")
+    distsrc.commands += $$mle(del /F /Q phrasebooks-$${VERSION}.zip)
+    distsrc.commands += $$mle($$ZIP a -r -tzip -mx=9 phrasebooks-$${VERSION}.zip \"$$T\")
+    distsrc.commands += $$mle(rd /S /Q \"$$T\")
+
+    QMAKE_EXTRA_TARGETS += distsrc
     # portable binary
     T="$${OUT_PWD}/phrasebooks-portable-$$VERSION"
 
