@@ -66,7 +66,7 @@ Target::Target(QWidget *parent)
 void Target::setNumberOfLinks(uint n)
 {
     m_timerRevert->stop();
-    m_number->setValue(n, NumericLabel::DontForce);
+    m_number->setValue(n);
 }
 
 void Target::locked(bool l)
@@ -145,8 +145,6 @@ void Target::resizeEvent(QResizeEvent *e)
 
 void Target::slotRevertIcon()
 {
-    qDebug("Blink step %d", m_blinkStep);
-
     if(m_blinkStep == PHRASEBOOKS_MAX_BLINKS*2)
     {
         qDebug("Stopping blinking");
@@ -154,10 +152,9 @@ void Target::slotRevertIcon()
         return;
     }
 
-    if((m_blinkStep) % 2)
-        m_number->setValue(m_number->value(), NumericLabel::Force);
-    else
-        m_number->setPixmap(QPixmap());
+    qDebug("Blink step %d", m_blinkStep);
+
+    m_number->setVisible((m_blinkStep) % 2);
 
     m_blinkStep++;
 }

@@ -36,10 +36,9 @@ NumericLabel::NumericLabel(uint value, QWidget *parent)
 NumericLabel::~NumericLabel()
 {}
 
-void NumericLabel::setValue(uint val, SetValueForce force)
+void NumericLabel::setValue(uint val)
 {
-    if((m_value == val || (m_value > PHRASEBOOKS_NUMERIC_LABEL_MAX && val > PHRASEBOOKS_NUMERIC_LABEL_MAX))
-            && force == DontForce)
+    if(m_value == val || (m_value > PHRASEBOOKS_NUMERIC_LABEL_MAX && val > PHRASEBOOKS_NUMERIC_LABEL_MAX))
         return;
 
     m_value = val;
@@ -73,7 +72,7 @@ void NumericLabel::init(uint value)
     m_value = PHRASEBOOKS_NUMERIC_LABEL_MAX + 1;
 
     setContentsMargins(0, 0, 0, 0);
-    setValue(value, Force);
+    setValue(value);
 
     QImage im(QString(":/images/counters/%1+.png").arg(PHRASEBOOKS_NUMERIC_LABEL_MAX));
 
