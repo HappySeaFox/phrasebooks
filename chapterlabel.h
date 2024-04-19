@@ -23,7 +23,7 @@
 class ChapterLabel : public QLabel
 {
 public:
-    ChapterLabel(QWidget *parent = 0);
+    explicit ChapterLabel(QWidget *parent = 0);
 
     void setText(const QString &text);
 

@@ -53,7 +53,7 @@ protected:
 private:
     struct Link
     {
-        Link(Platform::WindowId h = static_cast<Platform::WindowId>(0))
+        explicit Link(Platform::WindowId h = static_cast<Platform::WindowId>(0))
             : hwnd(h)
             , processId(0)
             , threadId(0)

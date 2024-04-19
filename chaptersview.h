@@ -23,7 +23,7 @@
 class ChaptersView : public QTreeView
 {
 public:
-    ChaptersView(QWidget *parent = 0);
+    explicit ChaptersView(QWidget *parent = 0);
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event);

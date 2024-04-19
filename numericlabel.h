@@ -26,7 +26,7 @@ class QPixmap;
 class NumericLabel : public QLabel
 {
 public:
-    NumericLabel(QWidget *parent = 0);
+    explicit NumericLabel(QWidget *parent = 0);
     NumericLabel(uint value, QWidget *parent = 0);
     ~NumericLabel();
 
