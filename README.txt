@@ -27,13 +27,6 @@ http://findicons.com/icon/177876/dictionary?id=177911
 Author: Jack Cai
 License: Creative Commons Attribution No Derivatives (by-nd)
 
-* "Windows" icon
-
-http://findicons.com/icon/88993/windows2
-
-Author: Tidav
-License: Freeware
-
 * Country flags are taken from
 
 http://icondrawer.com/free.php
