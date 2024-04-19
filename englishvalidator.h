@@ -27,7 +27,6 @@ class EnglishValidator : public QValidator
 {
 public:
     explicit EnglishValidator(QObject *parent = 0);
-    virtual ~EnglishValidator();
 
     virtual QValidator::State validate(QString &input, int &pos) const;
 };

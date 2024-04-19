@@ -21,9 +21,6 @@ EnglishValidator::EnglishValidator(QObject *parent) :
     QValidator(parent)
 {}
 
-EnglishValidator::~EnglishValidator()
-{}
-
 QValidator::State EnglishValidator::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos)
