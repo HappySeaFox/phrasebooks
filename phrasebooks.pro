@@ -212,6 +212,10 @@ QMAKE_EXTRA_TARGETS += tag
     iss.commands += $$mle(echo UninstallDisplayIcon={app}\\$${TARGET}.exe >> $$ISS)
     iss.commands += $$mle(echo MinVersion="0,5.1" >> $$ISS)
 
+    !isEmpty(SIGNTOOL):exists($$CERT) {
+        iss.commands += $$mle(echo SignTool=bps sign /d \$\$qPhrasebooks\$\$q /du \$\$q$$HTTPROOT\$\$q /f \$\$q$$CERT\$\$q /tr \$\$q$$RFC3161_SERVER\$\$q /v \$\$q\$\$f\$\$q >> $$ISS)
+    }
+
     iss.commands += $$mle(echo [Languages] >> $$ISS)
     iss.commands += $$mle(echo Name: \"Default\"; MessagesFile: \"compiler:Default.isl\" >> $$ISS)
 
@@ -318,8 +322,12 @@ QMAKE_EXTRA_TARGETS += tag
     QMAKE_EXTRA_TARGETS += iss
     QMAKE_EXTRA_TARGETS *= distbin
 
+    !isEmpty(SIGNTOOL):exists($$CERT) {
+        ADD="\"/sbps=$$SIGNTOOL \$\$p\""
+    }
+
     distbin.depends += iss
-    distbin.commands += $$mle(\"$$INNO\" /o. \"$$ISS\")
+    distbin.commands += $$mle(\"$$INNO\" /o. $$ADD \"$$ISS\")
     distbin.commands += $$mle(del /F /Q \"$$ISS\")
 } else {
     warning("Inno Setup is not found, will not create a setup file in a custom dist target")

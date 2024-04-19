@@ -102,6 +102,23 @@ win32 {
     }
 }
 
+win32 {
+    SIGNTOOL=$$findexe("signtool.exe")
+    CERT=$$dirname(_PRO_FILE_)-certs\\cert.pfx
+    RFC3161_SERVER="http://timestamp.comodoca.com/rfc3161"
+
+    !isEmpty(SIGNTOOL):exists($$CERT) {
+        message("Signtool and the certificate are found, will sign the $$TARGET executable")
+    } else {
+        warning("Signtool or the certificate is not found, will not sign the $$TARGET executable")
+    }
+
+    # sign
+    !isEmpty(SIGNTOOL):exists($$CERT) {
+        QMAKE_POST_LINK += $$mle($$SIGNTOOL sign /d \"Phrasebooks\" /du \"$$HTTPROOT\" /f \"$$CERT\" /tr \"$$RFC3161_SERVER\" /v \"$${OUT_PWD}/$(DESTDIR_TARGET)\")
+    }
+}
+
 # INNO setup
 win32 {
     INNO=$$system(echo %ProgramFiles(x86)%)\\Inno Setup 5\\iscc.exe
