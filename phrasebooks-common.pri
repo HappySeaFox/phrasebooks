@@ -95,14 +95,14 @@ message(Translations: $$MTRANSLATIONS)
         QMAKE_POST_LINK += $$mle(if not exist \"$$TRANSLATIONS_DIR\" mkdir \"$$TRANSLATIONS_DIR\")
 
         for(ts, LANGUAGES) {
-            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\")
+            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
         }
     } else {
         TRANSLATIONS_DIR="$${OUT_PWD}/translations"
         QMAKE_POST_LINK += $$mle(mkdir -p \"$$TRANSLATIONS_DIR\")
 
         for(ts, LANGUAGES) {
-            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\")
+            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
         }
     }
 }
