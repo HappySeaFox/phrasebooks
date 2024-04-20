@@ -390,7 +390,7 @@ void Utils::stopSendingKeys()
     XSync(QX11Info::display(), False);
     XTestGrabControl(QX11Info::display(), False);
     const int delay = SETTINGS_CONTAINS(SETTING_XTEST_RETURN_DELAY) ? SETTINGS_GET_INT(SETTING_XTEST_RETURN_DELAY) : 0;
-    sleep(delay < 250 : 250 : delay);
+    sleep(delay < 250 ? 250 : delay);
 #endif
 }
 
