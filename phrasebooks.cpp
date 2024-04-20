@@ -66,6 +66,7 @@ Phrasebooks::Phrasebooks()
               | Qt::CustomizeWindowHint)
     , ui(new Ui::Phrasebooks)
     , m_running(false)
+    , m_startupTime(0)
     , m_locked(false)
 #ifdef Q_OS_WIN32
     , m_drawnWindow(0)

@@ -113,10 +113,7 @@ private:
     QTimer *m_timerLoadToNextWindow;
     qint64 m_startupTime;
     QMenu *m_menu;
-    QGridLayout *m_layout;
     QString m_text;
-    bool m_wasVisible;
-    bool m_useKeyboardInRegion;
     bool m_locked;
 
 #ifdef Q_OS_WIN32
