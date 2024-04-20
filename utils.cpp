@@ -27,6 +27,7 @@
 #include <climits>
 #include <cstring>
 
+#include "settings.h"
 #include "utils.h"
 
 #ifdef Q_OS_UNIX
@@ -388,7 +389,8 @@ void Utils::stopSendingKeys()
 #ifndef Q_OS_WIN32
     XSync(QX11Info::display(), False);
     XTestGrabControl(QX11Info::display(), False);
-    sleep(250);
+    const int delay = SETTINGS_CONTAINS(SETTING_XTEST_RETURN_DELAY) ? SETTINGS_GET_INT(SETTING_XTEST_RETURN_DELAY) : 0;
+    sleep(delay < 250 : 250 : delay);
 #endif
 }
 

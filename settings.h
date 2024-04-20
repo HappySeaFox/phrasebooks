@@ -129,6 +129,7 @@
 #define SETTING_FOOLSDAY_SEEN       "foolsday-seen"
 #define SETTING_LAST_CHAPTER        "last-chapter"
 #define SETTING_LAST_LINK_POINTS    "last-link-points"
+#define SETTING_XTEST_RETURN_DELAY  "xtest-return-delay"
 
 class SettingsPrivate;
 
