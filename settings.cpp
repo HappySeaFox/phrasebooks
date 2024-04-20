@@ -37,12 +37,22 @@ Settings::Settings()
 
     qRegisterMetaTypeStreamOperators<QList<QPoint>>("QList<QPoint>");
 
-    d->settings = new QSettings(
-                QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                    + QDir::separator()
-                    + QCoreApplication::applicationName()
-                    + ".ini",
-                QSettings::IniFormat);
+    const QString configPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
+#ifdef Q_OS_UNIX
+            + QDir::separator()
+            + QCoreApplication::applicationName().toLower()
+#endif
+            ;
+
+    qDebug("Configuration directory: %s", qPrintable(configPath));
+
+    QDir().mkpath(configPath);
+
+    d->settings = new QSettings(configPath
+                                + QDir::separator()
+                                + QCoreApplication::applicationName()
+                                + ".ini",
+                                QSettings::IniFormat);
 
     d->settings->setFallbacksEnabled(false);
 
