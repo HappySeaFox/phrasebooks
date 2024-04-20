@@ -477,7 +477,7 @@ void Phrasebooks::slotRestoreLastLinks()
 
     slotClearLinks();
 
-    QList<QPoint> points = SETTINGS_GET_POINTS(SETTING_LAST_LINK_POINTS);
+    const QList<QPoint> points = SETTINGS_GET_POINTS(SETTING_LAST_LINK_POINTS);
 
     foreach(const QPoint &point, points)
     {

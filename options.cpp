@@ -59,7 +59,8 @@ void Options::load()
 {
     // translations
     const QMap<QString, QString> tsmap = Settings::instance()->translations();
-    QString ts = SETTINGS_GET_STRING(SETTING_TRANSLATION);
+    const QString ts = SETTINGS_GET_STRING(SETTING_TRANSLATION);
+
     QMap<QString, QString>::const_iterator itEnd = tsmap.end();
 
     for(QMap<QString, QString>::const_iterator it = tsmap.begin();it != itEnd;++it)
