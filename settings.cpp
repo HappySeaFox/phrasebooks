@@ -38,7 +38,7 @@ Settings::Settings()
     qRegisterMetaTypeStreamOperators<QList<QPoint>>("QList<QPoint>");
 
     d->settings = new QSettings(
-                Settings::appDataLocation()
+                QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                     + QDir::separator()
                     + QCoreApplication::applicationName()
                     + ".ini",
