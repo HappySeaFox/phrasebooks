@@ -50,7 +50,7 @@ Settings::Settings()
 
     d->settings = new QSettings(configPath
                                 + QDir::separator()
-                                + QCoreApplication::applicationName()
+                                + QCoreApplication::applicationName().toLower()
                                 + ".ini",
                                 QSettings::IniFormat);
 
