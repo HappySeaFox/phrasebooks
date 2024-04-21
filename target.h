@@ -19,6 +19,7 @@
 #define TARGET_H
 
 #include <QWidget>
+#include <QPixmap>
 
 class QTimer;
 class QLabel;
@@ -59,6 +60,7 @@ private:
     bool m_dragging;
     QTimer *m_timerRevert;
     uint m_blinkStep;
+    QPixmap m_dragPixmap;
 };
 
 #endif // TARGET_H

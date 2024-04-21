@@ -33,6 +33,7 @@ Target::Target(QWidget *parent)
     : QWidget(parent)
     , m_dragging(false)
     , m_blinkStep(0)
+    , m_dragPixmap(":/images/target_red.png")
 {
     QHBoxLayout *l = new QHBoxLayout;
     l->setContentsMargins(0, 0, 0, 0);
@@ -42,7 +43,7 @@ Target::Target(QWidget *parent)
     m_label = new QLabel(this);
     m_label->setFixedSize(32, 32);
     m_label->setToolTip(tr("Drag and drop this target to the window you need to create a link to"));
-    m_label->setPixmap(QPixmap(":/images/drag.png"));
+    m_label->setPixmap(QPixmap(":/images/target.png"));
 
     m_number = new NumericLabel(this);
 
@@ -92,13 +93,7 @@ void Target::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton)
     {
         qDebug("Start dragging");
-
-        QPixmap pixmap(m_label->size());
-        pixmap.fill(Qt::transparent);
-        m_label->render(&pixmap, QPoint(), QRegion(m_label->rect()), QWidget::DrawChildren);
-
-        QApplication::setOverrideCursor(QCursor(pixmap));
-
+        QApplication::setOverrideCursor(QCursor(m_dragPixmap));
         m_dragging = true;
     }
     else if(event->button() == Qt::MiddleButton)
