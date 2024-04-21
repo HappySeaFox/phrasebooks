@@ -75,8 +75,8 @@ Phrasebooks::Phrasebooks()
 {
     ui->setupUi(this);
 
-    connect(static_cast<QtSingleApplication *>(qApp), SIGNAL(messageReceived(QString)),
-            this, SLOT(slotMessageReceived(QString)));
+    connect(static_cast<QtSingleApplication *>(qApp), &QtSingleApplication::messageReceived,
+            this, &Phrasebooks::slotMessageReceived);
 
     setAcceptDrops(true);
 
@@ -113,15 +113,15 @@ Phrasebooks::Phrasebooks()
     m_timerCheckActive = new QTimer(this);
     m_timerCheckActive->setSingleShot(true);
     m_timerCheckActive->setInterval(50);
-    connect(m_timerCheckActive, SIGNAL(timeout()), this, SLOT(slotCheckActive()));
+    connect(m_timerCheckActive, &QTimer::timeout, this, &Phrasebooks::slotCheckActive);
 
     m_timerLoadToNextWindow = new QTimer(this);
     m_timerLoadToNextWindow->setSingleShot(true);
     m_timerLoadToNextWindow->setInterval(10);
-    connect(m_timerLoadToNextWindow, SIGNAL(timeout()), this, SLOT(slotLoadToNextWindow()));
+    connect(m_timerLoadToNextWindow, &QTimer::timeout, this, &Phrasebooks::slotLoadToNextWindow);
 
-    connect(ui->list, SIGNAL(loadText(QString)),            this, SLOT(slotLoadText(QString)));
-    connect(ui->list, SIGNAL(currentIndexChanged(int,int)), this, SLOT(slotCurrentIndexChanged(int,int)));
+    connect(ui->list, &List::loadText,            this, &Phrasebooks::slotLoadText);
+    connect(ui->list, &List::currentIndexChanged, this, &Phrasebooks::slotCurrentIndexChanged);
 
     // restore geometry
     QSize sz = SETTINGS_GET_SIZE(SETTING_SIZE);
@@ -137,7 +137,7 @@ Phrasebooks::Phrasebooks()
     if(!SETTINGS_GET_BOOL(SETTING_FOOLSDAY_SEEN))
         QTimer::singleShot(0, this, SLOT(slotFoolsDay()));
 
-    connect(ui->chapter, SIGNAL(selectorClosed(QString)), this, SLOT(slotSelectorClosed(QString)));
+    connect(ui->chapter, &BooksAndChapters::selectorClosed, this, &Phrasebooks::slotSelectorClosed);
 
     // load the last chapter
     const QString lastChapter = SETTINGS_GET_STRING(SETTING_LAST_CHAPTER);

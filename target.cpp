@@ -60,7 +60,7 @@ Target::Target(QWidget *parent)
 
     m_timerRevert = new QTimer(this);
     m_timerRevert->setInterval(200);
-    connect(m_timerRevert, SIGNAL(timeout()), this, SLOT(slotRevertIcon()));
+    connect(m_timerRevert, &QTimer::timeout, this, &Target::slotRevertIcon);
 }
 
 void Target::setNumberOfLinks(uint n)
