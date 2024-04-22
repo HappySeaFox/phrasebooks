@@ -109,9 +109,9 @@ DEFINES += HTTPROOT=$$sprintf("\"\\\"%1\\\"\"", $$HTTPROOT)
 DEFINES += DOWNLOADROOT=$$sprintf("\"\\\"%1\\\"\"", $$DOWNLOADROOT)
 
 tag.commands += $$mle(echo "$$VERSION"> "\"$${_PRO_FILE_PWD_}/phrasebooks-version.tag\"")
-tag.commands += $$mle(git commit -m "\"$$VERSION file tag\"" "\"$${_PRO_FILE_PWD_}/phrasebooks-version.tag\"")
-tag.commands += $$mle(git tag -a "\"$$VERSION\"" -m "\"$$VERSION\"")
-tag.commands += $$mle(git push -u origin master)
+tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" commit -m "\"$$VERSION file tag\"" "\"$${_PRO_FILE_PWD_}/phrasebooks-version.tag\"")
+tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" tag -a "\"$$VERSION\"" -m "\"$$VERSION\"")
+tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" push -u origin master)
 QMAKE_EXTRA_TARGETS += tag
 
 !isEmpty(GCCDIR):!isEmpty(ZIP) {
@@ -128,6 +128,7 @@ QMAKE_EXTRA_TARGETS += tag
     distsrc.commands += $$mle(rd /S /Q \"$$T\")
 
     QMAKE_EXTRA_TARGETS += distsrc
+
     # portable binary
     T="$${OUT_PWD}/phrasebooks-portable-$$VERSION"
 
