@@ -16,7 +16,6 @@
  */
 
 #include <QNetworkRequest>
-#include <QStringList>
 #include <QRegExp>
 #include <QTimer>
 
@@ -49,18 +48,20 @@ void UpdateChecker::slotFinished()
         return;
     }
 
-    QStringList list = QString(m_net->data()).split(m_rxNewLine, QString::SkipEmptyParts);
+    QString version = m_net->data().trimmed();
 
-    if(list.isEmpty() || !m_rxVersion.exactMatch(list[0]))
+    if(version.isEmpty() || !m_rxVersion.exactMatch(version))
     {
         qWarning("Update checker: answer is broken");
         emit error(tr("Server answer is broken"));
         return;
     }
 
-    if(m_lastVersion != list[0])
+    qDebug("Update checker: version on the server is %s", qPrintable(version));
+
+    if(m_lastVersion != version)
     {
-        m_lastVersion = list[0];
+        m_lastVersion = version;
 
         bool okmajor, okminor, okpatch;
 
