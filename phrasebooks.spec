@@ -19,7 +19,7 @@ Summary: English phrasebooks manager
 License: GPL-3.0
 Group: Applications/Education
 URL: http://sourceforge.net/projects/phrasebooks
-Version: 1.0.0
+Version: 1.0.1
 Release: 11
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
@@ -100,6 +100,9 @@ install -D -m 644 phrasebooks.desktop $RPM_BUILD_ROOT/usr/share/applications/phr
 /usr/share/man/man1/phrasebooks.1.gz
 /usr/share/applications/phrasebooks.desktop
 %changelog
+* Mon Apr 25 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.1-1
+- Added "Always on top" setting
+- Removed the green "OK" label
 * Tue Apr 19 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.0-11
 - General SPEC fixes
 * Tue Apr 19 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.0-10
