@@ -158,6 +158,10 @@
         <source>Need restart</source>
         <translation>Требуется перезапуск</translation>
     </message>
+    <message>
+        <source>Always on top</source>
+        <translation>Всегда наверху</translation>
+    </message>
 </context>
 <context>
     <name>Phrasebooks</name>

@@ -158,6 +158,10 @@
         <source>Need restart</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Always on top</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Phrasebooks</name>

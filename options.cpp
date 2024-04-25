@@ -52,7 +52,9 @@ Options::~Options()
 
 void Options::saveSettings() const
 {
-    SETTINGS_SET_STRING(SETTING_TRANSLATION, ui->comboLang->itemData(ui->comboLang->currentIndex()).toString());
+    SETTINGS_SET_STRING(SETTING_TRANSLATION, ui->comboLang->itemData(ui->comboLang->currentIndex()).toString(), Settings::NoSync);
+    SETTINGS_SET_BOOL(SETTING_ON_TOP, ui->checkOnTop->isChecked());
+
 }
 
 void Options::load()
@@ -76,6 +78,8 @@ void Options::load()
 
     if(m_startTranslationIndex < 0)
         m_startTranslationIndex = 0;
+
+    ui->checkOnTop->setChecked(SETTINGS_GET_BOOL(SETTING_ON_TOP));
 }
 
 void Options::slotSomethingImportantChanged()

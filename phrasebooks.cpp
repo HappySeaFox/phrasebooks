@@ -75,6 +75,9 @@ Phrasebooks::Phrasebooks()
 {
     ui->setupUi(this);
 
+    if(SETTINGS_GET_BOOL(SETTING_ON_TOP))
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+
     connect(static_cast<QtSingleApplication *>(qApp), &QtSingleApplication::messageReceived,
             this, &Phrasebooks::slotMessageReceived);
 
@@ -468,8 +471,20 @@ void Phrasebooks::slotOptions()
 {
     Options opt(this);
 
-    if(opt.exec() == Options::Accepted)
-        opt.saveSettings();
+    if(opt.exec() == Options::Rejected)
+        return;
+
+    opt.saveSettings();
+
+    Qt::WindowFlags flags = windowFlags();
+
+    if(SETTINGS_GET_BOOL(SETTING_ON_TOP))
+        flags |= Qt::WindowStaysOnTopHint;
+    else
+        flags &= ~Qt::WindowStaysOnTopHint;
+
+    setWindowFlags(flags);
+    show();
 }
 
 void Phrasebooks::slotRestoreLastLinks()

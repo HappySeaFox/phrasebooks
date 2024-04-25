@@ -130,6 +130,7 @@
 #define SETTING_LAST_CHAPTER        "last-chapter"
 #define SETTING_LAST_LINK_POINTS    "last-link-points"
 #define SETTING_XTEST_RETURN_DELAY  "xtest-return-delay"
+#define SETTING_ON_TOP              "on-top"
 
 class SettingsPrivate;
 
