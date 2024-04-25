@@ -180,11 +180,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phrasebooks is ready</source>
-        <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Phrasebooks is busy</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation type="unfinished"></translation>
