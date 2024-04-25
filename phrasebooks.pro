@@ -81,9 +81,9 @@ OTHER_FILES += \
     phrasebooks.rc \
     README.txt \
     LICENSE.txt \
-    phrasebooks-version.tag
+    $${TARGET}-version.tag
 
-include(phrasebooks-common.pri)
+include($${TARGET}-common.pri)
 
 # network data
 VCSROOT_FOR_DOWNLOAD="http://sourceforge.net/p/phrasebooks/code/ci/master/tree"
@@ -108,8 +108,8 @@ DEFINES += VCSROOT_FOR_DOWNLOAD=$$sprintf("\"\\\"%1\\\"\"", $$VCSROOT_FOR_DOWNLO
 DEFINES += HTTPROOT=$$sprintf("\"\\\"%1\\\"\"", $$HTTPROOT)
 DEFINES += DOWNLOADROOT=$$sprintf("\"\\\"%1\\\"\"", $$DOWNLOADROOT)
 
-tag.commands += $$mle(echo "$$VERSION"> "\"$${_PRO_FILE_PWD_}/phrasebooks-version.tag\"")
-tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" commit -m "\"$$VERSION file tag\"" "\"$${_PRO_FILE_PWD_}/phrasebooks-version.tag\"")
+tag.commands += $$mle(echo "$$VERSION"> "\"$${_PRO_FILE_PWD_}/$${TARGET}-version.tag\"")
+tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" commit -m "\"$$VERSION file tag\"" "\"$${_PRO_FILE_PWD_}/$${TARGET}-version.tag\"")
 tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" tag -a "\"$$VERSION\"" -m "\"$$VERSION\"")
 tag.commands += $$mle(git -C \"$${_PRO_FILE_PWD_}\" push -u origin master)
 QMAKE_EXTRA_TARGETS += tag
@@ -118,19 +118,19 @@ QMAKE_EXTRA_TARGETS += tag
     message("7Z is found, will create custom dist targets")
 
     # source archive
-    T="$${OUT_PWD}/phrasebooks-$$VERSION"
+    T="$${OUT_PWD}/$${TARGET}-$$VERSION"
     distsrc.commands += $$mle(if exist \"$$T\" rd /S /Q \"$$T\")
     distsrc.commands += $$mle(xcopy /s /q /y /i /h \"$${_PRO_FILE_PWD_}\" \"$$T\\\")
     distsrc.commands += $$mle(git -C \"$$T\" clean -dfx)
     distsrc.commands += $$mle(rd /S /Q \"$$T/.git\")
-    distsrc.commands += $$mle(del /F /Q phrasebooks-$${VERSION}.zip)
-    distsrc.commands += $$mle($$ZIP a -r -tzip -mx=9 phrasebooks-$${VERSION}.zip \"$$T\")
+    distsrc.commands += $$mle(del /F /Q $${TARGET}-$${VERSION}.zip)
+    distsrc.commands += $$mle($$ZIP a -r -tzip -mx=9 $${TARGET}-$${VERSION}.zip \"$$T\")
     distsrc.commands += $$mle(rd /S /Q \"$$T\")
 
     QMAKE_EXTRA_TARGETS += distsrc
 
     # portable binary
-    T="$${OUT_PWD}/phrasebooks-portable-$$VERSION"
+    T="$${OUT_PWD}/$${TARGET}-portable-$$VERSION"
 
     distbin.commands += $$mle(if exist \"$$T\" rd /S /Q \"$$T\")
     distbin.commands += $$mle(mkdir \"$$T\")
@@ -177,8 +177,8 @@ QMAKE_EXTRA_TARGETS += tag
     }
 
     # compress
-    distbin.commands += $$mle(del /F /Q phrasebooks-portable-$${VERSION}$${HOST64}.zip)
-    distbin.commands += $$mle($$ZIP a -r -tzip -mx=9 phrasebooks-portable-$${VERSION}$${HOST64}.zip \"$$T\")
+    distbin.commands += $$mle(del /F /Q $${TARGET}-portable-$${VERSION}$${HOST64}.zip)
+    distbin.commands += $$mle($$ZIP a -r -tzip -mx=9 $${TARGET}-portable-$${VERSION}$${HOST64}.zip \"$$T\")
     distbin.commands += $$mle(rd /S /Q \"$$T\")
 
     QMAKE_EXTRA_TARGETS += distbin
@@ -192,7 +192,7 @@ QMAKE_EXTRA_TARGETS += tag
     INNO_APPID="{{C498F818-43DB-438C-8DAA-272DE94FFCE1}"
     LANGS=$$system(dir /B \"$$INNO\\..\\Languages\")
 
-    ISS="phrasebooks-$${VERSION}.iss"
+    ISS="$${TARGET}-$${VERSION}.iss"
 
     iss.commands += $$mle(echo $${LITERAL_HASH}define MyAppName \"Phrasebooks\" > $$ISS)
     iss.commands += $$mle(echo $${LITERAL_HASH}define MyAppPublisher \"Dmitry Baryshev\" >> $$ISS)
@@ -216,7 +216,7 @@ QMAKE_EXTRA_TARGETS += tag
     iss.commands += $$mle(echo DefaultGroupName={$${LITERAL_HASH}MyAppName} >> $$ISS)
     iss.commands += $$mle(echo LicenseFile=$${_PRO_FILE_PWD_}\\LICENSE.txt >> $$ISS)
     iss.commands += $$mle(echo OutputDir=. >> $$ISS)
-    iss.commands += $$mle(echo OutputBaseFilename=phrasebooks-setup-$${VERSION}$${HOST64} >> $$ISS)
+    iss.commands += $$mle(echo OutputBaseFilename=$${TARGET}-setup-$${VERSION}$${HOST64} >> $$ISS)
     iss.commands += $$mle(echo SetupIconFile=$${_PRO_FILE_PWD_}\\images\\phrasebooks.ico >> $$ISS)
     iss.commands += $$mle(echo Compression=lzma >> $$ISS)
     iss.commands += $$mle(echo SolidCompression=yes >> $$ISS)

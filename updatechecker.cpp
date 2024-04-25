@@ -28,7 +28,7 @@ UpdateChecker::UpdateChecker(QObject *parent)
     , m_lastVersion(NVER_STRING)
     , m_rxVersion("^(\\d+)\\.(\\d+)\\.(\\d+)$")
     , m_rxNewLine("\\r?\\n")
-    , m_url(VCSROOT_FOR_DOWNLOAD "/phrasebooks-version.tag?format=raw")
+    , m_url(VCSROOT_FOR_DOWNLOAD "/" TARGET_STRING "-version.tag?format=raw")
 {
     m_net = new NetworkAccess(this);
 
