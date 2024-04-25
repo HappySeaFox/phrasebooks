@@ -20,7 +20,7 @@ License: GPL-3.0
 Group: Applications/Education
 URL: http://sourceforge.net/projects/phrasebooks
 Version: 1.0.1
-Release: 11
+Release: 12
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 
