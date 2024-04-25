@@ -3,7 +3,7 @@ TEMPLATE = app
 
 NVER1=1
 NVER2=0
-NVER3=0
+NVER3=1
 
 QT += core gui network widgets
 
