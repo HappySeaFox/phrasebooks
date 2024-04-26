@@ -120,8 +120,8 @@ void About::slotNewVersion(const QString &newVersion)
 
     if(!newVersion.isEmpty())
     {
-        //: Means "A new version of Phrasebooks is availabe on the website"
-        tooltip = tr("Update available");
+        //: Means "A new version of Phrasebooks is availabe on the website". %1 will be replaced with the version available by the application
+        tooltip = tr("Update available (%1)").arg(newVersion);
 
         ui->labelUpdate->setPixmap(QIcon::fromTheme("software-update-available", QIcon(":/images/update.png")).pixmap(16, 16));
         ui->labelUpdate->setCursor(Qt::PointingHandCursor);

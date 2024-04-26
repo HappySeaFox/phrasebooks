@@ -24,11 +24,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update available</source>
-        <extracomment>Means &quot;A new version of Phrasebooks is availabe on the website&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Phrasebooks is up to date</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application. Phrasebooks will check for updates and show this message when there are no new version available</extracomment>
         <translation type="unfinished"></translation>
@@ -50,6 +45,11 @@
     <message>
         <source>Phrasebooks is an application to manage English phrasebooks and load the specified English word or text into your favourite dictionary. Send your requests and report errors to our bug tracker. Also visit:</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update available (%1)</source>
+        <extracomment>Means &quot;A new version of Phrasebooks is availabe on the website&quot;. %1 will be replaced with the version available by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -24,11 +24,6 @@
         <translation>Youtube</translation>
     </message>
     <message>
-        <source>Update available</source>
-        <extracomment>Means &quot;A new version of Phrasebooks is availabe on the website&quot;</extracomment>
-        <translation>Доступно обновление</translation>
-    </message>
-    <message>
         <source>Phrasebooks is up to date</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application. Phrasebooks will check for updates and show this message when there are no new version available</extracomment>
         <translation>Установлена актуальная версия Phrasebooks</translation>
@@ -51,6 +46,11 @@
         <source>Phrasebooks is an application to manage English phrasebooks and load the specified English word or text into your favourite dictionary. Send your requests and report errors to our bug tracker. Also visit:</source>
         <extracomment>&quot;Phrasebooks&quot; is the name of the application</extracomment>
         <translation>Phrasebooks - это программа для управления английскими разговорниками и загрузки выбранного английского слова или текста в ваш любимый словарь. Присылайте ваши запросы и отчёты об ошибках в наш трекер. Также посетите:</translation>
+    </message>
+    <message>
+        <source>Update available (%1)</source>
+        <extracomment>Means &quot;A new version of Phrasebooks is availabe on the website&quot;. %1 will be replaced with the version available by the application</extracomment>
+        <translation>Доступно обновление (%1)</translation>
     </message>
 </context>
 <context>
