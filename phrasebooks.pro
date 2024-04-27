@@ -91,7 +91,9 @@ HTTPROOT="http://sourceforge.net/p/phrasebooks"
 DOWNLOADROOT="http://sourceforge.net/projects/phrasebooks"
 
 # files to copy to the distribution
+BEARERPLUGINS=
 IMAGEPLUGINS=qico.dll
+SQLPLUGINS=
 QTLIBS=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll
 SSLLIBS=libeay32.dll ssleay32.dll
 
@@ -156,8 +158,16 @@ QMAKE_EXTRA_TARGETS += tag
         distbin.commands += $$mle(copy /y \"$$GCCDIR\\$$ml\" \"$$T\")
     }
 
+    for(bp, BEARERPLUGINS) {
+        distbin.commands += $$mle(copy /y \"$$[QT_INSTALL_PLUGINS]\\bearer\\$$bp\" \"$$T/bearer\")
+    }
+
     for(ip, IMAGEPLUGINS) {
         distbin.commands += $$mle(copy /y \"$$[QT_INSTALL_PLUGINS]\\imageformats\\$$ip\" \"$$T/imageformats\")
+    }
+
+    for(sp, SQLPLUGINS) {
+        distbin.commands += $$mle(copy /y \"$$[QT_INSTALL_PLUGINS]\\sqldrivers\\$$sp\" \"$$T/sqldrivers\")
     }
 
     distbin.commands += $$mle(copy /y \"$$TRANSLATIONS_DIR\\*.qm\" \"$$T/translations\")
@@ -275,8 +285,16 @@ QMAKE_EXTRA_TARGETS += tag
         iss.commands += $$mle(echo Source: \"$${_PRO_FILE_PWD_}\\extra\\$$sl\"; DestDir: \"{app}\"; Flags: ignoreversion >> $$ISS)
     }
 
+    for(bp, BEARERPLUGINS) {
+        iss.commands += $$mle(echo Source: \"$$[QT_INSTALL_PLUGINS]\\bearer\\$$bp\"; DestDir: \"{app}\\bearer\"; Flags: ignoreversion >> $$ISS)
+    }
+
     for(ip, IMAGEPLUGINS) {
         iss.commands += $$mle(echo Source: \"$$[QT_INSTALL_PLUGINS]\\imageformats\\$$ip\"; DestDir: \"{app}\\imageformats\"; Flags: ignoreversion >> $$ISS)
+    }
+
+    for(sp, SQLPLUGINS) {
+        iss.commands += $$mle(echo Source: \"$$[QT_INSTALL_PLUGINS]\\sqldrivers\\$$sp\"; DestDir: \"{app}\\sqldrivers\"; Flags: ignoreversion >> $$ISS)
     }
 
     for(ml, MINGWLIBS) {
