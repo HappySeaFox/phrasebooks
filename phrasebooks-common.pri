@@ -71,8 +71,8 @@ win32-g++ {
 
 for(ts, LANGUAGES) {
     win32 {
-        LRELEASE=$$findexe("lrelease.exe")
-        LUPDATE=$$findexe("lupdate.exe")
+        LRELEASE="$$[QT_INSTALL_BINS]\\lrelease.exe"
+        LUPDATE="$$[QT_INSTALL_BINS]\\lupdate.exe"
         MTRANSLATIONS += $${_PRO_FILE_PWD_}\\ts\\$${ts}.ts
     } else {
         LRELEASE=$$system(which lrelease)
