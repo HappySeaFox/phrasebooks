@@ -46,8 +46,8 @@ About::About(QWidget *parent)
     ui->label->setPixmap(QIcon(":/images/phrasebooks.ico").pixmap(48, 48));
     ui->labelVersion->setText(QString("Phrasebooks %1").arg(VERSION_STRING));
 
-    ui->labelCopyright->setText(QString("(C) 2016 %1 &lt;<a href=\"mailto:linuxsquirrel.dev@gmail.com\">"
-                                        "linuxsquirrel.dev@gmail.com</a>&gt;").arg(tr("Dmitry Baryshev")));
+    ui->labelCopyright->setText(QString("(C) 2016 %1 &lt;<a href=\"mailto:dmitrymq@gmail.com\">"
+                                        "dmitrymq@gmail.com</a>&gt;").arg(tr("Dmitry Baryshev")));
 
     ui->labelUrl->setText(QString("<a href=\"%1\">%2</a> <a href=\"%3\">%4</a> <a href=\"%5\">%6</a> <a href=\"%7\">%8</a>")
                             .arg(HTTPROOT "/wiki/howto")
