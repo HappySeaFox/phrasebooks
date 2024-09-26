@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationName("Phrasebooks");
     QCoreApplication::setOrganizationName("Phrasebooks");
-    QCoreApplication::setApplicationVersion(NVER_STRING);
+    QCoreApplication::setApplicationVersion(VERSION_STRING);
 
     qInstallMessageHandler(phrasebooksOutput);
 

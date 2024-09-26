@@ -25,7 +25,7 @@
 
 UpdateChecker::UpdateChecker(QObject *parent)
     : QObject(parent)
-    , m_lastVersion(NVER_STRING)
+    , m_lastVersion(VERSION_STRING)
     , m_rxVersion("^(\\d+)\\.(\\d+)\\.(\\d+)$")
     , m_rxNewLine("\\r?\\n")
     , m_url(VCSROOT_FOR_DOWNLOAD "/" TARGET_STRING "-version.tag?format=raw")
@@ -71,9 +71,9 @@ void UpdateChecker::slotFinished()
 
         if(okmajor && okminor && okpatch)
         {
-            if(major > NVER1
-                    || (major == NVER1 && minor > NVER2)
-                    || (major == NVER1 && minor == NVER2 && patch > NVER3)
+            if(major > VERSION_MAJOR
+                    || (major == VERSION_MAJOR && minor > VERSION_MINOR)
+                    || (major == VERSION_MAJOR && minor == VERSION_MINOR && patch > VERSION_PATCH)
                     )
             {
                 qDebug("Update checker: new version is \"%s\"", qPrintable(m_lastVersion));

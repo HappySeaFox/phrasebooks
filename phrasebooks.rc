@@ -5,13 +5,13 @@
 #define stringify(v1) #v1
 #define quote(v1) stringify(v1)
 
-#define NVER NVER1.NVER2.NVER3
+#define VERSION VERSION_MAJOR.VERSION_MINOR.VERSION_PATCH
 
 IDI_ICON1 ICON DISCARDABLE "images/phrasebooks.ico"
 
 1 VERSIONINFO
-        FILEVERSION    NVER1, NVER2, NVER3, 0
-        PRODUCTVERSION NVER1, NVER2, NVER3, 0
+        FILEVERSION    VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, 0
+        PRODUCTVERSION VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, 0
         FILEOS         VOS_UNKNOWN
         FILETYPE       VFT_APP
 BEGIN
@@ -21,11 +21,11 @@ BEGIN
           BEGIN
           VALUE "CompanyName",        "Dmitry Baryshev"
           VALUE "FileDescription",    "Phrasebooks"
-          VALUE "FileVersion",        quote(NVER)
+          VALUE "FileVersion",        quote(VERSION)
           VALUE "InternalName",       "Phrasebooks"
           VALUE "LegalCopyright",     "(C) 2016 Dmitry Baryshev"
           VALUE "ProductName",        "Phrasebooks"
-          VALUE "ProductVersion",     quote(NVER)
+          VALUE "ProductVersion",     quote(VERSION)
           VALUE "Builder",            "Dmitry Baryshev"
           END
         END

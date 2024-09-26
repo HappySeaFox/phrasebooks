@@ -57,7 +57,7 @@ Settings::Settings()
     d->settings->setFallbacksEnabled(false);
 
     // save version for future changes
-    d->settings->setValue("version", NVER_STRING);
+    d->settings->setValue("version", VERSION_STRING);
 }
 
 Settings::~Settings()

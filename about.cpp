@@ -44,7 +44,7 @@ About::About(QWidget *parent)
     ui->pushOk->setText(Utils::oKTitle());
 
     ui->label->setPixmap(QIcon(":/images/phrasebooks.ico").pixmap(48, 48));
-    ui->labelVersion->setText(QString("Phrasebooks %1").arg(NVER_STRING));
+    ui->labelVersion->setText(QString("Phrasebooks %1").arg(VERSION_STRING));
 
     ui->labelCopyright->setText(QString("(C) 2016 %1 &lt;<a href=\"mailto:linuxsquirrel.dev@gmail.com\">"
                                         "linuxsquirrel.dev@gmail.com</a>&gt;").arg(tr("Dmitry Baryshev")));
