@@ -13,9 +13,9 @@ lessThan(QT_MAJOR_VERSION, 5) {
 }
 
 win32 {
-    LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\")
+    LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\\*.ts\")
 } else {
-    LANGUAGES=$$system(ls \"$${_PRO_FILE_PWD_}/ts\")
+    LANGUAGES=$$system(ls \"$${_PRO_FILE_PWD_}/ts/*.ts\")
 }
 
 LANGUAGES=$$replace(LANGUAGES, .ts, )
@@ -96,15 +96,21 @@ message(Translations: $$MTRANSLATIONS)
         QMAKE_POST_LINK += $$mle(if not exist \"$$TRANSLATIONS_DIR\" mkdir \"$$TRANSLATIONS_DIR\")
 
         for(ts, LANGUAGES) {
-            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+            QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR\\$${ts}.qm\")
+            QMAKE_POST_LINK += $$mle(copy /Y \"$${_PRO_FILE_PWD_}\\ts\\$${ts}.png\" \"$$TRANSLATIONS_DIR\\$${ts}.png\")
         }
+
+        QMAKE_POST_LINK += $$mle(copy /Y \"$${_PRO_FILE_PWD_}\\ts\\translations.conf\" \"$$TRANSLATIONS_DIR\\\")
     } else {
         TRANSLATIONS_DIR="$${OUT_PWD}/translations"
         QMAKE_POST_LINK += $$mle(mkdir -p \"$$TRANSLATIONS_DIR\")
 
         for(ts, LANGUAGES) {
             QMAKE_POST_LINK += $$mle($$LRELEASE \"$${_PRO_FILE_PWD_}/ts/$${ts}.ts\" -qm \"$$TRANSLATIONS_DIR/$${ts}.qm\")
+            QMAKE_POST_LINK += $$mle(cp -f \"$${_PRO_FILE_PWD_}/ts/$${ts}.png\" \"$$TRANSLATIONS_DIR/$${ts}.png\")
         }
+
+        QMAKE_POST_LINK += $$mle(cp -f \"$${_PRO_FILE_PWD_}/ts/translations.conf\" \"$$TRANSLATIONS_DIR/\")
     }
 }
 

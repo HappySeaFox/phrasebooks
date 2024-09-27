@@ -17,7 +17,9 @@
 
 #include <QCoreApplication>
 #include <QStandardPaths>
+#include <QTextStream>
 #include <QMetaType>
+#include <QFile>
 #include <QDir>
 
 #include "settings.h"
@@ -25,8 +27,13 @@
 class SettingsPrivate
 {
 public:
+    SettingsPrivate()
+        : translationsFilled(false)
+    {}
+
     QSettings *settings;
     QMap<QString, QString> translations;
+    bool translationsFilled;
 };
 
 /*******************************************************/
@@ -119,13 +126,46 @@ Settings* Settings::instance()
 
     return inst;
 }
-
+#include <QMessageBox>
 void Settings::fillTranslations()
 {
-    d->translations.insert("en", "English");
+    QFile translations(QCoreApplication::applicationDirPath()
+                       + QDir::separator()
+                       + "translations"
+                       + QDir::separator()
+                       + "translations.conf");
 
-    // http://www.loc.gov/standards/iso639-2/php/code_list.php
-    d->translations.insert("ru", QString::fromUtf8("Русский"));
+    d->translationsFilled = true;
+
+    if(!translations.open(QFile::ReadOnly))
+    {
+        qWarning("Cannot open translations' configuration: %s", qPrintable(translations.errorString()));
+        return;
+    }
+
+    QTextStream in(&translations);
+
+    in.setCodec("UTF-8");
+
+    while(!in.atEnd())
+    {
+        QString line = in.readLine().trimmed();
+
+        if(line.startsWith("#"))
+            continue;
+
+        int index = line.indexOf(QChar('='));
+
+        if(index < 0)
+            continue;
+
+        QString code = line.mid(index+1);
+
+        if(code.isEmpty())
+            continue;
+
+        d->translations.insert(code, line.left(index));
+    }
 }
 
 QSettings *Settings::settings()
@@ -152,7 +192,7 @@ void Settings::remove(const QString &key, Settings::SyncType sync)
 
 QMap<QString, QString> Settings::translations()
 {
-    if(d->translations.isEmpty())
+    if(!d->translationsFilled)
         fillTranslations();
 
     return d->translations;

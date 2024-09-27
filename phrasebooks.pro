@@ -170,7 +170,10 @@ QMAKE_EXTRA_TARGETS += tag
         distbin.commands += $$mle(copy /y \"$$[QT_INSTALL_PLUGINS]\\sqldrivers\\$$sp\" \"$$T/sqldrivers\")
     }
 
+    # translations
     distbin.commands += $$mle(copy /y \"$$TRANSLATIONS_DIR\\*.qm\" \"$$T/translations\")
+    distbin.commands += $$mle(copy /y \"$$TRANSLATIONS_DIR\\*.png\" \"$$T/translations\")
+    distbin.commands += $$mle(copy /y \"$$TRANSLATIONS_DIR\\translations.conf\" \"$$T/translations\")
 
     for(l, LANGUAGES) {
         qtl=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm $$[QT_INSTALL_TRANSLATIONS]\\qtbase_$${l}.qm
@@ -266,6 +269,8 @@ QMAKE_EXTRA_TARGETS += tag
     }
 
     iss.commands += $$mle(echo Source: \"$$TRANSLATIONS_DIR/*.qm\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
+    iss.commands += $$mle(echo Source: \"$$TRANSLATIONS_DIR/*.png\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
+    iss.commands += $$mle(echo Source: \"$$TRANSLATIONS_DIR/translations.conf\"; DestDir: \"{app}/translations\"; Flags: ignoreversion >> $$ISS)
 
     for(l, LANGUAGES) {
         qtl=$$[QT_INSTALL_TRANSLATIONS]\\qt_$${l}.qm $$[QT_INSTALL_TRANSLATIONS]\\qtbase_$${l}.qm

@@ -15,6 +15,7 @@
  * along with phrasebooks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
 #include <QListWidgetItem>
 #include <QPainter>
 #include <QString>
@@ -65,9 +66,14 @@ void Options::load()
 
     QMap<QString, QString>::const_iterator itEnd = tsmap.end();
 
+    const QString basePath = QCoreApplication::applicationDirPath()
+            + QDir::separator()
+            + "translations"
+            + QDir::separator();
+
     for(QMap<QString, QString>::const_iterator it = tsmap.begin();it != itEnd;++it)
     {
-        ui->comboLang->addItem(QIcon(":/images/flags/" + it.key() + ".png"), it.value(), it.key());
+        ui->comboLang->addItem(QIcon(basePath + it.key() + ".png"), it.value(), it.key());
 
         if(it.key() == ts)
         {
