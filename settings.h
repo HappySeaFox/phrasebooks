@@ -193,13 +193,6 @@ public:
      */
     QMap<QString, QString> translations();
 
-    void setCheckBoxState(const QString &checkbox, bool checked, SyncType sync = Sync);
-    int checkBoxState(const QString &checkbox);
-
-    void setTickersForGroup(int group, const QStringList &tickers, SyncType sync = Sync);
-    QStringList tickersForGroup(int group);
-    void removeTickers(int group, SyncType sync = Sync);
-
 private:
     Settings();
 

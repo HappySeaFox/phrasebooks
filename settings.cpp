@@ -78,55 +78,13 @@ void Settings::sync()
     d->settings->sync();
 }
 
-void Settings::setCheckBoxState(const QString &checkbox, bool checked, SyncType sync)
-{
-    d->settings->setValue("settings/checkbox-" + checkbox, (int)checked);
-
-    if(sync == Sync)
-        d->settings->sync();
-}
-
-int Settings::checkBoxState(const QString &checkbox)
-{
-    return d->settings->value("settings/checkbox-" + checkbox, -1).toInt();
-}
-
-void Settings::setTickersForGroup(int group, const QStringList &tickers, SyncType sync)
-{
-    d->settings->beginGroup(QString("tickers-%1").arg(group));
-    d->settings->setValue("tickers", tickers);
-    d->settings->endGroup();
-
-    if(sync == Sync)
-        d->settings->sync();
-}
-
-QStringList Settings::tickersForGroup(int group)
-{
-    d->settings->beginGroup(QString("tickers-%1").arg(group));
-    QStringList tickers = d->settings->value("tickers").toStringList();
-    d->settings->endGroup();
-
-    return tickers;
-}
-
-void Settings::removeTickers(int group, SyncType sync)
-{
-    d->settings->beginGroup(QString("tickers-%1").arg(group));
-    d->settings->remove(QString());
-    d->settings->endGroup();
-
-    if(sync == Sync)
-        d->settings->sync();
-}
-
 Settings* Settings::instance()
 {
     static Settings *inst = new Settings;
 
     return inst;
 }
-#include <QMessageBox>
+
 void Settings::fillTranslations()
 {
     QFile translations(QCoreApplication::applicationDirPath()
