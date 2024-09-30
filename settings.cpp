@@ -87,11 +87,16 @@ Settings* Settings::instance()
 
 void Settings::fillTranslations()
 {
-    QFile translations(QCoreApplication::applicationDirPath()
-                       + QDir::separator()
-                       + "translations"
-                       + QDir::separator()
-                       + "translations.conf");
+    QFile translations(
+            #ifdef Q_OS_UNIX
+                QString("/usr/share/" TARGET_STRING)
+            #else
+                QCoreApplication::applicationDirPath()
+            #endif
+                + QDir::separator()
+                + "translations"
+                + QDir::separator()
+                + "translations.conf");
 
     d->translationsFilled = true;
 

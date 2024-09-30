@@ -66,10 +66,14 @@ void Options::load()
 
     QMap<QString, QString>::const_iterator itEnd = tsmap.end();
 
-    const QString basePath = QCoreApplication::applicationDirPath()
-            + QDir::separator()
-            + "translations"
-            + QDir::separator();
+    const QString basePath =
+            #ifdef Q_OS_UNIX
+                QString("/usr/share/" TARGET_STRING)
+            #else
+                QCoreApplication::applicationDirPath()
+            #endif
+                + QDir::separator()
+                + "translations";
 
     for(QMap<QString, QString>::const_iterator it = tsmap.begin();it != itEnd;++it)
     {
