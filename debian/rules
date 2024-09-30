@@ -18,7 +18,9 @@ override_dh_auto_install:
 	install -D -m 755 phrasebooks $(CURDIR)/debian/phrasebooks/usr/bin/phrasebooks
 	strip $(CURDIR)/debian/phrasebooks/usr/bin/phrasebooks
 	install -d -m 755 $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations
+	install -D -m 644 translations/translations.conf $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations/
 	find translations -name '*.qm' -exec install -m 644 '{}' $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations/ ';'
+	find translations -name '*.png' -exec install -m 644 '{}' $(CURDIR)/debian/phrasebooks/usr/share/phrasebooks/translations/ ';'
 	for i in 16 24 32 48 64 72 96 128; do install -D -m 644 icons/phrasebooks-$${i}.png $(CURDIR)/debian/phrasebooks/usr/share/icons/hicolor/$${i}x$${i}/apps/phrasebooks.png; done
 	install -D -m 644 man/phrasebooks.1 $(CURDIR)/debian/phrasebooks/usr/share/man/man1/phrasebooks.1
 	install -D -m 644 phrasebooks.desktop $(CURDIR)/debian/phrasebooks/usr/share/applications/phrasebooks.desktop
