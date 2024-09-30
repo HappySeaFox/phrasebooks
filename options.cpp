@@ -73,7 +73,8 @@ void Options::load()
                 QCoreApplication::applicationDirPath()
             #endif
                 + QDir::separator()
-                + "translations";
+                + "translations"
+                + QDir::separator();
 
     for(QMap<QString, QString>::const_iterator it = tsmap.begin();it != itEnd;++it)
     {

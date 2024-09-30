@@ -15,7 +15,7 @@ lessThan(QT_MAJOR_VERSION, 5) {
 win32 {
     LANGUAGES=$$system(dir /B \"$${_PRO_FILE_PWD_}\\ts\\*.ts\")
 } else {
-    LANGUAGES=$$system(ls \"$${_PRO_FILE_PWD_}/ts/*.ts\")
+    LANGUAGES=$$system(find \"$${_PRO_FILE_PWD_}/ts/\" -name \"*.ts\" -printf \"%f \")
 }
 
 LANGUAGES=$$replace(LANGUAGES, .ts, )
