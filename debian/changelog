@@ -3,10 +3,10 @@ phrasebooks (1.0.1-1) unstable; urgency=medium
   * Added "Always on top" setting
   * Removed the green "OK" label from the main window
 
- -- Dmitry Baryshev <linuxsquirrel.dev@gmail.com>  Mon, 25 Apr 2016 10:16:12 +0300
+ -- Dmitry Baryshev <dima8w@gmail.com>  Mon, 25 Apr 2016 10:16:12 +0300
 
 phrasebooks (1.0.0-1) unstable; urgency=medium
 
   * Initial release.
 
- -- Dmitry Baryshev <linuxsquirrel.dev@gmail.com>  Thu, 14 Apr 2016 11:30:32 -0700
+ -- Dmitry Baryshev <dima8w@gmail.com>  Thu, 14 Apr 2016 11:30:32 -0700

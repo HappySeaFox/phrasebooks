@@ -1,7 +1,7 @@
 Phrasebooks
 -----------
 
-Author: Dmitry Baryshev <linuxsquirrel.dev@gmail.com>
+Author: Dmitry Baryshev <dima8w@gmail.com>
 License: GNU GPLv3+ (see LICENSE.txt)
 
 The purpose of this applications is to manage English phrasebooks

@@ -1,7 +1,7 @@
 #
 # spec file for package phrasebooks
 #
-# Copyright (c) 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com>
+# Copyright (c) 2016 Dmitry Baryshev <dima8w@gmail.com>
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -100,10 +100,10 @@ install -D -m 644 phrasebooks.desktop $RPM_BUILD_ROOT/usr/share/applications/phr
 /usr/share/man/man1/phrasebooks.1.gz
 /usr/share/applications/phrasebooks.desktop
 %changelog
-* Mon Apr 25 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.1-1
+* Mon Apr 25 2016 Dmitry Baryshev <dima8w@gmail.com> 1.0.1-1
 - Added "Always on top" setting
 - Removed the green "OK" label
-* Tue Apr 19 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.0-11
+* Tue Apr 19 2016 Dmitry Baryshev <dima8w@gmail.com> 1.0.0-11
 - General SPEC fixes
-* Tue Apr 19 2016 Dmitry Baryshev <linuxsquirrel.dev@gmail.com> 1.0.0-10
+* Tue Apr 19 2016 Dmitry Baryshev <dima8w@gmail.com> 1.0.0-10
 - Initial RPM release

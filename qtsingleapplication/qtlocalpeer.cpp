@@ -40,7 +40,7 @@
 
 /**********************************************************************
  *   Copyright (C) 2013 by Dmitry 'Krasu' Baryshev                    *
- *   linuxsquirrel.dev@gmail.com                                      *
+ *   dima8w@gmail.com                                                 *
  **********************************************************************/
 
 #include "qtlocalpeer.h"
