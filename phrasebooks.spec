@@ -18,7 +18,7 @@ Name: phrasebooks
 Summary: English phrasebooks manager
 License: GPL-3.0
 Group: Applications/Education
-URL: http://sourceforge.net/projects/phrasebooks
+URL: https://github.com/HappySeaFox/phrasebooks
 Version: 1.0.1
 Release: 12
 Source0: %{name}-%{version}.tar.gz

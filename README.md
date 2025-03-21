@@ -18,7 +18,7 @@ phrasebooks.
 If your favorite dictionary supports advanced phrasebooks, then
 you don't need this application.
 
-The C++ code is heavily based on THT code: http://sourceforge.net/projects/tht
+The C++ code is heavily based on the THT code: https://github.com/HappySeaFox/tht
 
 Other license notes
 -------------------

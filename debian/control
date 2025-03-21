@@ -6,9 +6,9 @@ XSBC-Original-Maintainer: Dmitry Baryshev <dima8w@gmail.com>
 Uploaders: Dmitry Baryshev <dima8w@gmail.com>
 Build-Depends: debhelper (>= 9), qtbase5-dev, libqt5x11extras5-dev, qttools5-dev-tools, libxext-dev, libxtst-dev, libx11-dev, libxt-dev
 Standards-Version: 3.9.4
-Homepage: https://sourceforge.net/projects/phrasebooks
-Vcs-Git: git://git.code.sf.net/p/phrasebooks/code
-Vcs-Browser: https://sourceforge.net/p/phrasebooks/code/ci/master/tree
+Homepage: https://github.com/HappySeaFox/phrasebooks
+Vcs-Git: https://github.com/HappySeaFox/phrasebooks.git
+Vcs-Browser: https://github.com/HappySeaFox/phrasebooks
 
 Package: phrasebooks
 Architecture: any
