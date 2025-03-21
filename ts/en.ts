@@ -62,6 +62,7 @@
     </message>
     <message>
         <source>Click or press %1...</source>
+        <extracomment>%1 will be replaced with the hotkey by the application</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

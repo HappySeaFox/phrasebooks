@@ -11,61 +11,61 @@ unix {
     QT += x11extras
 }
 
-INCLUDEPATH += . qtsingleapplication
-DEPENDPATH += . qtsingleapplication
+INCLUDEPATH += . src qtsingleapplication
+DEPENDPATH += . src qtsingleapplication
 
-SOURCES += main.cpp \
+SOURCES += src/main.cpp \
     qtsingleapplication/qtsingleapplication.cpp \
     qtsingleapplication/qtlockedfile.cpp \
     qtsingleapplication/qtlocalpeer.cpp \
-    utils.cpp \
-    phrasebooks.cpp \
-    settings.cpp \
-    list.cpp \
-    target.cpp \
-    miniinput.cpp \
-    networkaccess.cpp \
-    updatechecker.cpp \
-    numericlabel.cpp \
-    englishvalidator.cpp \
-    about.cpp \
-    booksandchapters.cpp \
-    selectchapter.cpp \
-    chaptersview.cpp \
-    options.cpp \
-    bookfileiconprovider.cpp \
-    chapterlabel.cpp
+    src/utils.cpp \
+    src/phrasebooks.cpp \
+    src/settings.cpp \
+    src/list.cpp \
+    src/target.cpp \
+    src/miniinput.cpp \
+    src/networkaccess.cpp \
+    src/updatechecker.cpp \
+    src/numericlabel.cpp \
+    src/englishvalidator.cpp \
+    src/about.cpp \
+    src/booksandchapters.cpp \
+    src/selectchapter.cpp \
+    src/chaptersview.cpp \
+    src/options.cpp \
+    src/bookfileiconprovider.cpp \
+    src/chapterlabel.cpp
 
 HEADERS += qtsingleapplication/qtsingleapplication.h \
     qtsingleapplication/qtlockedfile.h \
     qtsingleapplication/qtlocalpeer.h \
-    utils.h \
-    phrasebooks.h \
-    settings.h \
-    list.h \
-    target.h \
-    miniinput.h \
-    networkaccess.h \
-    updatechecker.h \
-    numericlabel.h \
-    englishvalidator.h \
-    about.h \
-    booksandchapters.h \
-    selectchapter.h \
-    chaptersview.h \
-    options.h \
-    bookfileiconprovider.h \
-    chapterlabel.h
+    src/utils.h \
+    src/phrasebooks.h \
+    src/settings.h \
+    src/list.h \
+    src/target.h \
+    src/miniinput.h \
+    src/networkaccess.h \
+    src/updatechecker.h \
+    src/numericlabel.h \
+    src/englishvalidator.h \
+    src/about.h \
+    src/booksandchapters.h \
+    src/selectchapter.h \
+    src/chaptersview.h \
+    src/options.h \
+    src/bookfileiconprovider.h \
+    src/chapterlabel.h
 
 win32 {
     SOURCES += qtsingleapplication/qtlockedfile_win.cpp \
-    windowmarker.cpp
+                src/windowmarker.cpp
 
-    HEADERS += windowmarker.h \
-                x11.h
+    HEADERS += src/windowmarker.h \
+                src/x11.h
 } else {
     SOURCES += qtsingleapplication/qtlockedfile_unix.cpp \
-                x11.cpp
+                src/x11.cpp
 }
 
 RESOURCES += phrasebooks.qrc
@@ -369,10 +369,10 @@ QMAKE_EXTRA_TARGETS += tag
 }
 
 FORMS += \
-    phrasebooks.ui \
-    list.ui \
-    miniinput.ui \
-    about.ui \
-    booksandchapters.ui \
-    selectchapter.ui \
-    options.ui
+    src/phrasebooks.ui \
+    src/list.ui \
+    src/miniinput.ui \
+    src/about.ui \
+    src/booksandchapters.ui \
+    src/selectchapter.ui \
+    src/options.ui
