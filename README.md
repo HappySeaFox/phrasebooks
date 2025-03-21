@@ -1,6 +1,10 @@
 Phrasebooks
 -----------
 
+<p align="center">
+  <a href=".github/demo.jpg"><img src=".github/demo.jpg?raw=true" alt="Demo Screenshot"/></a>
+</p>
+
 Author: Dmitry Baryshev <dima8w@gmail.com>
 License: GNU GPLv3+ (see LICENSE.txt)
 
