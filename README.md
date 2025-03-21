@@ -20,6 +20,8 @@ you don't need this application.
 
 The C++ code is heavily based on the THT code: https://github.com/HappySeaFox/tht
 
+Some useful video tutorials: https://www.youtube.com/@phrasebookslinker6474
+
 Other license notes
 -------------------
 
