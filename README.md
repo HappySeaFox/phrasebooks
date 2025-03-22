@@ -2,7 +2,7 @@ Phrasebooks
 -----------
 
 <p align="center">
-  <a href=".github/demo.jpg"><img src=".github/demo.jpg?raw=true" alt="Demo Screenshot"/></a>
+  <a href=".github/demo.png"><img src=".github/demo.png?raw=true" alt="Demo Screenshot"/></a>
 </p>
 
 Author: Dmitry Baryshev <dima8w@gmail.com>
